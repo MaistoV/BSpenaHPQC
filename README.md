@@ -41,8 +41,9 @@ Error-correcting code --> da vedere (?)
 * Java 8
 
 
-## Refernces
-* [What is Hadoop ?](https://www.youtube.com/watch?v=aReuLtY0YMI&t=1s) [1]
+## References
+* [1] : https://www.youtube.com/watch?v=aReuLtY0YMI&t=1s "What is Hadoop ?"
+* [What is Hadoop ?](https://www.youtube.com/watch?v=aReuLtY0YMI&t=1s)
 * [Hadoop Ecosystem](https://data-flair.training/blogs/hadoop-ecosystem-components/) [2]
 * [HDFS Blocks](https://data-flair.training/blogs/data-block/) [3]
 * [Hadoop HDFS Data Read and Write Operations](https://data-flair.training/blogs/hadoop-hdfs-data-read-and-write-operations/) [4]
