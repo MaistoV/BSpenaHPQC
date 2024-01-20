@@ -17,8 +17,8 @@ HDFS has two types of nodes [[3]](#3):
 1) **NameNode**
 2) **DataNode**
 
-The NameNode, known as master node, stores metadata (i.e. number of data blocks,their locations,...) and consists of files and directories [[2]](#2). It manages and mantains the slave nodes, assigning tasks to them. Besides, regulates the client’s access to files and executes file system namespace operations like opening, closing, and renaming files and directories [[3]](#3).
-The DataNode, known as slave node, stores the data, doing tasks and serving read/write operations from the file system’s clients. They can create, delete and replicate blocks; when a block is written on a DataNode, it replicates it to other DataNode, until are created the required numeber of repplicas [[3]](#3).
+The NameNode, known as master node, stores metadata (i.e. number of data blocks,their locations,...) and consists of files and directories [[2]](#2). It manages and mantains the slave nodes, assigning tasks to them. Besides, regulates the client’s access to files and executes file system namespace operations like opening, closing, and renaming files and directories [[3]](#3).  
+The DataNode, known as slave node, stores the data, doing tasks and serving read/write operations from the file system’s clients. They can create, delete and replicate blocks; when a block is written on a DataNode, it replicates it to other DataNode, until are created the required numeber of repplicas [[3]](#3).  
 At startup, each Datanode does **handshaking** in order to connect with its corresponding Namenode, during the handshaking there is the verification of namespace ID and software version. At the time of mismatch found, DataNode goes down automatically[[2]](#2).
 
 
