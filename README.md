@@ -4,18 +4,26 @@ Benchmark di Yarn in base alle configurazioni su DFSIO/Teragen, il benchmark son
 
 
 ## Hadoop
-Freamwork that store and process big data using cluster of commodity hardware. The ecosystem has different components, for example:
-1) HDFS is the storage unit
-2) MapReduce is the process unit
-3) Yarn is the menager unit
+Hadoop is a freamwork that store and process big data [[1]](#1) [[2]](#2). The ecosystem has different components, for example:
+1) **HDFS** is the storage unit
+2) **MapReduce** is the process unit
+3) **Yarn** is the menager unit
 
 ### HDFS
-It is a java based distributed file system; it is fault tolerant and provides scalabilty and reliability. HDFS has two components [2]:
-1) NameNode (master node) : stores metadata (i.e. number of data blocks,their locations,...) and performs different operations such as file system menagment
-2) DataNode (slave node) : stores data blocks and performs different operations such as read/write operation (as per the request of the clients) and block replica creation
+HDFS is a java based distributed file system [[2]](#2) that stores files running on cluster of commodity hardware [[3]](#3). It provides a reliable and a fault-tolerant layer (thanks to the replication) and provides a parallel data access. 
+
+#### HDFS Nodes
+HDFS has two types of nodes [[3]](#3):
+1) **NameNode**
+2) **DataNode**
+
+The NameNode, known as master node, stores metadata (i.e. number of data blocks,their locations,...) and consists of files and directories [[2]](#2). It manages and mantains the slave nodes, assigning tasks to them. Besides, regulates the client’s access to files and executes file system namespace operations like opening, closing, and renaming files and directories [[3]](#3).
+The DataNode, known as slave node, stores the data, doing tasks and serving read/write operations from the file system’s clients. They can create, delete and replicate blocks; when a block is written on a DataNode, it replicates it to other DataNode, until are created the required numeber of repplicas [[3]](#3).
+At startup, each Datanode does **handshaking** in order to connect with its corresponding Namenode, during the handshaking there is the verification of namespace ID and software version. At the time of mismatch found, DataNode goes down automatically[[2]](#2).
+
 
 #### Blocks
-HDFS splits the data into multiple blocks know as data blocks [3]; the HDFS data blocks are blocked-sized chunks whith deafult size of 128 MB (the size is configurable). The data blocks are stored on several slave nodes. Besides, thanks to the replication method, HDFS replicates the data blocks in order to prevent their lost [[1]](#1). By default, the replication method as a replication factor of 3, which cause which causes 200% overhead [1](#1).
+HDFS splits the data into multiple blocks know as data blocks [[3]](#3); the HDFS data blocks are blocked-sized chunks whith deafult size of 128 MB (the size is configurable). The data blocks are stored on several slave nodes. Besides, thanks to the replication method, HDFS replicates the data blocks in order to prevent their lost [[1]](#1). By default, the replication method as a replication factor of 3, which cause which causes 200% overhead.
 
 
 ### MapReduce
@@ -36,18 +44,21 @@ L'fs di Hadoop deve essere tollerante ai fallimenti ed essere in grado di funzio
 Error-correcting code --> da vedere (?)
 
 
-## Environment Setp
+## Environment Setup
 * Ubuntu 22.04 LTS on vm
 * HADOOP 3.3.5
 * Java 8
+* Maven
 
 
 ## References
 * <a id="1"></a> [What is Hadoop ?](https://www.youtube.com/watch?v=aReuLtY0YMI&t=1s)
-* [Hadoop Ecosystem](https://data-flair.training/blogs/hadoop-ecosystem-components/) [2]
-* [HDFS Blocks](https://data-flair.training/blogs/data-block/) [3]
-* [Hadoop HDFS Data Read and Write Operations](https://data-flair.training/blogs/hadoop-hdfs-data-read-and-write-operations/) [4]
-* "MapReduce: Simplified Data Processing on Large Clusters" []
+* <a id="2"></a> [Hadoop Ecosystem](https://data-flair.training/blogs/hadoop-ecosystem-components/)
+* <a id="3"></a> [HDFS Tutorial – A Complete Hadoop HDFS Overview](https://data-flair.training/blogs/hadoop-hdfs-tutorial/)
+* <a id="4"></a> [HDFS Blocks](https://data-flair.training/blogs/data-block/)
+* <a id="5"></a> [Hadoop HDFS Data Read and Write Operations](https://data-flair.training/blogs/hadoop-hdfs-data-read-and-write-operations/)
+* https://data-flair.training/blogs/hadoop-hdfs-tutorial/
+* "MapReduce: Simplified Data Processing on Large Clusters"
 
 
 # Cose da fare
@@ -57,7 +68,3 @@ Error-correcting code --> da vedere (?)
 * Cambiare parametri di configurazione di Yarn
 * Misurare i fattori all'interno dei wrokload
 * Gli script generati devono essere portati sul cluster fisico
-
-# Cose da inserire
-* Definizione di big data (?)
-* Differenza tra file system e file system distribuiti (?)
