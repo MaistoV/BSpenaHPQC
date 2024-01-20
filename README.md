@@ -13,6 +13,8 @@ Freamwork that store and process big data using cluster of commodity hardware. T
 It is a java based distributed file system; it is fault tolerant and provides scalabilty and reliability. HDFS has two components [2]:
 1) NameNode (master node) : stores metadata (i.e. number of data blocks,their locations,...) and performs different operations such as file system menagment
 2) DataNode (slave node) : stores data blocks and performs different operations such as read/write operation (as per the request of the clients) and block replica creation
+
+#### Blocks
 HDFS splits the data into multiple blocks know as data blocks [3]; the HDFS data blocks are blocked-sized chunks whith deafult size of 128 MB (the size is configurable). The data blocks are stored on several slave nodes. Besides, thanks to the replication method, HDFS replicates the data blocks in order to prevent their lost [1]. By default, the replication method as a replication factor of 3, which cause which causes 200% overhead.
 
 ### MapReduce
