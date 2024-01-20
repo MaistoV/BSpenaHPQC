@@ -42,7 +42,7 @@ Error-correcting code --> da vedere (?)
 
 
 ## References
-* [1] : https://www.youtube.com/watch?v=aReuLtY0YMI&t=1s "What is Hadoop ?"
+* [1]: https://www.youtube.com/watch?v=aReuLtY0YMI&t=1s "What is Hadoop ?"
 * [What is Hadoop ?](https://www.youtube.com/watch?v=aReuLtY0YMI&t=1s)
 * [Hadoop Ecosystem](https://data-flair.training/blogs/hadoop-ecosystem-components/) [2]
 * [HDFS Blocks](https://data-flair.training/blogs/data-block/) [3]
