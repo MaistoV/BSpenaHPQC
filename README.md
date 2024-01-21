@@ -4,27 +4,27 @@ Benchmark di Yarn in base alle configurazioni su DFSIO/Teragen, il benchmark son
 
 
 ## Hadoop
-Hadoop is a freamwork that store and process big data [[1]](#1) [[2]](#2). The ecosystem has different components, for example:
-* **HDFS** is the storage unit
-* **MapReduce** is the process unit
-* **Yarn** is the menager unit
+Hadoop is a freamwork that store and process big data [[1]](#1) [[2]](#2). The ecosystem has different components, three of them are:
+* **HDFS**: the storage unit
+* **MapReduce**: the process unit
+* **Yarn**: the menager unit
+
+![Links](https://data-flair.training/blogs/wp-content/uploads/sites/2/2017/04/Hadoop-Ecosystem-2-01.jpg)
 
 ### HDFS
-HDFS is a java based distributed file system [[2]](#2) that stores files running on cluster of commodity hardware [[3]](#3). It provides a reliable and a fault-tolerant layer (thanks to the replication) and provides a parallel data access. 
+HDFS is a java based distributed file system [[2]](#2) that stores files running on cluster of commodity hardware [[3]](#3). It provides data reliability and availability and fault-tolerant storage layer thanks to the replication method. In addiction, HDFS offers parallel data access increasing the throughput access to application and offers scalabilty by increasing and decreasing the cluster size
 
-#### Nodes
-HDFS has two types of nodes [[3]](#3):
+#### Nodes and Daemons
+HDFS has two types of **nodes** [[3]](#3):
 * **NameNode** (master node): manages and mantains the slave nodes, assigning tasks to them. Besides, regulates the client’s access to files and executes file system namespace operations like opening, closing, and renaming files and directories [[3]](#3).
-* **DataNode** (slave node): executes tasks and serving read/write operations from the file system’s clients. They can create, delete and replicate blocks; when a block is written on a DataNode, it replicates it to other DataNode, until are created the required numeber of repplicas [[3]](#3).    
+* **DataNode** (slave node): performs tasks,read/write operations from the file system’s clients and **data blocks** operation (creation, delation and replication). Datanodes are arranged in **racks**  and in a cluster there are multiple racks.
 At startup, each Datanode does **handshaking** in order to connect with its corresponding Namenode, during the handshaking there is the verification of namespace ID and software version. At the time of mismatch found, DataNode goes down automatically[[2]](#2).
-
-#### Daemons
-There are two types of deamons running on HDFS for data storage [[3]](#3):
+Besides, there are two types of **deamons** (processes runngin in background) running on HDFS for data storage [[3]](#3):
 * **Namenodes**: run on the master and store metadata (number of data blocks,their locations,numeber of replicas, etc...)
 * **Datanodes**: run on the slave and store the actual data
 
 #### Data Blocks
-HDFS splits files in blocked-sized chunks known as **data blocks**; each block has a default size of 128 MBz, but it can be configured by modifying the appropriate property [[4]](#4). HDFS uses a replication factor of three to replicate the data and store the copies across the cluster in a distributed manner on different nodes [[3]](#3), but the replication method causes an 200% overhead. Thanks to the block fixed size, it it possible calculate the number of blocks that can be stored on a given disk. Besides, since blocks are chunck of data, their metadata are not stored with data blocks [[4]](#4).
+HDFS splits files in blocked-sized chunks known as **data blocks**; each block has a default size of 128 MBz, but it can be configured by modifying the appropriate property [[4]](#4). HDFS uses a replication factor of three to replicate the data and store the copies across the cluster in a distributed manner on different DataNodes [[3]](#3), but the replication method causes an 200% overhead. Thanks to the block fixed size, it it possible calculate the number of blocks that can be stored on a given disk. Besides, since blocks are chunck of data, their metadata are not stored with data blocks [[4]](#4).
 
 #### Read/Write Operations
 
@@ -60,6 +60,7 @@ Error-correcting code --> da vedere (?)
 * <a id="3"></a> [HDFS Tutorial – A Complete Hadoop HDFS Overview](https://data-flair.training/blogs/hadoop-hdfs-tutorial/)
 * <a id="4"></a> [HDFS Blocks](https://data-flair.training/blogs/data-block/)
 * <a id="5"></a> [Hadoop HDFS Data Read and Write Operations](https://data-flair.training/blogs/hadoop-hdfs-data-read-and-write-operations/)
+* https://data-flair.training/blogs/rack-awareness-hadoop-hdfs/
 * https://data-flair.training/blogs/hadoop-hdfs-tutorial/
 * "MapReduce: Simplified Data Processing on Large Clusters"
 
