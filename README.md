@@ -17,8 +17,8 @@ HDFS is a java based distributed file system [[2]](#2) that stores files running
 #### Nodes and Daemons
 HDFS has two types of **nodes** [[3]](#3):
 * **NameNode** (master node): manages and mantains the slave nodes, assigning tasks to them. Besides, regulates the client’s access to files and executes file system namespace operations like opening, closing, and renaming files and directories [[3]](#3).
-* **DataNode** (slave node): performs tasks,read/write operations from the file system’s clients and **data blocks** operation (creation, delation and replication). Datanodes are arranged in **racks**  and in a cluster there are multiple racks.
-At startup, each Datanode does **handshaking** in order to connect with its corresponding Namenode, during the handshaking there is the verification of namespace ID and software version. At the time of mismatch found, DataNode goes down automatically[[2]](#2).
+* **DataNode** (slave node): performs tasks,read/write operations from the file system’s clients and **data blocks** operation (creation, delation and replication). Datanodes are arranged in **racks**  and in a cluster there are multiple racks.  
+At startup, each Datanode does **handshaking** in order to connect with its corresponding Namenode, during the handshaking there is the verification of namespace ID and software version. At the time of mismatch found, DataNode goes down automatically[[2]](#2).  
 Besides, there are two types of **deamons** (processes runngin in background) running on HDFS for data storage [[3]](#3):
 * **Namenodes**: run on the master node and store metadata (number of data blocks,their locations,numeber of replicas, etc...)
 * **Datanodes**: run on the slave node and store the actual data
