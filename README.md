@@ -20,13 +20,29 @@ HDFS has two types of **nodes** [[3]](#3):
 * **DataNode** (slave node): performs tasks,read/write operations from the file system’s clients and **data blocks** operation (creation, delation and replication). Datanodes are arranged in **racks**  and in a cluster there are multiple racks.
 At startup, each Datanode does **handshaking** in order to connect with its corresponding Namenode, during the handshaking there is the verification of namespace ID and software version. At the time of mismatch found, DataNode goes down automatically[[2]](#2).
 Besides, there are two types of **deamons** (processes runngin in background) running on HDFS for data storage [[3]](#3):
-* **Namenodes**: run on the master and store metadata (number of data blocks,their locations,numeber of replicas, etc...)
-* **Datanodes**: run on the slave and store the actual data
+* **Namenodes**: run on the master node and store metadata (number of data blocks,their locations,numeber of replicas, etc...)
+* **Datanodes**: run on the slave node and store the actual data
 
 #### Data Blocks
-HDFS splits files in blocked-sized chunks known as **data blocks**; each block has a default size of 128 MBz, but it can be configured by modifying the appropriate property [[4]](#4). HDFS uses a replication factor of three to replicate the data and store the copies across the cluster in a distributed manner on different DataNodes [[3]](#3), but the replication method causes an 200% overhead. Thanks to the block fixed size, it it possible calculate the number of blocks that can be stored on a given disk. Besides, since blocks are chunck of data, their metadata are not stored with data blocks [[4]](#4).
+HDFS splits files in blocked-sized chunks known as **data blocks**; each block has a default size of 128 MB, but it can be configured by modifying the appropriate property [[4]](#4). HDFS uses a replication factor of three to replicate the data and store the copies across the cluster in a distributed manner on different DataNodes [[3]](#3), but the replication method causes an 200% overhead. Thanks to the block fixed size, it it possible calculate the number of blocks that can be stored on a given disk. Besides, since blocks are chunck of data, their metadata are not stored with data blocks [[4]](#4).
 
-#### Read/Write Operations
+#### HDFS Read Operation
+During the read operation, the following operations are performed [[3]](#3):
+* a client interacts with the distributed file system API and sends a request to a NameNode in order to obtain the data block location
+* NameNode checks the client access privilegs; if the client has the right privileges, the NameNode sends to the client address (where the data are stored) 
+
+In the Hadoop HDFS read operation, if the client wants to read data that is stored in HDFS, it needs to interact with NameNode first. So the client interacts with distributed file system API and sends a request to NameNode to send block location. Thus, NameNode checks if the client has sufficient privileges to access the data or not. If the client have sufficient privileges,  then NameNode will share the address at which data is stored in the DataNode.
+
+With the address, NameNode also shares a security token with the client, which it needs to show to DataNode before accessing the data for authentication purposes.
+
+When a client goes to DataNode for reading the file, after checking the token, DataNode allows the client to read that particular block. A client then opens the input stream and starts reading data from the specified DataNodes. Hence, In this manner, the client reads data directly from DataNode.
+
+During the reading of a file, if the DataNode goes down suddenly, then a client will again go to the NameNode, and the NameNode will share another location where that block is present.
+
+![Links](https://data-flair.training/blogs/wp-content/uploads/sites/2/2016/05/Data-Read-Mechanism-in-HDFS.gif)
+
+
+#### HDFS Write Operation
 
 
 ### MapReduce
