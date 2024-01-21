@@ -15,34 +15,35 @@ Hadoop is a freamwork that store and process big data [[1]](#1) [[2]](#2). The e
 HDFS is a java based distributed file system [[2]](#2) that stores files running on cluster of commodity hardware [[3]](#3). It provides data reliability and availability and fault-tolerant storage layer thanks to the replication method. In addiction, HDFS offers parallel data access increasing the throughput access to application and offers scalabilty by increasing and decreasing the cluster size
 
 #### Nodes and Daemons
-HDFS has two types of **nodes** [[3]](#3):
-* **NameNode** (master node): manages and mantains the slave nodes, assigning tasks to them. Besides, regulates the client’s access to files and executes file system namespace operations like opening, closing, and renaming files and directories [[3]](#3).
-* **DataNode** (slave node): performs tasks,read/write operations from the file system’s clients and **data blocks** operation (creation, delation and replication). Datanodes are arranged in **racks**  and in a cluster there are multiple racks.  
+HDFS has two types of **nodes** and two types of **deamons** (processes running in background on HDFS for data storage) [[3]](#3):
+* **NameNode**: master node which manages and mantains the slave nodes, assigning tasks to them. Besides, regulates the client’s access to files and executes file system namespace operations like opening, closing, and renaming files and directories [[3]](#3)
+* **Namenodes**:  deamons which run on the master node and store metadata (number of data blocks,their locations,numeber of replicas, etc...)
+* **DataNode** : slave node which performs tasks,read/write operations from the file system’s clients and **data blocks** operation (creation, delation and replication). Datanodes are arranged in **racks**  and in a cluster there are multiple racks
+* **Datanodes**: deamons which run on the slave node and store the actual data   
 At startup, each Datanode does **handshaking** in order to connect with its corresponding Namenode, during the handshaking there is the verification of namespace ID and software version. At the time of mismatch found, DataNode goes down automatically[[2]](#2).  
-Besides, there are two types of **deamons** (processes runngin in background) running on HDFS for data storage [[3]](#3):
-* **Namenodes**: run on the master node and store metadata (number of data blocks,their locations,numeber of replicas, etc...)
-* **Datanodes**: run on the slave node and store the actual data
 
 #### Data Blocks
 HDFS splits files in blocked-sized chunks known as **data blocks**; each block has a default size of 128 MB, but it can be configured by modifying the appropriate property [[4]](#4). HDFS uses a replication factor of three to replicate the data and store the copies across the cluster in a distributed manner on different DataNodes [[3]](#3), but the replication method causes an 200% overhead. Thanks to the block fixed size, it it possible calculate the number of blocks that can be stored on a given disk. Besides, since blocks are chunck of data, their metadata are not stored with data blocks [[4]](#4).
 
 #### HDFS Read Operation
 During the read operation, the following operations are performed [[3]](#3):
-* a client interacts with the distributed file system API and sends a request to a NameNode in order to obtain the data block location
-* NameNode checks the client access privilegs; if the client has the right privileges, the NameNode sends to the client address (where the data are stored) 
-
-In the Hadoop HDFS read operation, if the client wants to read data that is stored in HDFS, it needs to interact with NameNode first. So the client interacts with distributed file system API and sends a request to NameNode to send block location. Thus, NameNode checks if the client has sufficient privileges to access the data or not. If the client have sufficient privileges,  then NameNode will share the address at which data is stored in the DataNode.
-
-With the address, NameNode also shares a security token with the client, which it needs to show to DataNode before accessing the data for authentication purposes.
-
-When a client goes to DataNode for reading the file, after checking the token, DataNode allows the client to read that particular block. A client then opens the input stream and starts reading data from the specified DataNodes. Hence, In this manner, the client reads data directly from DataNode.
-
-During the reading of a file, if the DataNode goes down suddenly, then a client will again go to the NameNode, and the NameNode will share another location where that block is present.
-
+* A client interacts with the distributed file system API and sends a request to a NameNode
+* NameNode checks the client access privilegs
+* If the client has the right privileges, the NameNode sends the **address** of Datanode with a copy of that block and a **security token**
+* The client shows the security token to the DataNode
+* Once the token is checked, the client opens an **input stream** and read the block  
+* Then the client close the input stream
+If during the reading the DataNode crashes, the client returns to the NameNode in order to retrieve a new block location
 ![Links](https://data-flair.training/blogs/wp-content/uploads/sites/2/2016/05/Data-Read-Mechanism-in-HDFS.gif)
 
-
 #### HDFS Write Operation
+During the write operation, the following operations are performed [[3]](#3):
+* The authentication operation is similar to the read operation, but here the NameNode sends the address of the DataNode that contains the data has to be written by the client
+* Once the token is checked, the client opens an **outuput stream**
+* When the client is done, the DataNode copies the same block to a second DataNode and the second one copies the block to a third DataNode (replication factor of three)
+* After the replica creation, the third DataNode sends an **acknowledgment** to the second DataNode, the second one sends an acknowledgment to the first one and the first one send the final acknowledgment to the client
+* The client close the stream and sends a completion message to the NameNode
+![Links](https://data-flair.training/blogs/wp-content/uploads/sites/2/2016/05/Data-Write-Mechanism-in-HDFS.gif)
 
 
 ### MapReduce
@@ -75,7 +76,7 @@ Error-correcting code --> da vedere (?)
 * <a id="2"></a> [Hadoop Ecosystem](https://data-flair.training/blogs/hadoop-ecosystem-components/)
 * <a id="3"></a> [HDFS Tutorial – A Complete Hadoop HDFS Overview](https://data-flair.training/blogs/hadoop-hdfs-tutorial/)
 * <a id="4"></a> [HDFS Blocks](https://data-flair.training/blogs/data-block/)
-* <a id="5"></a> [Hadoop HDFS Data Read and Write Operations](https://data-flair.training/blogs/hadoop-hdfs-data-read-and-write-operations/)
+* https://data-flair.training/blogs/hadoop-hdfs-data-read-and-write-operations/
 * https://data-flair.training/blogs/rack-awareness-hadoop-hdfs/
 * https://data-flair.training/blogs/hadoop-hdfs-tutorial/
 * "MapReduce: Simplified Data Processing on Large Clusters"
