@@ -34,6 +34,7 @@ During the read operation, the following operations are performed [[3]](#3):
 * Once the token is checked, the client opens an **input stream** and read the block  
 * Then the client close the input stream
 If during the reading the DataNode crashes, the client returns to the NameNode in order to retrieve a new block location
+
 ![Links](https://data-flair.training/blogs/wp-content/uploads/sites/2/2016/05/Data-Read-Mechanism-in-HDFS.gif)
 
 #### HDFS Write Operation
@@ -43,6 +44,7 @@ During the write operation, the following operations are performed [[3]](#3):
 * When the client is done, the DataNode copies the same block to a second DataNode and the second one copies the block to a third DataNode (replication factor of three)
 * After the replica creation, the third DataNode sends an **acknowledgment** to the second DataNode, the second one sends an acknowledgment to the first one and the first one send the final acknowledgment to the client
 * The client close the stream and sends a completion message to the NameNode
+
 ![Links](https://data-flair.training/blogs/wp-content/uploads/sites/2/2016/05/Data-Write-Mechanism-in-HDFS.gif)
 
 
