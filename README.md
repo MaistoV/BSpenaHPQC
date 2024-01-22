@@ -43,7 +43,10 @@ Objectives and Assumptions Of HDFS
 #### Nodes and Daemons
 HDFS has master and slave **nodes**, whiche typically forms an HDFS cluster: 
 * **NameNode**: master node which manages and mantains the slave nodes, assigning tasks to them. Besides, regulates the client’s access to files and executes file system namespace operations like opening, closing, and renaming files and directories [[3]](#3)
-* **DataNode** : slave node which performs tasks,read/write operations from the file system’s clients and **data blocks** operation (creation, delation and replication). Datanodes are arranged in **racks**  and in a cluster there are multiple racks    
+* **DataNode** : slave node which performs tasks,read/write operations from the file system’s clients and **data blocks** operation (creation, delation and replication). Datanodes are arranged in **racks**  and in a cluster there are multiple racks
+
+___ <!-- In questo modo le frasi che danno inizio ai due elenchi sono sulla stessa linea -->
+
 Besides, there are two types of **deamons** (processes running in background on HDFS for data storage) [[3]](#3):
 * **Namenodes**: run on the master node and store metadata (number of data blocks,their locations,numeber of replicas, etc...)
 * **Datanodes**: run on the slave node and store the actual data   
