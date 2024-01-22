@@ -5,9 +5,9 @@ Benchmark di Yarn in base alle configurazioni su DFSIO/Teragen, il benchmark son
 
 ## Hadoop
 Hadoop is a **freamwork** written in java used to store massive datasets on a **cluster** in a distributed manner; It offers reliabily, scalability and fault-tolerance [[2]](#2). The ecosystem has different components [[1]](#1), three of them are:
-* **HDFS**: the storage unit
-* **MapReduce**: the processing unit
-* **Yarn**: the menager unit
+* **HDFS**: the storage layer
+* **MapReduce**: the application layer
+* **Yarn**: the manager layer
 
 ![Links](https://data-flair.training/blogs/wp-content/uploads/sites/2/2017/04/Hadoop-Ecosystem-2-01.jpg)
 
@@ -85,6 +85,7 @@ Error-correcting code --> da vedere (?)
 
 
 # Cose da fare
+* Trovare foto architettura hdfs
 * Approfondire MapReduce
 * Approfondire YARN
 * Installare Hadoop (sorgente github)
