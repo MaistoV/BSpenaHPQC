@@ -12,14 +12,41 @@ Hadoop is a freamwork that store and process big data [[1]](#1) [[2]](#2). The e
 ![Links](https://data-flair.training/blogs/wp-content/uploads/sites/2/2017/04/Hadoop-Ecosystem-2-01.jpg)
 
 ### HDFS
-HDFS is a java based distributed file system [[2]](#2) that stores files running on cluster of commodity hardware [[3]](#3). It provides data reliability and availability and fault-tolerant storage layer thanks to the replication method. In addiction, HDFS offers parallel data access increasing the throughput access to application and offers scalabilty by increasing and decreasing the cluster size
+HDFS (Hadoop Distributed File System) is a java based distributed file system [[2]](#2) that stores data in a distributed manner running on cluster of commodity hardware (inexpensive hardware) [[3]](#3). HDFS provides different features:
+* 
+
+
+It provides data reliability and availability and fault-tolerant storage layer thanks to the replication method. In addiction, HDFS offers parallel data access increasing the throughput access to application and offers scalabilty by increasing and decreasing the cluster size.
+
+
+Objectives and Assumptions Of HDFS
+1. System Failure: As a Hadoop cluster is consists of Lots of nodes with are commodity hardware so node failure is possible, so the fundamental goal of HDFS figure out this failure problem and recover it. 
+
+2. Maintaining Large Dataset: As HDFS Handle files of size ranging from GB to PB, so HDFS has to be cool enough to deal with these very large data sets on a single cluster. 
+
+3. Moving Data is Costlier then Moving the Computation: If the computational operation is performed near the location where the data is present then it is quite faster and the overall throughput of the system can be increased along with minimizing the network congestion which is a good assumption. 
+
+4. Portable Across Various Platform: HDFS Posses portability which allows it to switch across diverse Hardware and software platforms. 
+
+5. Simple Coherency Model: A Hadoop Distributed File System needs a model to write once read much access for Files. A file written then closed should not be changed, only data can be appended. This assumption helps us to minimize the data coherency issue. MapReduce fits perfectly with such kind of file model.
+
+6. Scalability: HDFS is designed to be scalable as the data storage requirements increase over time. It can easily scale up or down by adding or removing nodes to the cluster. This helps to ensure that the system can handle large amounts of data without compromising performance.
+
+7. Security: HDFS provides several security mechanisms to protect data stored on the cluster. It supports authentication and authorization mechanisms to control access to data, encryption of data in transit and at rest, and data integrity checks to detect any tampering or corruption.
+
+8. Data Locality: HDFS aims to move the computation to where the data resides rather than moving the data to the computation. This approach minimizes network traffic and enhances performance by processing data on local nodes.
+
+9. Cost-Effective: HDFS can run on low-cost commodity hardware, which makes it a cost-effective solution for large-scale data processing. Additionally, the ability to scale up or down as required means that organizations can start small and expand over time, reducing upfront costs.
+
+10. Support for Various File Formats: HDFS is designed to support a wide range of file formats, including structured, semi-structured, and unstructured data. This makes it easier to store and process different types of data using a single system, simplifying data management and reducing costs.
 
 #### Nodes and Daemons
-HDFS has two types of **nodes** and two types of **deamons** (processes running in background on HDFS for data storage) [[3]](#3):
+HDFS has master and slave **nodes**, whiche typically forms an HDFS cluster: 
 * **NameNode**: master node which manages and mantains the slave nodes, assigning tasks to them. Besides, regulates the client’s access to files and executes file system namespace operations like opening, closing, and renaming files and directories [[3]](#3)
-* **Namenodes**:  deamons which run on the master node and store metadata (number of data blocks,their locations,numeber of replicas, etc...)
-* **DataNode** : slave node which performs tasks,read/write operations from the file system’s clients and **data blocks** operation (creation, delation and replication). Datanodes are arranged in **racks**  and in a cluster there are multiple racks
-* **Datanodes**: deamons which run on the slave node and store the actual data   
+* **DataNode** : slave node which performs tasks,read/write operations from the file system’s clients and **data blocks** operation (creation, delation and replication). Datanodes are arranged in **racks**  and in a cluster there are multiple racks    
+Besides, there are two types of **deamons** (processes running in background on HDFS for data storage) [[3]](#3):
+* **Namenodes**: run on the master node and store metadata (number of data blocks,their locations,numeber of replicas, etc...)
+* **Datanodes**: run on the slave node and store the actual data   
 At startup, each Datanode does **handshaking** in order to connect with its corresponding Namenode, during the handshaking there is the verification of namespace ID and software version. At the time of mismatch found, DataNode goes down automatically[[2]](#2).  
 
 #### Data Blocks
@@ -78,6 +105,7 @@ Error-correcting code --> da vedere (?)
 * <a id="2"></a> [Hadoop Ecosystem](https://data-flair.training/blogs/hadoop-ecosystem-components/)
 * <a id="3"></a> [HDFS Tutorial – A Complete Hadoop HDFS Overview](https://data-flair.training/blogs/hadoop-hdfs-tutorial/)
 * <a id="4"></a> [HDFS Blocks](https://data-flair.training/blogs/data-block/)
+* <a id="5"></a> [Hadoop – HDFS (Hadoop Distributed File System)](https://www.geeksforgeeks.org/hadoop-hdfs-hadoop-distributed-file-system/)
 * https://data-flair.training/blogs/hadoop-hdfs-data-read-and-write-operations/
 * https://data-flair.training/blogs/rack-awareness-hadoop-hdfs/
 * https://data-flair.training/blogs/hadoop-hdfs-tutorial/
