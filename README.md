@@ -12,8 +12,12 @@ Hadoop is a freamwork that store and process big data [[1]](#1) [[2]](#2). The e
 ![Links](https://data-flair.training/blogs/wp-content/uploads/sites/2/2017/04/Hadoop-Ecosystem-2-01.jpg)
 
 ### HDFS
-HDFS (Hadoop Distributed File System) is a java based distributed file system [[2]](#2) that stores data in a distributed manner running on cluster of commodity hardware (inexpensive hardware) [[3]](#3). HDFS provides different features:
+HDFS (Hadoop Distributed File System) is a java based distributed file system [[2]](#2) which provides different features [[3]](#3):
+* Splits data into **data blocks**.
+* Stores data in a distributed manner on cluster.
 * 
+
+ that stores data in a distributed manner running on cluster of commodity hardware (inexpensive hardware) 
 
 
 It provides data reliability and availability and fault-tolerant storage layer thanks to the replication method. In addiction, HDFS offers parallel data access increasing the throughput access to application and offers scalabilty by increasing and decreasing the cluster size.
@@ -42,14 +46,14 @@ Objectives and Assumptions Of HDFS
 
 #### Nodes and Daemons
 HDFS has master and slave **nodes**, whiche typically forms an HDFS cluster: 
-* **NameNode**: master node which manages and mantains the slave nodes, assigning tasks to them. Besides, regulates the client’s access to files and executes file system namespace operations like opening, closing, and renaming files and directories [[3]](#3)
-* **DataNode** : slave node which performs tasks,read/write operations from the file system’s clients and **data blocks** operation (creation, delation and replication). Datanodes are arranged in **racks**  and in a cluster there are multiple racks
+* **NameNode**: master node which manages and mantains the slave nodes, assigning tasks to them. Besides, regulates the client’s access to files and executes file system namespace operations like opening, closing, and renaming files and directories [[3]](#3).
+* **DataNode** : slave node which performs tasks,read/write operations from the file system’s clients and **data blocks** operation (creation, delation and replication). Datanodes are arranged in **racks**  and in a cluster there are multiple racks.
 
-___ <!-- In questo modo le frasi che danno inizio ai due elenchi sono sulla stessa linea -->
+*** <!-- In questo modo le frasi che danno inizio ai due elenchi sono sulla stessa linea -->
 
 Besides, there are two types of **deamons** (processes running in background on HDFS for data storage) [[3]](#3):
-* **Namenodes**: run on the master node and store metadata (number of data blocks,their locations,numeber of replicas, etc...)
-* **Datanodes**: run on the slave node and store the actual data   
+* **Namenodes**: run on the master node and store metadata (number of data blocks,their locations,numeber of replicas, etc...).
+* **Datanodes**: run on the slave node and store the actual data.  
 At startup, each Datanode does **handshaking** in order to connect with its corresponding Namenode, during the handshaking there is the verification of namespace ID and software version. At the time of mismatch found, DataNode goes down automatically[[2]](#2).  
 
 #### Data Blocks
@@ -57,23 +61,23 @@ HDFS splits files in blocked-sized chunks known as **data blocks**; each block h
 
 #### HDFS Read Operation
 During the read operation, the following operations are performed [[3]](#3):
-* A client interacts with the distributed file system API and sends a request to a NameNode
-* NameNode checks the client access privilegs
-* If the client has the right privileges, the NameNode sends the **address** of Datanode with a copy of that block and a **security token**
-* The client shows the security token to the DataNode
-* Once the token is checked, the client opens an **input stream** and read the block  
-* Then the client close the input stream
-If during the reading the DataNode crashes, the client returns to the NameNode in order to retrieve a new block location
+* A client interacts with the distributed file system API and sends a request to a NameNode.
+* NameNode checks the client access privilegs.
+* If the client has the right privileges, the NameNode sends the **address** of Datanode with a copy of that block and a **security token**.
+* The client shows the security token to the DataNode.
+* Once the token is checked, the client opens an **input stream** and read the block.
+* Then the client close the input stream.
+If during the reading the DataNode crashes, the client returns to the NameNode in order to retrieve a new block location.
 
 ![Links](https://data-flair.training/blogs/wp-content/uploads/sites/2/2016/05/Data-Read-Mechanism-in-HDFS.gif)
 
 #### HDFS Write Operation
 During the write operation, the following operations are performed [[3]](#3):
-* The authentication operation is similar to the read operation, but here the NameNode sends the address of the DataNode that contains the data has to be written by the client
-* Once the token is checked, the client opens an **outuput stream**
-* When the client is done, the DataNode copies the same block to a second DataNode and the second one copies the block to a third DataNode (replication factor of three)
-* After the replica creation, the third DataNode sends an **acknowledgment** to the second DataNode, the second one sends an acknowledgment to the first one and the first one send the final acknowledgment to the client
-* The client close the stream and sends a completion message to the NameNode
+* The authentication operation is similar to the read operation, but here the NameNode sends the address of the DataNode that contains the data has to be written by the client.
+* Once the token is checked, the client opens an **outuput stream**.
+* When the client is done, the DataNode copies the same block to a second DataNode and the second one copies the block to a third DataNode. (replication factor of three).
+* After the replica creation, the third DataNode sends an **acknowledgment** to the second DataNode, the second one sends an acknowledgment to the first one and the first one send the final acknowledgment to the client.
+* The client close the stream and sends a completion message to the NameNode.
 
 ![Links](https://data-flair.training/blogs/wp-content/uploads/sites/2/2016/05/Data-Write-Mechanism-in-HDFS.gif)
 
