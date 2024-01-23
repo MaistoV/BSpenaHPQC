@@ -3,39 +3,46 @@ Sviluppare degli script, che in base ad un file di configurazione, configurano i
 Benchmark di Yarn in base alle configurazioni su DFSIO/Teragen, il benchmark sono lanciati in parallelo agli script di misura.
 
 
-## Hadoop
-Hadoop is a **freamwork** written in java used to store massive datasets on a **cluster** in a distributed manner; It offers reliabily, scalability and fault-tolerance [[2]](#2). The ecosystem has different components [[1]](#1), three of them are:
-* **HDFS**: the storage layer
-* **MapReduce**: the application layer
-* **Yarn**: the manager layer
 
-![Links](https://data-flair.training/blogs/wp-content/uploads/sites/2/2017/04/Hadoop-Ecosystem-2-01.jpg)
+# Apache Hadoop
+Apache Hadoop software library <sup>[[1]](#1)</sup> <sup>[[2]](#2)</sup> is a **freamwork** used for the distributed processing of massive datasets across **clusters** of computers. It offers reliabily, scalability and fault-tolerance. Hadoop has these modules :
+* **Hadoop Common** : The common utilities that support the other Hadoop modules
+* **HDFS** : The distributed file system
+* **MapReduce** : The data processing layer
+* **Yarn** : The cluster resource management layer
 
-### Hadoop Cluster
-The Hadoop cluster is a group of computers connected together via LAN, based on the **master-slave architecture**. There is one master node and multiple slave nodes [[2]](#2) [[3]](#3) [[4]](#4):
-* **Master node** : asigns and manages task to the slave nodes; there are two daemons (processes running in background) running on it known as NameNode and Resource Menager. 
-* **Slave nodes** : performs computation operations and store the data. Inside the slave node, there are two tasks, Map and Reduce, and two daemons, DataNode and Node Manager.
-
-![Link](https://data-flair.training/blogs/wp-content/uploads/sites/2/2019/02/Hadoop-Architecture2-01.jpg)
+<p align="center">
+  <img src="https://data-flair.training/blogs/wp-content/uploads/sites/2/2017/04/Hadoop-Ecosystem-2-01.jpg" width="600">
+</p>
 
 
-### HDFS
-HDFS (Hadoop Distributed File System) is a java based distributed file system [[1]](#1) running on on low-cost commodity hardware. HDFS splits files in blocked-sized chunks known as **data blocks** (default configurable size of 128 MB); since blocks are chunck of data, their metadata are not stored with the data blocks [[6]](#6). The file system has two types of **deamons**[[4]](#4) [[5]](#5):
-* **NameNode**: runs on the master node, manages the DataNodes and the modifications to file system namespace. Finally, NameNode stores metadata (number of data blocks,their locations,numeber of replicas, etc...).
-* **DataNodes**: run on the slave node,so they execute read/write operation from the file system’s client. In addition, DataNodes perform data block operations (creation, deletion and replication) and store the actual data.  
+## HDFS
+HDFS (Hadoop Distributed File System) <sup>[[3]](#3)</sup> is a java-based distributed file system running on commodity hardware which supports a traditional hierarchical file organization. This file system :
+* Stores user data in files.
+* Splits file in one or more blocked-sized chunks known as **data blocks**,with size of 128 MB by default (the size is configurable per file).  
+* Replicates the data blocks, replication factor of three by default (the factor is configurable per file). However, the replication method generates an 200% overhead in storage space and other resources <sup>[[5]](#5)</sup>.
+* Supports **write-once-read-many** access model for on files. After closing a fila, it cannnot be updated at any point, but content can be append at the end.
+* Support the **snapshot** to execute a roll back a corrupted istance
 
-HDFS uses the **replication method** (by default with replication factor of three) to replicate the data and store the copies on different nodes across the cluster in a distributed manner; in this way the file system guarantees a **fault-tolerant** storage layer, as well as data reliability and availability [[5]](#5). However, the replication method generates an 200% overhead in storage space and other resources [[]](). Finally, HDFS provides high scalability through expanding or contracting the cluster  [[5]](#5).
+HDFS has a **master-slave architecture** :
+* **NameNode** (one per cluster) : The master node executes file system namespace operations (opening, closing, and renaming files and directories) and handles clients access to files. It assigns the blocks to DataNodes and stores the metadata (number of data blocks,their locations,numeber of replicas, etc...). Finally, it makes all decisions regarding replication of blocks.
+* **DataNodes** (usually one per node in the cluster) : The slave nodes execute read/write operation from the file system’s clien and perform data blocks operations (creation, deletion and replication) and store the actual data. Moreover, DataNodes ara gathered together in **racks**.
 
-#### HDFS Read Operation
-During the read operation, the following operations are performed [[5]](#5):
+<p align="center">
+  <img src="https://hadoop.apache.org/docs/r3.3.5/hadoop-project-dist/hadoop-hdfs/images/hdfsarchitecture.png" width="600">
+</p>
+
+HDFS provides data reliability and availability, as well as a fault-tolerant system. The architecture can be rebalanced moving data from one Datanode to another.
+
+### Read and Write Operation
+During the read operation <sup>[[4]](#4)</sup>, the following operations are performed :
 * A client interacts with the distributed file system API and sends a request to a NameNode which checks the client access privilegs.
 * If the client has the right privileges, the NameNode sends the **address** of Datanode with a copy of that block and a **security token**.
 * Once the token is checked, the client opens an **input stream** and read the block.
 * Then the client close the input stream.
 If during the reading the DataNode crashes, the client returns to the NameNode in order to retrieve a new block location.
 
-#### HDFS Write Operation
-During the write operation, the following operations are performed [[5]](#5):
+Instead, during the write operation <sup>[[4]](#4)</sup>, the following operations are performed :
 * The authentication operation is similar to the read operation, but here the NameNode sends the address of the DataNode that contains the data has to be written by the client.
 * Once the token is checked, the client opens an **outuput stream**.
 * When the client is done, the DataNode copies the same block to a second DataNode and the second one copies the block to a third DataNode(replication factor of three).
@@ -43,10 +50,13 @@ During the write operation, the following operations are performed [[5]](#5):
 * The client close the stream and sends a completion message to the NameNode.
 
 
-### MapReduce
-It splits data in parts and processes each of them separately on different data nodes. The results are then combined to give the final output. This method saves a lot of time
+## MapReduce 
 
-### Yarn
+### Map Abstraction 
+
+### Reduce Abstraction
+
+## Yarn
 It processes job requestes ad maneges cluster resources, tt has different units:
 * Resource menager : assings the resources
 * Node menager : handles the nodes and monitor the resource usage
@@ -61,6 +71,9 @@ L'fs di Hadoop deve essere tollerante ai fallimenti ed essere in grado di funzio
 Error-correcting code --> da vedere (?)
 
 
+
+# Implementation
+
 ## Environment Setup
 * Ubuntu 22.04 LTS on vm
 * HADOOP 3.3.5
@@ -68,21 +81,32 @@ Error-correcting code --> da vedere (?)
 * Maven
 
 
-## References
-* <a id="1"></a> [Hadoop Ecosystem](https://data-flair.training/blogs/hadoop-ecosystem-components/)
-* <a id="2"></a> [Hadoop Tutorial for Big Data Enthusiasts](https://data-flair.training/blogs/hadoop-tutorial/) <!-- Qua si parla anche di erasure coding-->
-* <a id="3"></a> [What is Hadoop Cluster? Learn to Build a Cluster in Hadoop](https://data-flair.training/blogs/what-is-hadoop-cluster/)
-* <a id="4"></a> [Hadoop Architecture in Detail – HDFS, Yarn & MapReduce](https://data-flair.training/blogs/hadoop-architecture/)
-* <a id="5"></a> [HDFS Tutorial – A Complete Hadoop HDFS Overview](https://data-flair.training/blogs/hadoop-hdfs-tutorial/)
-* <a id="6"></a> [HDFS Blocks](https://data-flair.training/blogs/data-block/)
-* <a id="7"></a> 
+# References
+* <a id="1"></a> [Apache Hadoop](https://hadoop.apache.org/)
+* <a id="2"></a> [Hadoop Ecosystem](https://data-flair.training/blogs/hadoop-ecosystem-components/)
+* <a id="3"></a> [HDFS Architecture](https://hadoop.apache.org/docs/r3.3.5/hadoop-project-dist/hadoop-hdfs/HdfsDesign.html)
+* <a id="4"></a> [HDFS Tutorial – A Complete Hadoop HDFS Overview](https://data-flair.training/blogs/hadoop-hdfs-tutorial/)
+* <a id="5"></a> [HDFS Erasure Coding](https://hadoop.apache.org/docs/current/hadoop-project-dist/hadoop-hdfs/HDFSErasureCoding.html)
 
+* <a id=""></a> [MapReduce Tutorial](https://hadoop.apache.org/docs/current/hadoop-mapreduce-client/hadoop-mapreduce-client-core/MapReduceTutorial.html)
+* <a id=""></a> [Hadoop MapReduce Tutorial – A Complete Guide to Mapreduce](https://data-flair.training/blogs/hadoop-mapreduce-tutorial/)
+* <a id=""></a> "MapReduce: Simplified Data Processing on Large Clusters"
+
+* https://data-flair.training/blogs/hadoop-architecture/
+* https://hadoop.apache.org/docs/current/hadoop-mapreduce-client/hadoop-mapreduce-client-core/MapReduceTutorial.html
 * https://data-flair.training/blogs/hadoop-hdfs-data-read-and-write-operations/
 * https://data-flair.training/blogs/rack-awareness-hadoop-hdfs/
-* https://hadoop.apache.org/docs/current/hadoop-project-dist/hadoop-hdfs/HDFSErasureCoding.html
-* "MapReduce: Simplified Data Processing on Large Clusters"
+
+
+* https://data-flair.training/blogs/hadoop-mapreduce-flow/
+
 * https://data-flair.training/blogs/hadoop-yarn-tutorial/
 
+
+
+## Note 
+* In [2] si parla dell'Erasure Coding
+* Per configurare la dimensione del block modificare la proprietà dfs.block.size in hdfs-site.xml (https://data-flair.training/blogs/data-block/)
 
 # Cose da fare
 * Trovare foto architettura hdfs
