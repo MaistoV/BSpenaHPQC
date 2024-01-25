@@ -51,21 +51,17 @@ Instead, during the write operation<sup>[[4]](#4)</sup>, the following operation
 
 
 ## MapReduce 
-MapReduce<sup>[[6]](#6)</sup><sup>[[7]](#7)</sup> is a software framework for writing applications (which need not be written in Java) that process big datasets in parallel on large clusters. MapReduce operates on sets of **<key,value> pairs**, them are processed in two main phases:
-* **Map Phase** : The **map tasks** map each input <key,value> pair to zero or many **intermediate <key,value> pairs**. The number of map tasks depends on the total size of the inputs, hence the total number of blocks of the input files.
-* **Reduce Phase** : The **reduce tasks** reduce a set of intermediate values which share a key to a smaller set of values, these are the final output <key,value> pairs. The number of reduce task can be set by the user, and cab be set as zero if no reduction is desired.
+MapReduce<sup>[[6]](#6)</sup> is a software framework for writing applications (which need not be written in Java) that process large datasets in parallel on large clusters. It operates on sets of **<key,value> pairs**. A **MapReduce job** splits the data into **InputSplit**; each job is a complete execution of a **map phase** and a **reduce phase**<sup>[[7]](#7)</sup><sup>[[8]](#8)</sup> : 
+* **Map Phase** : The **Mapper**, a worker who is asigned a **map task**, maps the input <key,value> pair to an **intermetdiate <key,value> pair**. MapReduce creates a map task for each InputSplit, each task uses a user-defined **map function** (implemted through interfaces and/or abstract-classes). 
+* **Shuffle and Sorting** : Two phases which occur simultaneously, the first one Fetches the relevant partition of the output of the mappers. The Sorting groups the intermediate pairs by keys. Furthermore, there is a **secondary sort** to group the intermediate pairs by values simultaneously with the sort phase.
+* **Reduce Phase** : The **Reducer**, a worker who is asigned a **reduce task**, reduces set of intermediate values, which share a key, to a smaller set of values. The smaller set is the final output. The number of reduce task can be set by the user (set as zero if no reduction is desired), each task uses a user-defined **reduce function** (implemted through interfaces and/or abstract-classes). 
 
-Between the main phases there are other two phases which occur simultaneously :
-* **Shuffle** : Fetches the relevant partition of the output of all the map tasks.
-* **Sort** : Groups the intermediate pairs by keys. Furthermore, there is a **secondary sort** to group the intermediate pairs by values simultaneously with the sort phase.
 
 <p align="center">
-  <img src="https://data-flair.training/blogs/wp-content/uploads/sites/2/2016/11/how-map-reduce-work-together-tutorial.jpg" width="600">
+  <img src="https://data-flair.training/blogs/wp-content/uploads/sites/2/2016/06/hadoop-mapreduce-flow.jpg" width="600">
 </p> 
 
-Note that user have to specify the input/output locations and supply **map and reduce functions** via implementations of appropriate interfaces and/or abstract-classes (known as **Mapper** and **Reducer**). Moreover, the user can implement other two interfaces :
-* **Partitioner** : Partitions the key space of the outputs of the map tasks. The total number of partitions is equal to the number of reduce tasks for the job, in this way it is known which intermediate key is reduced by which reduce task.
-* **Counter** : Used to report MapReduce statistics.
+[Here](https://data-flair.training/blogs/how-hadoop-mapreduce-works/) a more detailed description of MapReduce job execution flow.
 
 
 ## Yarn
@@ -82,20 +78,22 @@ Error-correcting code --> da vedere (?)
 ## Environment Setup
 * Ubuntu 22.04 LTS on vm
 * HADOOP 3.3.5
-* Java 8
+* Java 8 (OpenJDK)
 * Maven
 
 
 # References
-* <a id="1"></a> [Apache Hadoop](https://hadoop.apache.org/)
-* <a id="2"></a> [Hadoop Ecosystem](https://data-flair.training/blogs/hadoop-ecosystem-components/)
-* <a id="3"></a> [HDFS Architecture](https://hadoop.apache.org/docs/r3.3.5/hadoop-project-dist/hadoop-hdfs/HdfsDesign.html)
-* <a id="4"></a> [HDFS Tutorial – A Complete Hadoop HDFS Overview](https://data-flair.training/blogs/hadoop-hdfs-tutorial/)
-* <a id="5"></a> [HDFS Erasure Coding](https://hadoop.apache.org/docs/r3.3.5/hadoop-project-dist/hadoop-hdfs/HDFSErasureCoding.html)
-* <a id="6"></a> [MapReduce Tutorial](https://hadoop.apache.org/docs/r3.3.5/hadoop-mapreduce-client/hadoop-mapreduce-client-core/MapReduceTutorial.html)
-* <a id="7"></a> [Hadoop MapReduce Tutorial – A Complete Guide to Mapreduce](https://data-flair.training/blogs/hadoop-mapreduce-tutorial/)
-* <a id="8"></a> [Apache Hadoop YARN](https://hadoop.apache.org/docs/r3.3.5/hadoop-yarn/hadoop-yarn-site/YARN.html)
-* <a id="9"></a> [Hadoop Yarn Tutorial for Beginners](https://data-flair.training/blogs/hadoop-yarn-tutorial/)
+* <a id="1"></a> [[1] Apache Hadoop](https://hadoop.apache.org/)
+* <a id="2"></a> [[2] Hadoop Ecosystem](https://data-flair.training/blogs/hadoop-ecosystem-components/)
+* <a id="3"></a> [[3] HDFS Architecture](https://hadoop.apache.org/docs/r3.3.5/hadoop-project-dist/hadoop-hdfs/HdfsDesign.html)
+* <a id="4"></a> [[4] HDFS Tutorial – A Complete Hadoop HDFS Overview](https://data-flair.training/blogs/hadoop-hdfs-tutorial/)
+* <a id="5"></a> [[5] HDFS Erasure Coding](https://hadoop.apache.org/docs/r3.3.5/hadoop-project-dist/hadoop-hdfs/HDFSErasureCoding.html)
+* <a id="6"></a> [[6] MapReduce Tutorial](https://hadoop.apache.org/docs/r3.3.5/hadoop-mapreduce-client/hadoop-mapreduce-client-core/MapReduceTutorial.html)
+* <a id="7"></a> [7] "MapReduce: Simplified Data Processing on Large Cluster",Jeffrey Dean,Sanjay Ghemawat
+* <a id="8"></a> [[8] Hadoop MapReduce Flow – How data flows in MapReduce?](https://data-flair.training/blogs/hadoop-mapreduce-flow/)
+
+* <a id=""></a> [[] Apache Hadoop YARN](https://hadoop.apache.org/docs/r3.3.5/hadoop-yarn/hadoop-yarn-site/YARN.html)
+* <a id=""></a> [[] Hadoop Yarn Tutorial for Beginners](https://data-flair.training/blogs/hadoop-yarn-tutorial/)
 
 
 # References non usate
@@ -106,6 +104,8 @@ Error-correcting code --> da vedere (?)
 * https://data-flair.training/blogs/rack-awareness-hadoop-hdfs/
 * https://data-flair.training/blogs/hadoop-mapreduce-flow/
 * https://data-flair.training/blogs/hadoop-yarn-tutorial/
+
+
 
 
 
