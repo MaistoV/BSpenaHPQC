@@ -69,7 +69,7 @@ A **MapReduce job** is a complete execution of a **map phase** and a **reduce ph
 YARN (Yet Another Resource Negotiator)<sup>[[8]](#8)</sup><sup>[[10]](#10)</sup> is the resource menagement layer. It allows the exectution of different kind of applications, like MapReduce job, DAG of job , Stream processing, etc... 
 
 YARN architecture has the following components :
-* **Client** : Submits the application <sup>[[9]](#9)</sup> to the ResourceManager
+* **Client** : Submits the application <sup>[[9]](#9)</sup> to the ResourceManager.
 * **ResourceManager** : The **master daemon** manages the resources among all the applications in the system. The ResourceManager has two main components :
     * **Scheduler** : It is a pure scheduler (does not perform monitoring or tracking of the applications' status), it allocates resources to the running applications.
     * **ApplicationsManager** : Accepts job submissions and secures resources on a node (an operation known as "**negotiating the first container**") to launch the ApplicationMaster
@@ -83,13 +83,23 @@ YARN architecture has the following components :
 The pair ResourceManager/NodeManager rapresents the **data-computation framework**.
 
 
-# Implementation
 
+# Implementation
 ## Environment Setup
-* Ubuntu 22.04 LTS on vm
-* HADOOP 3.3.5
-* Java 8 (OpenJDK)
-* Maven
+### Overview
+* Virtual machine running Ubuntu 22.04 LTS :
+  * 8 GB of RAM 
+  * 4 cores
+  * 150 GB of memory
+* Tools :
+  * OpenJDK 8 : Open-source implentation of Java Platform
+  * Hadoop 3.3.5
+  * Maven
+
+### Installation
+* [OpenJDK 8 on Ubuntu](https://www.linuxcapable.com/how-to-install-openjdk-8-on-ubuntu-linux/)
+* [Hadoop](https://www.adaltas.com/en/2020/08/04/installing-hadoop-from-source/)
+
 
 
 # References
@@ -111,13 +121,12 @@ The pair ResourceManager/NodeManager rapresents the **data-computation framework
 * https://data-flair.training/blogs/hadoop-hdfs-data-read-and-write-operations/
 * https://data-flair.training/blogs/rack-awareness-hadoop-hdfs/
 * https://data-flair.training/blogs/learn-hadoop-hdfs-fault-tolerance/
-
+* https://maven.apache.org/
 
 
 ## Note 
-* In [2] si parla dell'Erasure Coding
 * Per configurare la dimensione del block modificare la proprietà dfs.block.size in hdfs-site.xml (https://data-flair.training/blogs/data-block/)
-* In [6] parla di Hadoop Streaming che è una utility che permette di creare ed eseguire i job con qualsiasi eseguibile e di creare mapper e reducer
+* In [6] parla di Hadoop Streaming, utility che permette di creare ed eseguire job con qualsiasi eseguibile e di creare mapper e reducer
 * In [6] indica quali interfacce devono essere implementate dalle classi key e value
  
 # Cose da fare
