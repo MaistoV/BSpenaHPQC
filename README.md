@@ -56,9 +56,9 @@ Note that each map task uses a user-defined **map function** which is implemente
 
 A **MapReduce job** is a complete execution of a **map phase** and a **reduce phase**<sup>[[6]](#6)</sup><sup>[[7]](#7)</sup> (a complete [MapReduce job execution flow](https://data-flair.training/blogs/how-hadoop-mapreduce-works/)) : 
 * **Map Phase** : The mapper maps the input <key,value> pair to an **intermetdiate <key,value> pair**.
-* **Shuffle and Sorting** : Occur simultaneously
-  * Shuffle : Fetches the values of the output of the mappers.
-  * Sort : Groups the intermediate pairs by keys.
+* **Shuffling and Sorting** : Occur simultaneously
+  * **Shuffle Phase** : Fetches the values of the output of the mappers.
+  * **Sort Phase** : Groups the intermediate pairs by keys.
 * **Reduce Phase** : The reducer reduces set of intermediate values, which share a key, to a smaller set of values. The smaller set is the final output.
 
 <p align="center">
@@ -86,19 +86,15 @@ The pair ResourceManager/NodeManager rapresents the **data-computation framework
 
 # Implementation
 ## Environment Setup
-### Overview
 * Virtual machine running Ubuntu 22.04 LTS :
   * 8 GB of RAM 
   * 4 cores
   * 150 GB of memory
 * Tools :
-  * OpenJDK 8 : Open-source implentation of Java Platform
-  * Hadoop 3.3.5
-  * Maven
-
-### Installation
-* [OpenJDK 8 on Ubuntu](https://www.linuxcapable.com/how-to-install-openjdk-8-on-ubuntu-linux/)
-* [Hadoop](https://www.adaltas.com/en/2020/08/04/installing-hadoop-from-source/)
+  * [Java 1.8](https://linuxize.com/post/install-java-on-ubuntu-22-04/#uninstalling-java)
+  * [Hadoop 3.3.5](https://www.adaltas.com/en/2020/08/04/installing-hadoop-from-source/)
+  * [Maven](https://maven.apache.org/guides/getting-started/maven-in-five-minutes.html)
+  * Docker Container
 
 
 
