@@ -69,12 +69,12 @@ A **MapReduce job** is a complete execution of a **map phase** and a **reduce ph
 YARN (Yet Another Resource Negotiator)<sup>[[8]](#8)</sup><sup>[[10]](#10)</sup> is the resource menagement layer. It allows the exectution of different kind of applications, like MapReduce job, DAG of job , Stream processing, etc... 
 
 YARN architecture has the following components :
-* **Client** : Submits the application <sup>[[9]](#9)</sup> to the ResourceManager.
+* **Client**<sup>[[9]](#9)</sup> : Submits the job to the ResourceManager.
 * **ResourceManager** : The **master daemon** manages the resources among all the applications in the system. The ResourceManager has two main components :
     * **Scheduler** : It is a pure scheduler (does not perform monitoring or tracking of the applications' status), it allocates resources to the running applications.
     * **ApplicationsManager** : Accepts job submissions and secures resources on a node (an operation known as "**negotiating the first container**") to launch the ApplicationMaster
 * **NodeManager** : The **slave deamon** launches, manages and monitors resource usage of the containers on a node. The containers execute tasks as specified by the ApplicationMaster.
-* **ApplicationMaster** : It is a framework specific library, so there is one per application. The ApplicationMaster works with the NodeManager to execute and monitor the tasks. 
+* **ApplicationMaster** : It is a framework specific library, so there is one per application. The ApplicationMaster negotiates resources from the ResourceManager and works with the NodeManager to execute and monitor the tasks. 
 
 <p align="center">
   <img src="https://data-flair.training/blogs/wp-content/uploads/sites/2/2017/05/Apache-YARN-architecture-min.jpg" width="600">
