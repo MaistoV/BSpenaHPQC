@@ -1,7 +1,7 @@
 # HPQC
 Sviluppare degli script, che in base ad un file di configurazione, configurano il file system distribuito (esistono dei comandi). Gli esperimenti devono essere estendibili e replicabili ed eventualmente portabili sul cluster fisico.
 Benchmark di Yarn in base alle configurazioni su DFSIO/Teragen, il benchmark sono lanciati in parallelo agli script di misura.
-
+Il file system è virtualmente distribuito perché i vari componenti sono dei container.
 
 
 # Apache Hadoop
@@ -86,15 +86,40 @@ The pair ResourceManager/NodeManager rapresents the **data-computation framework
 
 # Implementation
 ## Environment Setup
-* Virtual machine running Ubuntu 22.04 LTS :
+* Virtual machine running **Ubuntu 22.04 LTS** :
   * 8 GB of RAM 
   * 4 cores
   * 150 GB of memory
-* Tools :
-  * [Java 1.8](https://linuxize.com/post/install-java-on-ubuntu-22-04/#uninstalling-java)
-  * [Hadoop 3.3.5](https://www.adaltas.com/en/2020/08/04/installing-hadoop-from-source/)
-  * [Maven](https://maven.apache.org/guides/getting-started/maven-in-five-minutes.html)
-  * Docker Container
+* **Tools** :
+  * **Java 1.8**<sup>[[]](#)</sup>
+    ```bash
+      $ sudo apt update
+      $ sudo apt install openjdk-8-jdk
+      $ java -version                                 # Check java version 
+
+      # Setting the JAVA_HOME environment variable (necessary to install Maven)
+      $ sudo nano /etc/environment                    # Open the /etc/environment
+      JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64"   # Add this line to the end of the file
+      $ source /etc/environment                       # To take effect the changes
+      $ echo $JAVA_HOME                               # To verify is the variable is set correctly
+    ```
+  * **Hadoop 3.3.5**
+    ```bash
+      $ git clone -b rel/release-3.3.5 --single-branch https://github.com/apache/hadoop.git     # Clone the specific release
+    ```
+  * **Maven 3.9.6**<sup>[[]](#)</sup> ([download](https://maven.apache.org/download.cgi))
+    ```bash
+      $ unzip apache-maven-3.9.6-bin.zip              # Extract distribution archive in any directory
+      
+      # Add the apache-maven-3.9.6 bin directory to the PATH environment variable
+      $ sudo nano /etc/environment                    # Open the /etc/environment
+      ":/path/to/apache-maven-3.9.6/bin"              # Add to PATH environment variable the path to maven bin
+      $ source /etc/environment                       # To take effect the changes
+      $ echo $PATH                                    # To verify is the variable is set correctly         
+
+      $ mvn -v                                        # Check maven version 
+    ```
+  * **Docker Container**
 
 
 
@@ -110,6 +135,9 @@ The pair ResourceManager/NodeManager rapresents the **data-computation framework
 * <a id="9"></a> [[9] Hadoop: Writing YARN Applications](https://hadoop.apache.org/docs/r3.3.5/hadoop-yarn/hadoop-yarn-site/WritingYarnApplications.html)
 * <a id="10"></a> [[10] Hadoop Yarn Tutorial for Beginners](https://data-flair.training/blogs/hadoop-yarn-tutorial/)
 
+* <a id=""></a> [[] How to Install Java on Ubuntu 22.04](https://linuxize.com/post/install-java-on-ubuntu-22-04/#uninstalling-java)
+* <a id=""></a> [[] Maven in 5 Minutes](https://maven.apache.org/guides/getting-started/maven-in-five-minutes.html)
+
 
 # References non usate
 * https://data-flair.training/blogs/hadoop-architecture/
@@ -117,7 +145,13 @@ The pair ResourceManager/NodeManager rapresents the **data-computation framework
 * https://data-flair.training/blogs/hadoop-hdfs-data-read-and-write-operations/
 * https://data-flair.training/blogs/rack-awareness-hadoop-hdfs/
 * https://data-flair.training/blogs/learn-hadoop-hdfs-fault-tolerance/
-* https://maven.apache.org/
+* https://www.adaltas.com/en/2020/08/04/installing-hadoop-from-source/
+
+
+
+# Problemi incontrati (?)
+* "Permission denied" esguendo "$ sbin/start-dfs.sh" [Soluzione](https://stackoverflow.com/questions/42756555/permission-denied-error-while-running-start-dfs-sh) 
+* "mkdir: Call From spena-VirtualBox/127.0.1.1 to localhost:9000 failed on connection exception: java.net.ConnectException: Connection refused;" eseguento "  $ bin/hdfs dfs -mkdir -p /user/<username>" [Soluzione](https://stackoverflow.com/questions/28661285/hadoop-cluster-setup-java-net-connectexception-connection-refused)
 
 
 ## Note 
