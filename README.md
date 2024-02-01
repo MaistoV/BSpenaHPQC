@@ -25,8 +25,8 @@ HDFS (Hadoop Distributed File System)<sup>[[3]](#3)</sup> is a java-based distri
 * Support the **snapshot** to execute a roll back of a corrupted istance
 
 HDFS has a **master-slave architecture** :
-* **NameNode** : There is one master per cluster, it executes file system namespace operations (opening, closing, and renaming files and directories) and handles clients access to files. The NameNode assigns the blocks to DataNodes and stores the metadata (number of data blocks,their locations,numeber of replicas, etc...). Finally, it makes all decisions regarding blocks replication.
-* **DataNode**  : There is one slave per node in the cluster, it executes read/write operation from the file system’s client. The DataNode performs data blocks operations (creation, deletion and replication) and stores the actual data. Moreover, DataNodes ara gathered together in **racks**.
+* **NameNode** : There is one master daemon per cluster, it executes file system namespace operations (opening, closing, and renaming files and directories) and handles clients access to files. The NameNode assigns the blocks to DataNodes and stores the metadata (number of data blocks,their locations,numeber of replicas, etc...). Finally, it makes all decisions regarding blocks replication.
+* **DataNode**  : There is one slave daemon per node in the cluster, it executes read/write operation from the file system’s client. The DataNode performs data blocks operations (creation, deletion and replication) and stores the actual data. Moreover, DataNodes ara gathered together in **racks**.
 
 <p align="center">
   <img src="https://hadoop.apache.org/docs/r3.3.5/hadoop-project-dist/hadoop-hdfs/images/hdfsarchitecture.png" width="600">
@@ -56,7 +56,7 @@ Note that each map task uses a user-defined **map function** which is implemente
 
 A **MapReduce job** is a complete execution of a **map phase** and a **reduce phase**<sup>[[6]](#6)</sup><sup>[[7]](#7)</sup> (a complete [MapReduce job execution flow](https://data-flair.training/blogs/how-hadoop-mapreduce-works/)) : 
 * **Map Phase** : The mapper maps the input <key,value> pair to an **intermetdiate <key,value> pair**.
-* **Shuffling and Sorting** : Occur simultaneously
+* **Shuffling and Sorting** (occur simultaneously) :
   * **Shuffle Phase** : Fetches the values of the output of the mappers.
   * **Sort Phase** : Groups the intermediate pairs by keys.
 * **Reduce Phase** : The reducer reduces set of intermediate values, which share a key, to a smaller set of values. The smaller set is the final output.
@@ -66,103 +66,158 @@ A **MapReduce job** is a complete execution of a **map phase** and a **reduce ph
 </p> 
 
 ## YARN
-YARN (Yet Another Resource Negotiator)<sup>[[8]](#8)</sup><sup>[[10]](#10)</sup> is the resource menagement layer. It allows the exectution of different kind of applications, like MapReduce job, DAG of job , Stream processing, etc... 
+YARN (Yet Another Resource Negotiator)<sup>[[8]](#8)</sup><sup>[[9]](#9)</sup><sup>[[10]](#10)</sup> is a freamwork for distributed computing which separates resorse menagement and processing components. YARN :
+* Allows the exectution of different kind of **applications**, like MapReduce job, DAG of job , Stream processing, etc... 
+* Sends computations where the data is stored on locak disks (property of **data locality**)
+* Uses the concept of containers. 
+* Has a **master-worker nodes architecture**.
 
 YARN architecture has the following components :
-* **Client**<sup>[[9]](#9)</sup> : Submits the job to the ResourceManager.
-* **ResourceManager** : The **master daemon** manages the resources among all the applications in the system. The ResourceManager has two main components :
-    * **Scheduler** : It is a pure scheduler (does not perform monitoring or tracking of the applications' status), it allocates resources to the running applications.
-    * **ApplicationsManager** : Accepts job submissions and secures resources on a node (an operation known as "**negotiating the first container**") to launch the ApplicationMaster
-* **NodeManager** : The **slave deamon** launches, manages and monitors resource usage of the containers on a node. The containers execute tasks as specified by the ApplicationMaster.
-* **ApplicationMaster** : It is a framework specific library, so there is one per application. The ApplicationMaster negotiates resources from the ResourceManager and works with the NodeManager to execute and monitor the tasks. 
+* **ResourceManager** : The **master daemon** runs on master node. It manages the resources among all the applications in the system. The daemon assigns tasks to the NodeManager and schedules containers. The ResourceManager has two main components :
+    * **Scheduler** : It is a pure scheduler (does not perform monitoring or tracking of the applications' status), it allocates resources or container to the running applications.
+    * **ApplicationsManager** : Accepts **job submissions** by the clients<sup>[[11]](#11)</sup> and secures resources on a node (an operation known as "**negotiating the first container**") to launch the ApplicationMaster.
+* **NodeManager** : The **worker deamon** runs on the worker node. It launches, manages and monitors resource usage of the containers on a node.
+* **ApplicationMaster** : It is a framework specific library, so there is one per application. The ApplicationMaster negotiates resources for the running application from the ResourceManager and works with the NodeManager to execute and monitor the tasks. 
+* **Containers** : Collection of all the resources necessary to run an application, specified by the ApplicationMaster, on a node in a cluster.
 
 <p align="center">
   <img src="https://data-flair.training/blogs/wp-content/uploads/sites/2/2017/05/Apache-YARN-architecture-min.jpg" width="600">
 </p> 
 
-The pair ResourceManager/NodeManager rapresents the **data-computation framework**.
+ResourceManager/NodeManager rapresents the **data-computation framework**.
+
+YARN supports the following schedulers :
+* **FIFO** : Allocates resources based on arrival time.
+* **Capacity scheduler** (default in hadoop) : Allocates resources to pools or queues, with FIFO scheduling to each pool.
+* **Fair scheduler** : Organizes applications into queues or pools and allows to share resources fairly between quees (every application belongs to a queue).
 
 
 
 # Implementation
+
 ## Environment Setup
+### Overview
 * Virtual machine running **Ubuntu 22.04 LTS** :
   * 8 GB of RAM 
   * 4 cores
   * 150 GB of memory
 * **Tools** :
-  * **Java 1.8**<sup>[[]](#)</sup>
-    ```bash
-      $ sudo apt update
-      $ sudo apt install openjdk-8-jdk
-      $ java -version                                 # Check java version 
-
-      # Setting the JAVA_HOME environment variable (necessary to install Maven)
-      $ sudo nano /etc/environment                    # Open the /etc/environment
-      JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64"   # Add this line to the end of the file
-      $ source /etc/environment                       # To take effect the changes
-      $ echo $JAVA_HOME                               # To verify is the variable is set correctly
-    ```
+  * **Java 1.8**<sup>[[12]](#12)</sup>
   * **Hadoop 3.3.5**
-    ```bash
-      $ git clone -b rel/release-3.3.5 --single-branch https://github.com/apache/hadoop.git     # Clone the specific release
-    ```
-  * **Maven 3.9.6**<sup>[[]](#)</sup> ([download](https://maven.apache.org/download.cgi))
-    ```bash
-      $ unzip apache-maven-3.9.6-bin.zip              # Extract distribution archive in any directory
-      
-      # Add the apache-maven-3.9.6 bin directory to the PATH environment variable
-      $ sudo nano /etc/environment                    # Open the /etc/environment
-      ":/path/to/apache-maven-3.9.6/bin"              # Add to PATH environment variable the path to maven bin
-      $ source /etc/environment                       # To take effect the changes
-      $ echo $PATH                                    # To verify is the variable is set correctly         
-
-      $ mvn -v                                        # Check maven version 
-    ```
+  * **Maven 3.9.6**<sup>[[13]](#13)</sup>
   * **Docker Container**
 
+### Tools Installation
+#### Java 1.8
+* Install Java via the following commands:
+```bash
+$ sudo apt update
+$ sudo apt install openjdk-8-jdk
+$ java -version                                 # Check java version 
+```
+* Setting the JAVA_HOME environment variable (necessary to install Maven) via the following commands:
+```bash
+$ sudo nano /etc/environment                    # Open the /etc/environment
+JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64"   # Add this line to the end of the file
+$ source /etc/environment                       # To take effect the changes
+$ sudo reboot                                   # Restart the system
+$ echo $JAVA_HOME                               # To verify is the variable is set correctly
+```
+#### Hadoop 3.3.5
+```bash
+$ git clone https://github.com/apache/hadoop.git --branch rel/release-3.3.5 --single-branch
+```
+#### Maven 3.9.6
+* [Download Maven releases](https://maven.apache.org/download.cgi)
+* Install Maven via the following commands :
+```bash
+$ unzip apache-maven-3.9.6-bin.zip        # Extract distribution archive in any directory
+      
+# Add the apache-maven-3.9.6 bin directory to the PATH environment variable
+$ sudo nano /etc/environment              # Open the /etc/environment
+":/path/to/apache-maven-3.9.6/bin"        # Add this line to PATH environment variable      
+$ source /etc/environment                 # To take effect the changes
+$ sudo reboot                             # Restart the system
+$ echo $PATH                              # To verify is the variable is set correctly         
+
+$ mvn -v                                  # Check maven version 
+```
+#### Docker Container
+
+## Hadoop Cluster Setup
+The Hadoop's cluster can be configured by setting <sup>[[14]](#14)</sup>:
+* **Hadoop deamons exectuion environment** via read-only default configuration files :
+  * core-default.xml.
+  * hdfs-default.xml. 
+  * yarn-default.xml.
+  * mapred-default.xml.
+* **Hadoop deamonds configuration parameters** via site-specific configuration files :
+  * core-site.xml.
+  * hdfs-site.xml.
+  * yarn-site.xml.
+  * mapred-site.xml.
+* **Site-specific values** via : 
+  * hadoop-env.sh.
+  * yarn-env.sh.
+
+In the next paragraph I will analyze a few **HDFS and YARN deamonds configurations parameters**.
+
+### Configuring HDFS Deamons
+<sup>[[14]](#14)</sup>
+
+hdfs-site.xml
+
+#### NameNode
+dfs.blocksize is the HDFS blocksize
+dfs.namenode.handler.count server threads to handle RPCs (Remote Procedure Call)
+
+#### DataNode
 
 
-# References
-* <a id="1"></a> [[1] Apache Hadoop](https://hadoop.apache.org/)
-* <a id="2"></a> [[2] Hadoop Ecosystem](https://data-flair.training/blogs/hadoop-ecosystem-components/)
-* <a id="3"></a> [[3] HDFS Architecture](https://hadoop.apache.org/docs/r3.3.5/hadoop-project-dist/hadoop-hdfs/HdfsDesign.html)
-* <a id="4"></a> [[4] HDFS Erasure Coding](https://hadoop.apache.org/docs/r3.3.5/hadoop-project-dist/hadoop-hdfs/HDFSErasureCoding.html)
-* <a id="5"></a> [[5] MapReduce Tutorial](https://hadoop.apache.org/docs/r3.3.5/hadoop-mapreduce-client/hadoop-mapreduce-client-core/MapReduceTutorial.html)
-* <a id="6"></a> [6] "MapReduce: Simplified Data Processing on Large Cluster",Jeffrey Dean,Sanjay Ghemawat
-* <a id="7"></a> [[7] Hadoop MapReduce Flow – How data flows in MapReduce?](https://data-flair.training/blogs/hadoop-mapreduce-flow/)
-* <a id="8"></a> [[8] Apache Hadoop YARN](https://hadoop.apache.org/docs/r3.3.5/hadoop-yarn/hadoop-yarn-site/YARN.html)
-* <a id="9"></a> [[9] Hadoop: Writing YARN Applications](https://hadoop.apache.org/docs/r3.3.5/hadoop-yarn/hadoop-yarn-site/WritingYarnApplications.html)
-* <a id="10"></a> [[10] Hadoop Yarn Tutorial for Beginners](https://data-flair.training/blogs/hadoop-yarn-tutorial/)
+### Configuring YARN Deamons
+<sup>[[14]](#14)</sup>
+yarn-site.xml
 
-* <a id=""></a> [[] How to Install Java on Ubuntu 22.04](https://linuxize.com/post/install-java-on-ubuntu-22-04/#uninstalling-java)
-* <a id=""></a> [[] Maven in 5 Minutes](https://maven.apache.org/guides/getting-started/maven-in-five-minutes.html)
+#### ResourceMenager
+yarn.scheduler.minimum-allocation-mb  Minimum limit of memory to allocate to each container request at the Resource Manager. in MBs
+yarn.scheduler.maximum-allocation-mb Maximum limit of memory to allocate to each container request at the Resource Manager. in MBs
+
+#### NodeMenager
+yarn.nodemanager.resource.memory-mb Defines total available resources on the NodeManager to be made available to running containers
 
 
-# References non usate
-* https://data-flair.training/blogs/hadoop-architecture/
-* https://hadoop.apache.org/docs/current/hadoop-mapreduce-client/hadoop-mapreduce-client-core/MapReduceTutorial.html
-* https://data-flair.training/blogs/hadoop-hdfs-data-read-and-write-operations/
-* https://data-flair.training/blogs/rack-awareness-hadoop-hdfs/
-* https://data-flair.training/blogs/learn-hadoop-hdfs-fault-tolerance/
-* https://www.adaltas.com/en/2020/08/04/installing-hadoop-from-source/
+<sup>[[]](#)</sup> ??????
+MapReduce requests three different kinds of containers from YARN: the application master container, map containers, and reduce containers. For each container type, there is a corresponding set of properties that can be used to set the resources requested.  
+yarn.app.mapreduce.am.resource.vcores	Sets the CPU requested for the application master container to the value. Defaults to 1.
 
 
-
-# Problemi incontrati (?)
-* "Permission denied" esguendo "$ sbin/start-dfs.sh" [Soluzione](https://stackoverflow.com/questions/42756555/permission-denied-error-while-running-start-dfs-sh) 
-* "mkdir: Call From spena-VirtualBox/127.0.1.1 to localhost:9000 failed on connection exception: java.net.ConnectException: Connection refused;" eseguento "  $ bin/hdfs dfs -mkdir -p /user/<username>" [Soluzione](https://stackoverflow.com/questions/28661285/hadoop-cluster-setup-java-net-connectexception-connection-refused)
-* "resourcemanager is running as process 9365.  Stop it first and ensure /tmp/hadoop-spena-resourcemanager.pid file is empty before retry." eseguendo sbin/start-yarn.sh [Soluzione](https://stackoverflow.com/questions/14273620/error-in-namenode-starting)
-
-## Note 
-* Per configurare la dimensione del block modificare la proprietà dfs.block.size in hdfs-site.xml (https://data-flair.training/blogs/data-block/)
-* In [6] parla di Hadoop Streaming, utility che permette di creare ed eseguire job con qualsiasi eseguibile e di creare mapper e reducer
-* In [6] indica quali interfacce devono essere implementate dalle classi key e value
- 
 # Cose da fare
-* Installare Hadoop (sorgente github)
+* Documentare i principali parametri di configurazione di HDFS e YARN in hdfs-site.xml, yarn-site.xml, etc (ad esempio 3x replication, EC-config, #vcpus, memory per thread, etc.)
 * Creare un cluster virtuale a container (build con Maven)
 * Setup del cluster virtuale su singolo nodo
 * Cambiare parametri di configurazione di Yarn
 * Misurare i fattori all'interno dei wrokload
 * Gli script generati devono essere portati sul cluster fisico
+
+
+https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html
+
+
+sudo apt-get -y install openjdk-8-jdk
+sudo apt-get -y install maven
+sudo apt-get -y install build-essential autoconf automake libtool cmake zlib1g-dev pkg-config libssl-dev libsasl2-dev
+curl -L -s -S https://github.com/protocolbuffers/protobuf/releases/download/v3.7.1/protobuf-java-3.7.1.tar.gz -o protobuf-3.7.1.tar.gz
+mkdir protobuf-3.7-src
+tar xzf protobuf-3.7.1.tar.gz --strip-components 1 -C protobuf-3.7-src && cd protobuf-3.7-src
+./configure
+make -j$(nproc)
+sudo make install
+# Optionals for native libraries
+sudo apt-get install snappy libsnappy-dev
+sudo apt-get install bzip2 libbz2-dev
+sudo apt-get install fuse libfuse-dev
+sudo apt-get install libzstd1-dev
+
+mvn package -Pdist -Dtar -DskipTests
+mvn compile -Pdist -Dtar -DskipTests
+
