@@ -1,4 +1,5 @@
-# Problemi incontrati
+# Troubleshooting
+
 ## Setting up a Single Node Cluster
 * "Permission denied" esguendo "$ sbin/start-dfs.sh" [Soluzione](https://stackoverflow.com/questions/42756555/permission-denied-error-while-running-start-dfs-sh) 
 * "mkdir: Call From spena-VirtualBox/127.0.1.1 to localhost:9000 failed on connection exception: java.net.ConnectException: Connection refused;" eseguento "$ bin/hdfs dfs -mkdir -p /user/<username>" [Soluzione](https://stackoverflow.com/questions/28661285/hadoop-cluster-setup-java-net-connectexception-connection-refused)
