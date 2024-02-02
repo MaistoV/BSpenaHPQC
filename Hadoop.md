@@ -69,7 +69,7 @@ YARN (Yet Another Resource Negotiator)<sup>[[8]](#8)</sup><sup>[[9]](#9)</sup><s
 YARN architecture has the following components :
 * **ResourceManager** : The **master daemon** runs on master node. It manages the resources among all the applications in the system. The daemon assigns tasks to the NodeManager and schedules containers. The ResourceManager has two main components :
     * **Scheduler** : It is a pure scheduler (does not perform monitoring or tracking of the applications' status), it allocates resources or container to the running applications.
-    * **ApplicationsManager** : Accepts **job submissions** by the clients<sup>[[11]](./References.md#11)</sup> and secures resources on a node (an operation known as "**negotiating the first container**") to launch the ApplicationMaster.
+    * **ApplicationsManager** : Accepts **job submissions** by the clients<sup>[[11]](References.md#11)</sup> and secures resources on a node (an operation known as "**negotiating the first container**") to launch the ApplicationMaster.
 * **NodeManager** : The **worker deamon** runs on the worker node. It launches, manages and monitors resource usage of the containers on a node.
 * **ApplicationMaster** : It is a framework specific library, so there is one per application. The ApplicationMaster negotiates resources for the running application from the ResourceManager and works with the NodeManager to execute and monitor the tasks. 
 * **Containers** : Collection of all the resources necessary to run an application, specified by the ApplicationMaster, on a node in a cluster.
