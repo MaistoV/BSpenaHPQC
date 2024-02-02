@@ -89,7 +89,7 @@ YARN supports the following schedulers :
 
 
 ## Hadoop Cluster Setup
-The Hadoop's cluster can be configured by setting <sup>[[14]](#14)</sup>:
+The Hadoop's cluster can be configured by setting <sup>[[14]](References.md#14)</sup>:
 * **Hadoop deamons exectuion environment** via read-only default configuration files :
   * core-default.xml.
   * hdfs-default.xml. 
