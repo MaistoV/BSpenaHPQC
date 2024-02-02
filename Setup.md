@@ -27,22 +27,37 @@ $ git clone https://github.com/apache/hadoop.git --branch rel/release-3.3.5 --si
 ```
 * Other Libraries
 
-
-
 sudo apt-get -y install openjdk-8-jdk
-sudo apt-get -y install maven
 sudo apt-get -y install build-essential autoconf automake libtool cmake zlib1g-dev pkg-config libssl-dev libsasl2-dev
+
+### protobuf
 curl -L -s -S https://github.com/protocolbuffers/protobuf/releases/download/v3.7.1/protobuf-java-3.7.1.tar.gz -o protobuf-3.7.1.tar.gz
 mkdir protobuf-3.7-src
 tar xzf protobuf-3.7.1.tar.gz --strip-components 1 -C protobuf-3.7-src && cd protobuf-3.7-src
 ./configure
 make -j$(nproc)
 sudo make install
+
+
 # Optionals for native libraries
 sudo apt-get install snappy libsnappy-dev
 sudo apt-get install bzip2 libbz2-dev
 sudo apt-get install fuse libfuse-dev
-sudo apt-get install libzstd1-dev
+sudo apt-get install libzstd1-dev  --> non trovato --> sudo apt-get install libzstd-dev
 
+######
 mvn package -Pdist -Dtar -DskipTests
 mvn compile -Pdist -Dtar -DskipTests
+
+
+#### Setup passphraseless ssh
+Now check that you can ssh to the localhost without a passphrase:
+ $ ssh localhost
+If you cannot ssh to localhost without a passphrase, execute the following commands:
+ $ ssh-keygen -t rsa -P '' -f ~/.ssh/id_rsa
+  $ cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
+  $ chmod 0600 ~/.ssh/authorized_keys
+
+
+#
+mvn package -Pdist,native -DskipTests -Dtar   --> https://hadoop.apache.org/docs/current/hadoop-project-dist/hadoop-common/NativeLibraries.html
