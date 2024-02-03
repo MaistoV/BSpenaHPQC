@@ -7,15 +7,18 @@ Virtual machine running **Ubuntu 22.04 LTS** :
 
 ## Tools
 ### Java 1.8
+* Install
 ```bash
 $ sudo apt install openjdk-8-jdk
+```
 
-# Setting the JAVA_HOME environment variable 
-$ sudo nano /etc/environment                    # Open the /etc/environment
+* Setting the JAVA_HOME environment variable 
+```bash
+$ sudo nano /etc/environment                    
 JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64"   # Add this line to the end of the file
-$ source /etc/environment                       # To take effect the changes
-$ sudo reboot                                   # Restart the system
-$ echo $JAVA_HOME                               # To verify is the variable is set correctly
+$ source /etc/environment                       
+$ sudo reboot                                   
+$ echo $JAVA_HOME                               
 ```
 
 ### Maven 3.6
@@ -63,7 +66,7 @@ sudo apt-get install libzstd1-dev
 ```
 
 ### SSH and PDSH
-* Install : 
+* Install 
 ```bash
 $ sudo apt-get install ssh
 $ sudo apt-get install pdsh
@@ -80,7 +83,7 @@ $ cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
 $ chmod 0600 ~/.ssh/authorized_keys
 ```
 
-## Build ???'
+## Build ???
 ```bash
 $ mvn package -Pdist -Dtar -DskipTests
 $ mvn compile -Pdist -Dtar -DskipTests
