@@ -17,5 +17,9 @@
 * 'build.plugins.plugin.version' for org.codehaus.mojo:findbugs-maven-plugin is missing. @ line 74, column 15 https://stackoverflow.com/questions/4123044/maven-3-warnings-about-build-plugins-plugin-version
 
 
+### 
+WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable spena@spena-VirtualBox:~/hadoop/hadoop-dist/targe  
 
-WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable spena@spena-VirtualBox:~/hadoop/hadoop-dist/targe  --> https://stackoverflow.com/questions/38198857/warn-util-nativecodeloader-unable-to-load-native-hadoop-library-for-your-platfo
+$ mvn package -Pdist,native -DskipTests -Dtar
+
+https://hadoop.apache.org/docs/current/hadoop-project-dist/hadoop-common/NativeLibraries.html
