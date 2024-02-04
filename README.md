@@ -4,7 +4,7 @@ Benchmark di Yarn in base alle configurazioni su DFSIO/Teragen, il benchmark son
 Il file system è virtualmente distribuito perché i vari componenti sono dei container.
 
 
-# Index
+# Table of Contents
 1. [Apache Hadoop](Hadoop.md)
 2. [Implementation](Implementation.md)
 3. [Environment Setup](Setup.md)

@@ -84,7 +84,7 @@ YARN architecture has the following components :
 
 ResourceManager/NodeManager rapresents the **data-computation framework**.
 
-YARN supports the following schedulers :
+YARN supports the following schedulers<sup>[[9]](References.md#9)</sup> :
 * **FIFO** : Allocates resources based on arrival time.
 * **Capacity scheduler** (default in hadoop) : Allocates resources to pools or queues, with FIFO scheduling to each pool.
 * **Fair scheduler** : Organizes applications into queues or pools and allows to share resources fairly between quees (every application belongs to a queue).

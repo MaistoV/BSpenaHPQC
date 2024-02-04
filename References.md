@@ -17,7 +17,8 @@
 
 
 
-# References non usate
+# References Utili
+* https://techvidvan.com/tutorials/hadoop-architecture/
 * https://data-flair.training/blogs/hadoop-architecture/
 * https://hadoop.apache.org/docs/current/hadoop-mapreduce-client/hadoop-mapreduce-client-core/MapReduceTutorial.html
 * https://data-flair.training/blogs/hadoop-hdfs-data-read-and-write-operations/
@@ -35,6 +36,10 @@
 * https://github.com/eirslett/frontend-maven-plugin
 
 * https://maven.apache.org/guides/getting-started/maven-in-five-minutes.html
+
+* https://data-flair.training/blogs/features-of-hadoop-and-design-principles/
+
+* https://techvidvan.com/tutorials/wp-content/uploads/sites/2/2020/03/HDFS-Architecture.jpg --> da sostituire all'immagine in hdfs
 
 
 ## Note 
