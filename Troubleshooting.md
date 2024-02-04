@@ -1,29 +1,30 @@
 # Troubleshooting
 
 ## Error 1
-* **Error Cause** : Building Hadoop without running the tests
+* **Error Cause** : Building Hadoop without running the tests through the following command
 ```bash
 $ mvn package -Pdist -DskipTests -Dtar
 ```
 * **Error Message** : Failed to execute goal com.github.eirslett:frontend-maven-plugin:1.6:yarn (yarn install)
-* **Solution** : Check the output of the command. If there is this kind of messagge "error triple-beam@1.4.1: The engine "node" is incompatible with this module. Expected version ">= 14.0.0". Got "12.22.1" [INFO] error Found incompatible module.", go to the pom.xml file 
-```bash
-
+* **Solution** : Check the output of the command. If there is this kind of messagge "error triple-beam@1.4.1: The engine "node" is incompatible with this module. Expected version ">= 14.0.0". Got "12.22.1" [INFO] error Found incompatible module.", go to the pom.xml file in the hadoop-yarn-applications-catalog-webapp directory and modify Node and YARN version as follows
+```xml
+<nodeVersion>v14.15.0</nodeVersion>
+<yarnVersion>v1.22.5</yarnVersion>
 ```
 
 ## Error 2
-* **Error Cause** : 
+* **Error Cause** :  Start NameNode daemon and DataNode daemon in order to run a MapReduce job locally (Hadoop cluster in **Pseudo-Distributed Mode**) through the following command
 ```bash
-
+$ sbin/start-dfs.sh
 ```
-* **Error Message** : 
-* [**Solution**]() : 
+* **Error Message** : WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable <user>@<user>-VirtualBox:~/hadoop/hadoop-dist/targe  
+* **Solution** :
 ```bash
-
+$ mvn package -Pdist,native -DskipTests -Dtar       # Build the native hadoop library
 ```
 
 ## Error 3
-* **Error Cause** : Start NameNode daemon and DataNode daemon in order to run a MapReduce job locally (Hadoop cluster in **Pseudo-Distributed Mode**)
+* **Error Cause** : Start NameNode daemon and DataNode daemon in order to run a MapReduce job locally (Hadoop cluster in **Pseudo-Distributed Mode**) through the following command
 ```bash
 $ sbin/start-dfs.sh
 ```
@@ -40,7 +41,7 @@ $ source ~/.bashrc
 ```
 
 ## Error 4
-* **Error Cause** : Copy the input files into the distributed filesystem in order to run a MapReduce job locally (Hadoop cluster in **Pseudo-Distributed Mode**)
+* **Error Cause** : Copy the input files into the distributed filesystem in order to run a MapReduce job locally (Hadoop cluster in **Pseudo-Distributed Mode**) through the following command
 ```bash
 $ bin/hdfs dfs -mkdir -p /user/<username>
 ```
@@ -48,12 +49,12 @@ $ bin/hdfs dfs -mkdir -p /user/<username>
 * [**Solution**](https://stackoverflow.com/questions/28661285/hadoop-cluster-setup-java-net-connectexception-connection-refused) : 
 ```bash
 $ sbin/stop-all.sh                  # All deamons will stop
-$ bin/hadoop namenode -format
+$ bin/hadoop namenode -format       # Format the filesystem
 $ sbin/start-all.sh                 # All deamons will start
 ```
 
 ## Error 5
-* **Error Cause** : Start ResourceManager daemon and NodeManager daemon in order to run a MapReduce job on YARN in a pseudo-distributed mode (Hadoop cluster in **Pseudo-Distributed Mode**)
+* **Error Cause** : Start ResourceManager daemon and NodeManager daemon in order to run a MapReduce job on YARN in a pseudo-distributed mode (Hadoop cluster in **Pseudo-Distributed Mode**) through the following command
 ```bash
 $ sbin/start-yarn.sh
 ```
@@ -68,11 +69,3 @@ $ jps
 # If NameNodes doesn't appear in java processes running list, check the error through
 $ bin/hadoop namenode
 ```
-
-
-### 
-WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable spena@spena-VirtualBox:~/hadoop/hadoop-dist/targe  
-
-$ mvn package -Pdist,native -DskipTests -Dtar
-
-https://hadoop.apache.org/docs/current/hadoop-project-dist/hadoop-common/NativeLibraries.html
