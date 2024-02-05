@@ -131,7 +131,7 @@ Besides, it is possible to set site-specific values via :
 * **dfs.namenode.maintenance.replication.min** : Minimal number of live replicas that all blocks of DataNodes undergoing maintenance need to satisfy.
 
 #### DataNode
-* **dfs.datanode.volumes.replica-add.threadpool.size**<sup>[[14]](References.md#14)</sup> :  Specifies the maximum number of threads to use for adding block in volume.
+* **dfs.datanode.volumes.replica-add.threadpool.size**<sup>[[14]](References.md#14)</sup> : Specifies the maximum number of threads to use for adding block in volume.
 * **dfs.datanode.max.transfer.threads** : Specifies the maximum number of threads to use for transferring data in and out of the DN.
 * **dfs.datanode.fsdatasetcache.max.threads.per.volume** : Maximum number of threads (consume  both I/O and CPU) per volume to use for caching new data on the datanode.
 * **dfs.datanode.data.dir** : Comma separated list of paths on the local filesystem of a DataNode where it should store its blocks.
@@ -139,6 +139,7 @@ Besides, it is possible to set site-specific values via :
 * **dfs.datanode.ec.reconstruction.stripedread.buffer.size** : Buffer size for reader service.
 * **dfs.datanode.ec.reconstruction.threads** : Number of threads used by the Datanode for background reconstruction work.
 * **dfs.datanode.ec.reconstruction.xmits.weight** : Relative weight of xmits (maximum value between the number of read streams and the number of write streams) used by EC background recovery task comparing to replicated block recovery.
+* **dfs.stream-buffer-size** : The size of buffer to stream files.
 
 ### YARN Configuration Parameters
 #### ResourceMenager
