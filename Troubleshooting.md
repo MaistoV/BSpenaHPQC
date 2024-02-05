@@ -6,11 +6,13 @@
 $ mvn package -Pdist -DskipTests -Dtar
 ```
 * **Error Message** : Failed to execute goal com.github.eirslett:frontend-maven-plugin:1.6:yarn (yarn install)
-* **Solution** : Check the output of the command. If there is this kind of messagge "error triple-beam@1.4.1: The engine "node" is incompatible with this module. Expected version ">= 14.0.0". Got "12.22.1" [INFO] error Found incompatible module.", go to the pom.xml file in the hadoop-yarn-applications-catalog-webapp directory and modify Node and YARN version as follows
+* **Solution** : Check the output of the command. If there is this kind of messagge "error triple-beam@1.4.1: The engine "node" is incompatible with this module. Expected version ">= 14.0.0". Got "12.22.1" [INFO] error Found incompatible module.", go to the pom.xml file in the hadoop-yarn-applications-catalog-webapp directory and modify Node and YARN versions as follows
 ```xml
 <nodeVersion>v14.15.0</nodeVersion>
 <yarnVersion>v1.22.5</yarnVersion>
 ```
+> [!NOTE]
+> The yarn version is specified in the output of the command.
 
 ## Error 2
 * **Error Cause** :  Start NameNode daemon and DataNode daemon in order to run a MapReduce job locally (Hadoop cluster in **Pseudo-Distributed Mode**) through the following command

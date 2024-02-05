@@ -6,11 +6,11 @@ Il file system è virtualmente distribuito perché i vari componenti sono dei co
 
 # Table of Contents
 1. [Apache Hadoop](Hadoop.md)
-2. [Implementation](Implementation.md)
-3. [Environment Setup](Setup.md)
-4. [Troubleshooting](Troubleshooting.md)
-5. [References](References.md)
-
+1. [](Parameters.md)
+1. [Implementation](Implementation.md)
+1. [Environment Setup](Setup.md)
+1. [Troubleshooting](Troubleshooting.md)
+1. [References](References.md)
 
 # Cose da fare
 * Documentare i principali parametri di configurazione che riguardano la computazione/spazio usato/ecc.. di HDFS e YARN in hdfs-site.xml, yarn-site.xml, etc (ad esempio 3x replication, EC-config, #vcpus, memory per thread, etc.)

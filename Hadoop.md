@@ -1,5 +1,5 @@
 # Apache Hadoop
-Apache Hadoop software library <sup>[[1]](References.md#1)</sup> is a **freamwork** used for the distributed processing of massive datasets across **clusters** of computers. It has a **master-slave** architecture<sup>[[2]](References.md#2)</sup> :
+Apache Hadoop software library <sup>[[1]](References.md#1)</sup> is a **freamwork** used for the distributed processing of massive datasets across **clusters** of commodity hardware. Hadoop Cluster is a computational cluster used for storing and analyzing huge amounts of unstructured or structured data in a distributed computing environment. Hadoop has a **master-slave** architecture<sup>[[2]](References.md#2)</sup> :
 * **Master Node** : There is one per cluster. It assigns tasks to the slave nodes. The master node stores metadata and manages the resources across the cluster.
 * **Slave Nodes** : Store data and perform the computing.
 
@@ -7,12 +7,12 @@ Apache Hadoop software library <sup>[[1]](References.md#1)</sup> is a **freamwor
   <img src="https://techvidvan.com/tutorials/wp-content/uploads/sites/2/2020/03/hadoop-architecture.jpg" width="700">
 </p>
 
-Hadoop architecture has three layers :
+Besides, the architecture has three layers :
 * **HDFS** : The storage layer.
 * **MapReduce** : The data processing layer.
 * **Yarn** : The resource management layer.
 
-Besides, Hadoop provides different features<sup>[[3]](References.md#3)</sup> such as :
+Hadoop provides different features<sup>[[3]](References.md#3)</sup> such as :
 * Fault Tolerance.
 * High Availability.
 * Data Locality.
@@ -37,7 +37,7 @@ HDFS has a **master-slave architecture** :
 </p>
 
 > [!NOTE]
-> [Here](https://data-flair.training/blogs/hadoop-hdfs-data-read-and-write-operations/) a detailed description of Hadoop HDFS Data Read and Write Operations.
+> [Here](https://data-flair.training/blogs/hadoop-hdfs-data-read-and-write-operations/) a detailed description of Hadoop HDFS Data Read and Write Operations and [here](https://data-flair.training/blogs/rack-awareness-hadoop-hdfs/) an introductory guide to the rack awareness.
 
 The architecture can be **rebalanced** moving data from one Datanode to another. HDFS provides :
 * Data reliability.
@@ -45,10 +45,12 @@ The architecture can be **rebalanced** moving data from one Datanode to another.
 * Data Locality.
 * A fault-tolerant system.
 
+> [!NOTE]
+> [Here](https://data-flair.training/blogs/learn-hadoop-hdfs-fault-tolerance/) a detailed description of how HDFS achieves fault tolerance.
+
 ### Erasure Coding
 The 3x replication generates an 200% overhead in storage space and other resources. An alterntive method is the **erasure coding**<sup>[[5]](References.md#5)</sup>, which provides the same level of fault-tolerance with much less storage space.  
 **Redundant Array of Inexpensive Disks (RAID)** implements the eresure coding by diving logically sequantial data (such as file) into smaller units and stores consecutive units on differnt disks. 
-
 
 
 ## MapReduce 
@@ -102,7 +104,7 @@ ResourceManager/NodeManager rapresents the **data-computation framework**. YARN 
 
 
 ## Hadoop Cluster Configuration Parameters
-The Hadoop's cluster can be configured by setting twu type of files<sup>[[13]](References.md#13)</sup>:
+The Hadoop's cluster can be configured by setting two type of files<sup>[[13]](References.md#13)</sup>:
 * **Read-only default configuration files** :
   * core-default.xml.
   * hdfs-default.xml. 
@@ -143,7 +145,7 @@ Besides, it is possible to set site-specific values via :
 * **yarn.scheduler.minimum-allocation-vcores**<sup>[[15]](References.md#15)</sup> : Minimum allocation for every container request at the RM in terms of virtual CPU cores. 
 * **yarn.scheduler.maximum-allocation-vcores** : Maximum allocation for every container request at the RM in terms of virtual CPU cores.
 * **yarn.resourcemanager.scheduler.class** : ResourceManager Scheduler class (CapacityScheduler, FairScheduler or FifoScheduler).
-* **yarn.scheduler.minimum-allocation-mb** :  Minimum limit of memory in MBs to allocate to each container request at the Resource Manager.
+* **yarn.scheduler.minimum-allocation-mb** : Minimum limit of memory in MBs to allocate to each container request at the Resource Manager.
 * **yarn.scheduler.maximum-allocation-mb** : Maximum limit of memory in MBs to allocate to each container request at the Resource Manager.
 
 #### NodeMenager
