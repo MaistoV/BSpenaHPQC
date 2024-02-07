@@ -7,17 +7,14 @@ Il file system è virtualmente distribuito perché i vari componenti sono dei co
 # Table of Contents
 1. [Apache Hadoop](Hadoop.md)
 1. [Parameters Description](Parameters.md)
-1. [Exeperiments](Experiments.md)
+1. [Exeperiments ???](Experiments.md)
 1. [Environment Setup](Setup.md)
 1. [Troubleshooting](Troubleshooting.md)
 1. [References](References.md)
 
 # Cose da fare
-* Documentare i principali parametri di configurazione che riguardano la computazione/spazio usato/ecc.. di HDFS e YARN in hdfs-site.xml, yarn-site.xml, etc (ad esempio 3x replication, EC-config, #vcpus, memory per thread, etc.)
-* Creare un cluster virtuale a container (build con Maven)
-* Setup del cluster virtuale su singolo nodo
-* Cambiare parametri di configurazione di Yarn
-* Misurare i fattori all'interno dei wrokload
+* Approfondimento parametri di riconfigurazione (timeouts, num mappers, num reducers, buffer size, scheduling policy, Resource Profiles, num threads, mb, vcores, ...)
+* Esperimenti con workload DFSIO (variabili di risposta : num threads, num mappers, num reducers)
 * Gli script generati devono essere portati sul cluster fisico
 
 
