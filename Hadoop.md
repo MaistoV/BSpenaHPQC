@@ -79,7 +79,7 @@ A **MapReduce job** is a complete execution of a **map phase** and a **reduce ph
 
 
 ## YARN
-YARN (Yet Another Resource Negotiator)<sup>[[9]](References.md#9)</sup><sup>[[10]](References.md#10)</sup><sup>[[11]](References.md#11)</sup> is a freamwork for distributed computing which separates resorse menagement and processing components. YARN :
+YARN (Yet Another Resource Negotiator)<sup>[[9]](References.md#yarn)</sup><sup>[[10]](References.md#10)</sup><sup>[[11]](References.md#11)</sup> is a freamwork for distributed computing which separates resorse menagement and processing components. YARN :
 * Allows the exectution of different kind of **applications**, like MapReduce job, DAG of job , Stream processing, etc... 
 * Sends computations where the data is stored on locak disks (property of **data locality**)
 * Uses the **containers**, collection of all the resources necessary to run an application on a node in a cluster.
