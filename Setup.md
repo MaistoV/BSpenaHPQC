@@ -26,6 +26,9 @@ $ echo $JAVA_HOME
 sudo apt-get -y install maven
 ```
 
+> [!NOTE]
+> [Here](https://maven.apache.org/guides/getting-started/index.html) the Maven doc.
+
 ### Hadoop 3.3.5
 ```bash
 $ git clone https://github.com/apache/hadoop.git --branch rel/release-3.3.5 --single-branch

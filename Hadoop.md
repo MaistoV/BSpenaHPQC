@@ -100,3 +100,71 @@ ResourceManager/NodeManager rapresents the **data-computation framework**. YARN 
 * **FIFO** : Allocates resources based on arrival time.
 * **Capacity scheduler** (default in hadoop) : Allocates resources to pools or queues, with FIFO scheduling to each pool.
 * **Fair scheduler** : Organizes applications into queues or pools and allows to share resources fairly between quees (every application belongs to a queue).
+
+
+## Hadoop Cluster Configuration
+The Hadoop's cluster can be configured by setting two type of files<sup>[[13]](References.md#13)</sup>:
+* **Read-only default configuration files** :
+  * core-default.xml.
+  * hdfs-default.xml. 
+  * yarn-default.xml.
+  * mapred-default.xml.
+* **Site-specific configuration files** :
+  * core-site.xml.
+  * hdfs-site.xml.
+  * yarn-site.xml.
+  * mapred-site.xml.
+
+Besides, it is possible to set site-specific values via : 
+  * hadoop-env.sh.
+  * yarn-env.sh.
+
+### HDFS<sup>[[5]](References.md#5)</sup><sup>[[14]](References.md#14)</sup>
+#### NameNode
+| Parameter | Description |
+| :---: | :---: |
+| dfs.namenode.handler.count | The number of Namenode RPC(Remote Procedure Call) server threads that listen to requests from clients |
+| dfs.namenode.replication.max-streams-hard-limit | Hard limit for all replication streams |
+| dfs.replication | Default block replication |
+| dfs.namenode.replication.min | Minimal block replication |
+| dfs.blocksize | The default block size for new files, in bytes |
+| dfs.namenode.maintenance.replication.min | Minimal number of live replicas that all blocks of DataNodes undergoing maintenance need to satisfy |
+
+#### DataNode
+| Parameter | Description |
+| :---: | :---: |
+|dfs.datanode.volumes.replica-add.threadpool.size | Specifies the maximum number of threads to use for adding block in volume |
+|dfs.datanode.max.transfer.threads | Specifies the maximum number of threads to use for transferring data in and out of the DataNode |
+|dfs.datanode.fsdatasetcache.max.threads.per.volume | Maximum number of threads (consume  both I/O and CPU) per volume to use for caching new data on the datanode |
+|dfs.datanode.data.dir |Comma separated list of paths on the local filesystem of a DataNode where it should store its blocks  |
+|dfs.datanode.ec.reconstruction.stripedread.timeout.millis | Timeout for striped reads |
+|dfs.datanode.ec.reconstruction.stripedread.buffer.size | Buffer size for reader service |
+|dfs.datanode.ec.reconstruction.threads |Number of threads used by the Datanode for background reconstruction work |
+|dfs.datanode.ec.reconstruction.xmits.weight| Relative weight of xmits (maximum value between the number of read streams and the number of write streams) used by EC background recovery task comparing to replicated block recovery |
+|dfs.stream-buffer-size | The size of buffer to stream files |
+
+
+### MapReduce
+| Parameter | Description |
+| :---: | :---: |
+|mapreduce.map.resource.memory-mb |Sets the memory requested for the all map task containers to the value in MB  |
+|mapreduce.map.resource.vcores |Sets the CPU requested for the all map task containers to the value  |
+|mapreduce.reduce.resource.memory-mb |Sets the memory requested for the all reduce task containers to the value in MB  |
+|mapreduce.reduce.resource.vcores |Sets the CPU requested for the all reduce task containers to the value  |
+
+
+### YARN<sup>[[13]](References.md#13)</sup><sup>[[15]](References.md#15)</sup><sup>[[16]](References.md#16)</sup>
+#### ResourceMenager
+| Parameter | Description |
+| :---: | :---: |
+|yarn.scheduler.minimum-allocation-vcores |Minimum allocation for every container request at the RM in terms of virtual CPU cores  |
+|yarn.scheduler.maximum-allocation-vcores | Maximum allocation for every container request at the RM in terms of virtual CPU cores |
+|yarn.resourcemanager.scheduler.class |ResourceManager Scheduler class (CapacityScheduler, FairScheduler or FifoScheduler)  |
+|yarn.scheduler.minimum-allocation-mb |Minimum limit of memory in MBs to allocate to each container request at the Resource Manager  |
+|yarn.scheduler.maximum-allocation-mb |Maximum limit of memory in MBs to allocate to each container request at the Resource Manager  |
+
+
+#### NodeMenager
+| Parameter | Description |
+| :---: | :---: |
+|yarn.nodemanager.resource.memory-mb | Defines total available resources on the NodeManager to be made available to running containers |

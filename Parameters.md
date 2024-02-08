@@ -1,69 +1,43 @@
-## Hadoop Cluster Configuration Parameters
-The Hadoop's cluster can be configured by setting two type of files<sup>[[13]](References.md#13)</sup>:
-* **Read-only default configuration files** :
-  * core-default.xml.
-  * hdfs-default.xml. 
-  * yarn-default.xml.
-  * mapred-default.xml.
-* **Site-specific configuration files** :
-  * core-site.xml.
-  * hdfs-site.xml.
-  * yarn-site.xml.
-  * mapred-site.xml.
+# Parameters Analisys ????
 
-Besides, it is possible to set site-specific values via : 
-  * hadoop-env.sh.
-  * yarn-env.sh.
+## HDFS
+### NameNode
+| Parameter | Default Value | Configuration File | Description |
+| :---: | :---: | :---: | :---: |
+| dfs.namenode.handler.count | 10 | hdfs-site.xml/core-site.xml | The number of Namenode RPC server threads that listen to requests from clients |
+| dfs.blocksize | 134217728 | hdfs-site.xml | The default block size for new files, in bytes |
 
-### HDFS Configuration Parameters
-#### NameNode
-* **dfs.namenode.replication.max-streams-hard-limit**<sup>[[14]](References.md#14)</sup> : Hard limit for all replication streams.
-* **dfs.replication** : Default block replication.
-* **dfs.namenode.replication.min** : Minimal block replication.
-* **dfs.replication.max** : Maximal block replication.
-* **dfs.blocksize** : HDFS blocksize.
-* **dfs.namenode.handler.count** : Server threads to handle RPCs (Remote Procedure Call).
-* **dfs.namenode.maintenance.replication.min** : Minimal number of live replicas that all blocks of DataNodes undergoing maintenance need to satisfy.
-
-#### DataNode
-* **dfs.datanode.volumes.replica-add.threadpool.size**<sup>[[14]](References.md#14)</sup> : Specifies the maximum number of threads to use for adding block in volume.
-* **dfs.datanode.max.transfer.threads** : Specifies the maximum number of threads to use for transferring data in and out of the DN.
-* **dfs.datanode.fsdatasetcache.max.threads.per.volume** : Maximum number of threads (consume  both I/O and CPU) per volume to use for caching new data on the datanode.
-* **dfs.datanode.data.dir** : Comma separated list of paths on the local filesystem of a DataNode where it should store its blocks.
-* **dfs.datanode.ec.reconstruction.stripedread.timeout.millis**<sup>[[5]](References.md#5)</sup> : Timeout for striped reads.
-* **dfs.datanode.ec.reconstruction.stripedread.buffer.size** : Buffer size for reader service.
-* **dfs.datanode.ec.reconstruction.threads** : Number of threads used by the Datanode for background reconstruction work.
-* **dfs.datanode.ec.reconstruction.xmits.weight** : Relative weight of xmits (maximum value between the number of read streams and the number of write streams) used by EC background recovery task comparing to replicated block recovery.
-* **dfs.stream-buffer-size** : The size of buffer to stream files.
-
-### YARN Configuration Parameters
-#### ResourceMenager
-* **yarn.scheduler.minimum-allocation-vcores**<sup>[[15]](References.md#15)</sup> : Minimum allocation for every container request at the RM in terms of virtual CPU cores. 
-* **yarn.scheduler.maximum-allocation-vcores** : Maximum allocation for every container request at the RM in terms of virtual CPU cores.
-* **yarn.resourcemanager.scheduler.class** : ResourceManager Scheduler class (CapacityScheduler, FairScheduler or FifoScheduler).
-* **yarn.scheduler.minimum-allocation-mb** : Minimum limit of memory in MBs to allocate to each container request at the Resource Manager.
-* **yarn.scheduler.maximum-allocation-mb** : Maximum limit of memory in MBs to allocate to each container request at the Resource Manager.
-
-#### NodeMenager
-* **yarn.nodemanager.resource.memory-mb**<sup>[[13]](References.md#13)</sup> : Defines total available resources on the NodeManager to be made available to running containers.
-* **yarn.app.mapreduce.am.resource.memory-mb**<sup>[[16]](References.md#16)</sup> :	Sets the memory requested for the application master container to the value in MB.
-* **yarn.app.mapreduce.am.resource.vcores** :	Sets the CPU requested for the application master container to the value.
-* **mapreduce.map.resource.memory-mb** : Sets the memory requested for the all map task containers to the value in MB.
-* **mapreduce.map.resource.vcores	Sets** : The CPU requested for the all map task containers to the value.
-* **mapreduce.reduce.resource.memory-mb** :	Sets the memory requested for the all reduce task containers to the value in MB.
-* **mapreduce.reduce.resource.vcores** : Sets the CPU requested for the all reduce task containers to the value.
+### DataNode
+| Parameter | Default Value | Configuration File | Description |
+| :---: | :---: | :---: | :---: |
+| dfs.datanode.handler.count | 10 | hdfs-site.xml/core-site.xml| The number of server threads for the datanode |
+|dfs.stream-buffer-size | 4096 |hdfs-site.xml | The size of buffer to stream files|
+|dfs.datanode.fsdatasetcache.max.threads.per.volume | 4 | hdfs-site.xml | The maximum number of threads per volume to use for caching new data on the datanode|
 
 
-# Parameters Description ????
+## MapReduce
+| Parameter | Default Value | Configuration File | Description |
+| :---: | :---: | :---: | :---: |
+| mapreduce.job.maps | 2 | The number of map tasks is determinated by the number of input splits | The default number of map tasks per job |
+| mapreduce.job.reduces | 1 | mapred-site.xml | The default number of reduce tasks per job |
+|mapreduce.task.timeout | 600000 | mapred-site.xml | The number of milliseconds before a task will be terminated if it neither reads an input, writes an output, nor updates its status string|
+|mapreduce.map.resource.vcores | 1 |mapred-site.xml | Sets the CPU requested for the all map task containers to the value|
+|mapreduce.map.resource.memory-mb | 1024 | mapred-site.xml | Sets the memory requested for the all map task containers to the value in MB|
+|mapreduce.reduce.resource.memory-mb | 1024 | mapred-site.xml | Sets the memory requested for the all reduce task containers to the value in MB  |
+|mapreduce.reduce.resource.vcores | 1 | mapred-site.xml | Sets the CPU requested for the all reduce task containers to the value  |
 
-dfs.namenode.handler.count
-dfs.datanode.volumes.replica-add.threadpool.size
-dfs.stream-buffer-size
 
-yarn.scheduler.minimum-allocation-vcores
-yarn.scheduler.maximum-allocation-vcores
+## YARN
+### ResourceMenager
+| Parameter | Default Value | Configuration File | Description |
+| :---: | :---: | :---: | :---: |
+| yarn.scheduler.minimum-allocation-vcores | 1 | yarn-site.xml | Minimum allocation for every container request at the RM in terms of virtual CPU cores |
+| yarn.scheduler.maximum-allocation-vcores |4  | yarn-site.xml | The maximum allocation for every container request at the RM in terms of virtual CPU cores|
+|yarn.scheduler.minimum-allocation-mb| 1024 | yarn-site.xml | The minimum allocation for every container request at the RM in MBs|
+|yarn.scheduler.maximum-allocation-mb| 8192 | yarn-site.xml | The maximum allocation for every container request at the RM in MBs|
 
-mapreduce.map.resource.memory-mb
-mapreduce.map.resource.vcores
-mapreduce.reduce.resource.memory-mb
-mapreduce.reduce.resource.vcores
+
+### NodeMenager
+| Parameter | Default Value | Configuration File | Description |
+| :---: | :---: | :---: | :---: |
+|yarn.nodemanager.resource.memory-mb | -1 | yarn-site.xml | Defines total available resources on the NodeManager to be made available to running containers |

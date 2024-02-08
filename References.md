@@ -20,20 +20,30 @@
 # References Utili
 ## hadoop
 * https://data-flair.training/blogs/hadoop-architecture/
+* https://ercoppa.github.io/HadoopInternals/HadoopConfigurationParameters.html
 
 ## mapreduce
 * https://hadoop.apache.org/docs/r3.3.5/hadoop-mapreduce-client/hadoop-mapreduce-client-core/MapReduceTutorial.html
+* https://hadoop.apache.org/docs/r3.3.5/hadoop-mapreduce-client/hadoop-mapreduce-client-core/mapred-default.xml
+* https://cwiki.apache.org/confluence/display/HADOOP2/HowManyMapsAndReduces#
+
+## hdfs
+* https://hawq.apache.org/docs/userguide/2.3.0.0-incubating/reference/HDFSConfigurationParameterReference.html
 
 ## installazione
 * https://www.adaltas.com/en/2020/08/04/installing-hadoop-from-source/
 * https://hadoop.apache.org/docs/r3.3.5/hadoop-project-dist/hadoop-common/SingleCluster.html
 
 ## maven
-* https://maven.apache.org/guides/getting-started/index.html
 * https://maven.apache.org/guides/getting-started/maven-in-five-minutes.html
 * https://github.com/eirslett/frontend-maven-plugin
 * https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html
 
+## issue searcher
+* https://issues.apache.org/jira/browse/ZOOKEEPER-4802?jql=
+
+##
+* https://docs.cloudera.com/HDPDocuments/HDP2/HDP-2.1.2/bk_system-admin-guide/content/config_properties.html
 
 ## Note 
 * Per configurare la dimensione del block modificare la proprietà dfs.block.size in hdfs-site.xml (https://data-flair.training/blogs/data-block/)
