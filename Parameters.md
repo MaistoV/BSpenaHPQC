@@ -6,6 +6,7 @@
 | :---: | :---: | :---: | :---: |
 | dfs.namenode.handler.count | 10 | hdfs-site.xml/core-site.xml | The number of Namenode RPC server threads that listen to requests from clients |
 | dfs.blocksize | 134217728 | hdfs-site.xml | The default block size for new files, in bytes |
+| dfs.namenode.ec.system.default.policy | RS-6-3-1024k | hdfs-site.xml | The default erasure coding policy name will be used on the path if no policy name is passed |
 
 ### DataNode
 | Parameter | Default Value | Configuration File | Description |
@@ -31,6 +32,7 @@
 ### ResourceMenager
 | Parameter | Default Value | Configuration File | Description |
 | :---: | :---: | :---: | :---: |
+| yarn.resourcemanager.scheduler.class | org.apache.hadoop.yarn.<br>server.resourcemanager.<br>scheduler.capacity.<br>CapacityScheduler | yarn-site.xml | The class to use as the resource scheduler |
 | yarn.scheduler.minimum-allocation-vcores | 1 | yarn-site.xml | Minimum allocation for every container request at the RM in terms of virtual CPU cores |
 | yarn.scheduler.maximum-allocation-vcores |4  | yarn-site.xml | The maximum allocation for every container request at the RM in terms of virtual CPU cores|
 |yarn.scheduler.minimum-allocation-mb| 1024 | yarn-site.xml | The minimum allocation for every container request at the RM in MBs|

@@ -1,5 +1,5 @@
 # Apache Hadoop
-Apache Hadoop software library <sup>[[1]](References.md#1)</sup> is a **freamwork** used for the distributed processing of massive datasets across **clusters** of commodity hardware. Hadoop Cluster is a computational cluster used for storing and analyzing huge amounts of unstructured or structured data in a distributed computing environment. Hadoop has a **master-slave** architecture<sup>[[2]](References.md#2)</sup> :
+Apache Hadoop software library <sup>[[1]](References.md#hadoop)</sup> is a **freamwork** used for the distributed processing of massive datasets across **clusters** of commodity hardware. Hadoop Cluster is a computational cluster used for storing and analyzing huge amounts of unstructured or structured data in a distributed computing environment. Hadoop has a **master-slave** architecture<sup>[[2]](References.md#hadoop_architecture)</sup> :
 * **Master Node** : There is one per cluster. It assigns tasks to the slave nodes. The master node stores metadata and manages the resources across the cluster.
 * **Slave Nodes** : Store data and perform the computing.
 
@@ -12,7 +12,7 @@ Besides, the architecture has three layers :
 * **MapReduce** : The data processing layer.
 * **Yarn** : The resource management layer.
 
-Hadoop provides different features<sup>[[3]](References.md#3)</sup> such as :
+Hadoop provides different features<sup>[[3]](References.md#hadoop_features)</sup> such as :
 * Fault Tolerance.
 * High Availability.
 * Data Locality.
@@ -21,7 +21,7 @@ Hadoop provides different features<sup>[[3]](References.md#3)</sup> such as :
 
 
 ## HDFS
-HDFS (Hadoop Distributed File System)<sup>[[4]](References.md#4)</sup> is a java-based distributed file system running on commodity hardware which supports a traditional hierarchical file organization. This file system :
+HDFS (Hadoop Distributed File System)<sup>[[4]](References.md#hdfs_architecture)</sup> is a java-based distributed file system running on commodity hardware which supports a traditional hierarchical file organization. This file system :
 * Stores user data in files.
 * Splits file in one or more blocked-sized chunks known as **data blocks**,with size of 128 MB by default (the size is configurable per file).  
 * Replicates the data blocks. The replication factor is three by default, but it can be configurable per file.
@@ -49,12 +49,30 @@ The architecture can be **rebalanced** moving data from one Datanode to another.
 > [Here](https://data-flair.training/blogs/learn-hadoop-hdfs-fault-tolerance/) a detailed description of how HDFS achieves fault tolerance.
 
 ### Erasure Coding
-The 3x replication generates an 200% overhead in storage space and other resources. An alterntive method is the **erasure coding**<sup>[[5]](References.md#5)</sup>, which provides the same level of fault-tolerance with much less storage space.  
-**Redundant Array of Inexpensive Disks (RAID)** implements the eresure coding by diving logically sequantial data (such as file) into smaller units and stores consecutive units on differnt disks. 
+The 3x replication generates an 200% overhead in storage space and other resources. An alterntive method is the **erasure coding (EC)**<sup>[[5]](References.md#EC)</sup>, which provides the same level of fault-tolerance with much less storage space. In storage system, an EC implementation is **Redundant Array of Inexpensive Disks (RAID)**. RAID implements EC by:
+* Diving logically sequantial data (file) into smaller units.
+* Storing consecutive units on differnt disks.
+
+The dividing opertation is known as striping, and the generated units are known as **striping cell**. EC has two main processes :
+* **Encoding** : For each of striping cell, are calculated and stored a certain number of **parity cell**.
+* **Decoding** : Using pararity cells and remaining data, it is possible to recover the error of any striping cell.
+
+EC works the **policy concept** wich describes how encode/decode a file. Each policy contains :
+* **EC Schema** : It includes the numbers of data and parity blocks in an EC group , as well as the codec algorithm.
+* **Striping cell size** : It determines the granularity of striped reads and writes, including buffer sizes and encoding work.
+
+Policies are named as follow **codec - num data blocks - num parity blocks - cell size**, the supported policies are :
+* **RS-3-2-1024k**
+* **RS-6-3-1024k**
+* **RS-10-4-1024k**
+* **RS-LEGACY-6-3-1024k**
+* **XOR-2-1-1024k**
+
+One of codec algorithm are the **Reed–Solomon codes**<sup>[[6]](References.md#RS)</sup>. They are a group of error-correcting codes which help in recovering corrupted messages that are being transferred over a network.
 
 
 ## MapReduce 
-MapReduce<sup>[[6]](References.md#6)</sup> is a software framework for writing applications (which need not be written in Java) that process large datasets in parallel on large clusters. The framework :
+MapReduce<sup>[[7]](References.md#mapred_tutorial)</sup> is a software framework for writing applications (which need not be written in Java) that process large datasets in parallel on large clusters. The framework :
 * Operates on sets of **<key,value> pairs**.
 * Splits input into fixed-size splits called **InputSplit** in order to be processed. 
 * Starts up many copies of the program on the nodes of the cluster, the copies are divided into :
@@ -63,7 +81,7 @@ MapReduce<sup>[[6]](References.md#6)</sup> is a software framework for writing a
 
 Each map task uses a user-defined **map function** which is implemented through interfaces and/or abstract-classes, the same goes for each reduce task with a **reduce function**.
 
-A **MapReduce job** is a complete execution of a **map phase** and a **reduce phase**<sup>[[7]](References.md#7)</sup><sup>[[8]](References.md#8)</sup> : 
+A **MapReduce job** is a complete execution of a **map phase** and a **reduce phase**<sup>[[8]](References.md#mapred_tutorial)</sup><sup>[[9]](References.md#mapred_flow)</sup> : 
 * **Map Phase** : The mapper maps the input <key,value> pair to zero or multiple **intermetdiate <key,value> pairs**.
 * **Shuffling and Sorting** (occur simultaneously) :
   * **Shuffle Phase** : Fetches the values of the output of the mappers.
@@ -79,7 +97,7 @@ A **MapReduce job** is a complete execution of a **map phase** and a **reduce ph
 
 
 ## YARN
-YARN (Yet Another Resource Negotiator)<sup>[[9]](References.md#yarn)</sup><sup>[[10]](References.md#10)</sup><sup>[[11]](References.md#11)</sup> is a freamwork for distributed computing which separates resorse menagement and processing components. YARN :
+YARN (Yet Another Resource Negotiator)<sup>[[10]](References.md#yarn)</sup><sup>[[11]](References.md#yarn_intro)</sup><sup>[[12]](References.md#yarn_tutorial)</sup> is a freamwork for distributed computing which separates resorse menagement and processing components. YARN :
 * Allows the exectution of different kind of **applications**, like MapReduce job, DAG of job , Stream processing, etc... 
 * Sends computations where the data is stored on locak disks (property of **data locality**)
 * Uses the **containers**, collection of all the resources necessary to run an application on a node in a cluster.
@@ -88,7 +106,7 @@ YARN (Yet Another Resource Negotiator)<sup>[[9]](References.md#yarn)</sup><sup>[
 YARN has the following components :
 * **ResourceManager** : The **master daemon** runs on master node. It manages the resources among all the applications in the system. The daemon assigns tasks to the NodeManager and schedules containers. The ResourceManager has two main components :
     * **Scheduler** : It is a pure scheduler (does not perform monitoring or tracking of the applications' status), it allocates resources or container to the running applications.
-    * **ApplicationsManager** : Accepts **job submissions** by the clients<sup>[[12]](References.md#12)</sup> and secures resources on a node (an operation known as "**negotiating the first container**") to launch the ApplicationMaster.
+    * **ApplicationsManager** : Accepts **job submissions** by the clients<sup>[[13]](References.md#yarn_app)</sup> and secures resources on a node (an operation known as "**negotiating the first container**") to launch the ApplicationMaster.
 * **NodeManager** : The **slave deamon** runs on the worker node. It launches, manages and monitors resource usage of the containers on a node.
 * **ApplicationMaster** : It is a framework specific library, so there is one per application. The ApplicationMaster negotiates resources for the running application from the ResourceManager and works with the NodeManager to execute and monitor the tasks. 
 
@@ -96,14 +114,14 @@ YARN has the following components :
   <img src="https://techvidvan.com/tutorials/wp-content/uploads/sites/2/2020/03/apache-hadoop-yarn.jpg" width="600">
 </p> 
 
-ResourceManager/NodeManager rapresents the **data-computation framework**. YARN supports the following schedulers<sup>[[10]](References.md#10)</sup> :
+ResourceManager/NodeManager rapresents the **data-computation framework**. YARN supports the following schedulers<sup>[[11]](References.md#yarn_intro)</sup> :
 * **FIFO** : Allocates resources based on arrival time.
 * **Capacity scheduler** (default in hadoop) : Allocates resources to pools or queues, with FIFO scheduling to each pool.
-* **Fair scheduler** : Organizes applications into queues or pools and allows to share resources fairly between quees (every application belongs to a queue).
+* **Fair scheduler** : Organizes applications into queues or pools and allows to share resources fairly between quees (every application belongs to a queue). It grants container with the least amount of allocated resources.
 
 
 ## Hadoop Cluster Configuration
-The Hadoop's cluster can be configured by setting two type of files<sup>[[13]](References.md#13)</sup>:
+The Hadoop's cluster can be configured by setting two type of files<sup>[[14]](References.md#cluster_setup)</sup>:
 * **Read-only default configuration files** :
   * core-default.xml.
   * hdfs-default.xml. 
@@ -119,7 +137,7 @@ Besides, it is possible to set site-specific values via :
   * hadoop-env.sh.
   * yarn-env.sh.
 
-### HDFS<sup>[[5]](References.md#5)</sup><sup>[[14]](References.md#14)</sup>
+### HDFS<sup>[[5]](References.md#EC)</sup><sup>[[15]](References.md#hdfs_default_xml)</sup>
 #### NameNode
 | Parameter | Description |
 | :---: | :---: |
@@ -144,7 +162,7 @@ Besides, it is possible to set site-specific values via :
 |dfs.stream-buffer-size | The size of buffer to stream files |
 
 
-### MapReduce
+### MapReduce<sup>[[17]](References.md#yarn_resource_configuration)</sup>
 | Parameter | Description |
 | :---: | :---: |
 |mapreduce.map.resource.memory-mb |Sets the memory requested for the all map task containers to the value in MB  |
@@ -152,8 +170,14 @@ Besides, it is possible to set site-specific values via :
 |mapreduce.reduce.resource.memory-mb |Sets the memory requested for the all reduce task containers to the value in MB  |
 |mapreduce.reduce.resource.vcores |Sets the CPU requested for the all reduce task containers to the value  |
 
+> [!NOTE]
+>* mapreduce.map.resource.memory-mb is preferred over mapreduce.map.resource.memory
+>* mapreduce.map.resource.vcores is preferred over mapreduce.map.cpu.vcores
+>* mapreduce.reduce.resource.memory-mb is preferred over mapreduce.reduce.resource.memory
+>* mapreduce.reduce.resource.vcores is preferred over mapreduce.reduce.cpu.vcores
 
-### YARN<sup>[[13]](References.md#13)</sup><sup>[[15]](References.md#15)</sup><sup>[[16]](References.md#16)</sup>
+
+### YARN<sup>[[14]](References.md#cluster_setup)</sup><sup>[[16]](References.md#yarn_default_xml)</sup><sup>[[17]](References.md#yarn_resource_configuration)</sup>
 #### ResourceMenager
 | Parameter | Description |
 | :---: | :---: |
