@@ -91,3 +91,6 @@ $ mvn package -Pdist -Dtar -DskipTests
 $ mvn compile -Pdist -Dtar -DskipTests
 $ mvn package -Pdist,native -DskipTests -Dtar   # https://hadoop.apache.org/docs/current/hadoop-project-dist/hadoop-common/NativeLibraries.html
 ```
+
+
+hadoop/hadoop-dist/target/hadoop-3.3.5/

@@ -17,7 +17,9 @@
 1. <a id="yarn_default_xml"></a> [yarn-defult.xml File](https://hadoop.apache.org/docs/r3.3.5/hadoop-yarn/hadoop-yarn-common/yarn-default.xml)
 1. <a id="yarn_resource_configuration"></a> [Hadoop: YARN Resource Configuration](https://hadoop.apache.org/docs/r3.3.5/hadoop-yarn/hadoop-yarn-site/ResourceModel.html)
 1. <a id="dfsio"></a> [Distributed I/O Benchmark of HDFS](https://bdaafall2015.readthedocs.io/en/latest/dfsio.html)
-https://www.michael-noll.com/blog/2011/04/09/benchmarking-and-stress-testing-an-hadoop-cluster-with-terasort-testdfsio-nnbench-mrbench/
+1. <a id="benchmark"></a> [Benchmarking and Stress Testing an Hadoop Cluster with TeraSort, TestDFSIO & Co.](https://www.michael-noll.com/blog/2011/04/09/benchmarking-and-stress-testing-an-hadoop-cluster-with-terasort-testdfsio-nnbench-mrbench/)
+1. <a id="fair_scheduler"></a> [Hadoop: Fair Scheduler](https://hadoop.apache.org/docs/r3.3.5/hadoop-yarn/hadoop-yarn-site/FairScheduler.html)
+
 
 # References Utili
 ## hadoop
@@ -51,10 +53,6 @@ https://www.michael-noll.com/blog/2011/04/09/benchmarking-and-stress-testing-an-
 ## EC e RS
 * https://www.geeksforgeeks.org/what-is-reed-solomon-code/
 * https://docs.cloudera.com/HDPDocuments/HDP3/HDP-3.1.0/data-storage/content/erasure_coding_examples.html
-
-## Fair Scheduler
-* https://hadoop.apache.org/docs/r3.3.5/hadoop-yarn/hadoop-yarn-site/FairScheduler.html
-
 
 
 ## Note 
