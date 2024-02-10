@@ -34,6 +34,7 @@
 
 ## hdfs
 * https://hawq.apache.org/docs/userguide/2.3.0.0-incubating/reference/HDFSConfigurationParameterReference.html
+* https://docs.cloudera.com/HDPDocuments/HDP2/HDP-2.1.2/bk_system-admin-guide/content/config_properties.html
 
 ## installazione
 * https://www.adaltas.com/en/2020/08/04/installing-hadoop-from-source/
@@ -47,13 +48,13 @@
 ## issue searcher
 * https://issues.apache.org/jira/browse/ZOOKEEPER-4802?jql=
 
-##
-* https://docs.cloudera.com/HDPDocuments/HDP2/HDP-2.1.2/bk_system-admin-guide/content/config_properties.html
-
 ## EC e RS
 * https://www.geeksforgeeks.org/what-is-reed-solomon-code/
 * https://docs.cloudera.com/HDPDocuments/HDP3/HDP-3.1.0/data-storage/content/erasure_coding_examples.html
 
+## Commands
+* https://hadoop.apache.org/docs/r3.3.5/hadoop-yarn/hadoop-yarn-site/YarnCommands.html
+* https://hadoop.apache.org/docs/r3.3.5/hadoop-project-dist/hadoop-common/CommandsManual.html
 
 ## Note 
 * Per configurare la dimensione del block modificare la proprietà dfs.block.size in hdfs-site.xml (https://data-flair.training/blogs/data-block/)

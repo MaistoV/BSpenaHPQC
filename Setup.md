@@ -93,4 +93,7 @@ $ mvn package -Pdist,native -DskipTests -Dtar   # https://hadoop.apache.org/docs
 ```
 
 
-hadoop/hadoop-dist/target/hadoop-3.3.5/
+* hadoop/hadoop-dist/target/hadoop-3.3.5/
+
+## EC 
+bin/hdfs ec -listPolicies  --> Lists all (enabled, disabled and removed) erasure coding policies registered in HDFS. Only the enabled policies are suitable for use with the setPolicy command.

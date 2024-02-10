@@ -20,7 +20,6 @@ DFSIO<sup>[[18]](References.md#dfsio)</sup><sup>[[19]](References.md#benchmark)<
 $ hadoop jar $HADOOP_HOME/hadoop-*test*.jar TestDFSIO -read | -write | -clean [-nrFiles N] [-fileSize MB] [-resFile resultFileName] [-bufferSize Bytes]
 ```
 
-
 * Flags
 -nrFiles: the number of files (equal to the number of map tasks)
 -fileSize: the size of a file to generate B|KB|MB|GB|TB is allowed
@@ -44,81 +43,53 @@ hadoop jar /opt/hadoop/share/hadoop/mapreduce/hadoop-mapreduce-client-jobclient-
 hadoop fs -cat /benchmarks/TestDFSIO/io_write/part*
 
 
-## YARN Configuration
-Fair scheduler configuartion --> two files : yarn-site.xml and Fair-scheduler.xml used to configure ResourceMenager and NodeMenager
+## Experiments Steps ???
 
-<sup>[[11]](References.md#yarn_intro)</sup>
-<sup>[[20]](References.md#fair_scheduler)</sup>
+All experiments follow this steps :
+1. selected parameters configuration and YARN configuration (?)
+1. ec configuration (?)
+1. start daemons
+1. execute commands 4-5 (https://hadoop.apache.org/docs/r3.3.5/hadoop-project-dist/hadoop-common/SingleCluster.html)
+1. execute dfsio test
+1. stop all deamons
 
-* yarn-site.xml
-
-```xml
-<property>
-  <name>yarn.resourcemanager.scheduler.class</name>
-  <value>org.apache.hadoop.yarn.server.resourcemanager.scheduler.fair.FairScheduler</value>
-</property>
-```
-
-* fair-scheduler.xml
-```xml
-<?xml version="1.0"?>
-<allocations>
-  <queue name="sample_queue">
-    <minResources>10000 mb,0vcores</minResources>
-    <maxResources>90000 mb,0vcores</maxResources>
-    <maxRunningApps>50</maxRunningApps>
-    <maxAMShare>0.1</maxAMShare>
-    <weight>2.0</weight>
-    <schedulingPolicy>fair</schedulingPolicy>
-    <queue name="sample_sub_queue">
-      <aclSubmitApps>charlie</aclSubmitApps>
-      <minResources>5000 mb,0vcores</minResources>
-    </queue>
-    <queue name="sample_reservable_queue">
-      <reservation></reservation>
-    </queue>
-  </queue>
-  
-  <queueMaxAMShareDefault>0.5</queueMaxAMShareDefault>
-  <queueMaxResourcesDefault>40000 mb,0vcores</queueMaxResourcesDefault>
-</allocations>
-```
-
-
-Note : The configuration file must be set for all the nodes in the cluster 
-
-
-* configurare i parametri scelti
-* Configurare yarn
-* configurare ec
-* avviare dfsio
-
-## Comandi 
-bin/hdfs ec -listPolicies  --> Lists all (enabled, disabled and removed) erasure coding policies registered in HDFS. Only the enabled policies are suitable for use with the setPolicy command.
+Note : All experiments have the parameter configuration described in https://hadoop.apache.org/docs/r3.3.5/hadoop-project-dist/hadoop-common/SingleCluster.html
 
 
 ## Experiment 1
+
+* parameters : 
+  * dfs.datanode.handler.count : 20 
+  * mapreduce.job.reduces : 2
+  * mapreduce.reduce.resource.vcores : 2
+  * yarn.resourcemanager.scheduler.class : org.apache.hadoop.yarn.server.resourcemanager.scheduler.fair.FairScheduler (non mi permette di avviare il resourcemenager) <sup>[[20]](References.md#fair_scheduler)</sup>
 
 * EC policy : RS-10-4-1024k   <sup>[[5]](References.md#EC)</sup>
 
 ```bash
 $ hdfs ec -enablePolicy -policy RS-10-4-1024k
 ```
-Riesco a settare la policy ma mi da un warning per cui il cluster non supporta 
-
-
-
-* parameters : 
-  * dfs.datanode.handler.count : 20 
-  * mapreduce.job.reduces : 2
-  * mapreduce.reduce.resource.vcores : 2
-  * yarn.resourcemanager.scheduler.class : org.apache.hadoop.yarn.server.resourcemanager.scheduler.fair.FairScheduler  --> già settato in share/hadoop/tools/sls/sample-conf
+Settata la policy, ho un errore per cui il cluster non supporta il tipo di policy visto che richiede un numero maggiore di nodi (14)
 
 * dfsio
   * write
   * nrFiles 16
   * fileSize 1GB
 
-  bin/hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-client-jobclient-3.3.5-tests.jar TestDFSIO -write -nrFiles 16 -fileSize 1GB
+bin/hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-client-jobclient-3.3.5-tests.jar TestDFSIO -write -nrFiles 16 -fileSize 1GB
 
-  https://stackoverflow.com/questions/4228047/java-lang-noclassdeffounderror-in-junit
+Number of map tasks : 16 (terminal output)
+ThreadsRunnable	: 17 (ResourceManager web GUI --> Tools --> Server metrics)
+Active threads : 215 (ResourceManager web GUI --> Tools --> Server stacks)
+
+
+
+
+* in map-site.xml
+<property>
+        <name>mapreduce.jobhistory.webapps.address</name>
+        <value>localhost:19888</value>
+</property>
+
+* bin/yarn application -list (mentre eseguo il comando)
+
