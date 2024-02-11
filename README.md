@@ -14,7 +14,7 @@ Il file system è virtualmente distribuito perché i vari componenti sono dei co
 
 # Cose da fare
 * Approfondimento parametri di configurazione per scheduling e calcolo (timeouts, num mappers, num reducers, buffer size, scheduling policy, Resource Profiles, num threads, mb, vcores, ...)
-* Esperimenti con workload DFSIO (variabili di risposta : num threads, num mappers, num reducers)
+* Esperimenti con workload DFSIO (variabili di risposta DataNode : num threads, num mappers, num reducers)
 
 
 

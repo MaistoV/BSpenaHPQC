@@ -26,11 +26,16 @@
 * https://data-flair.training/blogs/hadoop-architecture/
 * https://ercoppa.github.io/HadoopInternals/HadoopConfigurationParameters.html
 * https://kontext.tech/article/265/default-ports-used-by-hadoop-services-hdfs-mapreduce-yarn  (porti)
+* https://hadoop.apache.org/docs/r3.3.5/hadoop-project-dist/hadoop-common/CommandsManual.html
 
 ## mapreduce
 * https://hadoop.apache.org/docs/r3.3.5/hadoop-mapreduce-client/hadoop-mapreduce-client-core/MapReduceTutorial.html
 * https://hadoop.apache.org/docs/r3.3.5/hadoop-mapreduce-client/hadoop-mapreduce-client-core/mapred-default.xml
+* https://hadoop.apache.org/docs/r3.3.5/hadoop-mapreduce-client/hadoop-mapreduce-client-core/MapredCommands.html
 * https://cwiki.apache.org/confluence/display/HADOOP2/HowManyMapsAndReduces#
+
+## Yarn
+* https://hadoop.apache.org/docs/r3.3.5/hadoop-yarn/hadoop-yarn-site/YarnCommands.html
 
 ## hdfs
 * https://hawq.apache.org/docs/userguide/2.3.0.0-incubating/reference/HDFSConfigurationParameterReference.html
@@ -51,10 +56,6 @@
 ## EC e RS
 * https://www.geeksforgeeks.org/what-is-reed-solomon-code/
 * https://docs.cloudera.com/HDPDocuments/HDP3/HDP-3.1.0/data-storage/content/erasure_coding_examples.html
-
-## Commands
-* https://hadoop.apache.org/docs/r3.3.5/hadoop-yarn/hadoop-yarn-site/YarnCommands.html
-* https://hadoop.apache.org/docs/r3.3.5/hadoop-project-dist/hadoop-common/CommandsManual.html
 
 ## Note 
 * Per configurare la dimensione del block modificare la proprietà dfs.block.size in hdfs-site.xml (https://data-flair.training/blogs/data-block/)
