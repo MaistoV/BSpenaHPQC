@@ -7,8 +7,8 @@ Il file system è virtualmente distribuito perché i vari componenti sono dei co
 # Table of Contents
 1. [Apache Hadoop](Hadoop.md)
 1. [Environment Setup](Setup.md)
-    * [Overview](Setup.md#Overview)
-        *  [Hadoop 3.3.5](Setup.md#hadoop_3.3.5)
+    * [Overview](#Overview)
+        *  [Hadoop 3.3.5](#hadoop_3.3.5)
     * 
 1. [Parameters Analisys ???](Parameters.md)
 1. [Exeperiments ???](Experiments.md)
