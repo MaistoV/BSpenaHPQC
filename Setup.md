@@ -1,4 +1,5 @@
 # Environment Setup
+
 ## Overview <a name="Overview"></a>
 Virtual machine running **Ubuntu 22.04 LTS** :
   * 8 GB of RAM 
