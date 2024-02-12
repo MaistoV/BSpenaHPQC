@@ -1,4 +1,6 @@
 # Apache Hadoop
+
+## Introduction
 Apache Hadoop software library <sup>[[1]](References.md#hadoop)</sup> is a **freamwork** used for the distributed processing of massive datasets across **clusters** of commodity hardware. Hadoop Cluster is a computational cluster used for storing and analyzing huge amounts of unstructured or structured data in a distributed computing environment. Hadoop has a **master-slave** architecture<sup>[[2]](References.md#hadoop_architecture)</sup> :
 * **Master Node** : There is one per cluster. It assigns tasks to the slave nodes. The master node stores metadata and manages the resources across the cluster.
 * **Slave Nodes** : Store data and perform the computing.
