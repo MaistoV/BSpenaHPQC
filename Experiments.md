@@ -6,7 +6,24 @@ The experiment script has two phases:
 * Execution Phase
 
 ## Configuration Phase <a name="confphase"></a>
-During this phase, the user will set the parameters in the *test_list.csv* file. 
+During this phase, the user will set the parameters in the *test_list.csv* file :
+* **Configuration parameters** per the three Hadoop layers :
+    * [HDFS](Parameters.md#hdfsparanalysis)
+    * [MapReduce](Parameters.md#maprredparanalysis)
+    * [YARN](Parameters.md#yarnparanalysis)
+* **DFSIO Benchmark parameters and values**<sup>[[17]](References.md#dfsio)</sup><sup>[[18]](References.md#benchmark)</sup> :
+  * **-write** : Runs the write test.
+  * **-read** : Runs the read test.
+  * **-clean** : Runs the clean up of the results.
+  * **-nrFiles** : The number of files (equal to the number of map tasks).
+  * **-fileSize** : The size of a file to generate B|KB|MB|GB|TB is allowed.
+  * **-resFile** : Set the file name where the results will be saved.
+  * **-bufferSize** : The buffer size flag describes the length of the write buffer in bytes.
+
+> [!NOTE]
+> By deafult the results are saved in TestDFSIO_results.log file in /benchmarks/TestDFSIO directory.
+>
+> The read test of TestDFSIO does not generate its own input files. For this reason, it is a convenient practice to first run a write test and then follow-up with a read test (using the same parameters).
 
 
 ## Execution Phase <a name="exphase"></a>
@@ -26,35 +43,16 @@ During this phase, the user will set the parameters in the *test_list.csv* file.
     3.2. Raccogliere i valori delle variabili di risposta in una riga di un file CSV (test_result.csv).
 
 
-## DFSIO <a name="dfsio"></a>
-DFSIO<sup>[[18]](References.md#dfsio)</sup><sup>[[19]](References.md#benchmark)</sup> is a built-in benchmark tool for HDFS I/O test, it runs a MapReduce job. The syntax for running a DFSIO test is as follows:
+
+The syntax for running a DFSIO test is as follows:
 
 ```bash
 $ hadoop jar $HADOOP_HOME/hadoop-*test*.jar TestDFSIO -read | -write | -clean [-nrFiles N] [-fileSize MB] [-resFile resultFileName] [-bufferSize Bytes]
 ```
-and each flag has a specific function :
-* **-write** : Runs the write test.
-* **-read** : Runs the read test.
-* **-clean** : Runs the clean up of the results.
-* **-nrFiles** : The number of files (equal to the number of map tasks).
-* **-fileSize** : The size of a file to generate B|KB|MB|GB|TB is allowed.
-* **-resFile** : Set the file name where the results will be saved, by deafult the results are saved in TestDFSIO_results.log file in /benchmarks/TestDFSIO directory.
-* **-bufferSize** : The buffer size flag describes the length of the write buffer in bytes.
 
 * If there are outputs, use fs commands to see the contents e.g.
 hadoop fs -cat /benchmarks/TestDFSIO/io_write/part*
 
-
-
-> [!NOTE]
-> The read test of TestDFSIO does not generate its own input files. For this reason, it is a convenient practice to first run a write test and then follow-up with a read test (using the same parameters).
-
-
-
-
-* variables of interest : num threads, num mappers, num reducers
-* independent factors :
-* Input : worload DFSIO (lanciati in parallelo agli script di misura)
 
 
 ## ?????
@@ -73,18 +71,6 @@ hadoop fs -cat /benchmarks/TestDFSIO/io_write/part*
 * Logs : Into /logs directory
 
 
-## Experiments Steps ???  <a name="exsteps"></a>
-All experiments follow this steps :
-1. Configuration of 
-    * Selected parameters
-    * YARN ???
-    * EC ???
-1. Execution of the experiment : 
-    * Start daemons
-    * Execute commands 4-5 (https://hadoop.apache.org/docs/r3.3.5/hadoop-project-dist/hadoop-common/SingleCluster.html)
-    * Execute dfsio test
-    * Stop all deamons
-1. Analysis of the variables of interest 
 
 Note : All experiments have the parameters configuration described in https://hadoop.apache.org/docs/r3.3.5/hadoop-project-dist/hadoop-common/SingleCluster.html
 

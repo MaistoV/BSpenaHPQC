@@ -21,8 +21,8 @@ In this chapter, we will see a detailed description of some parameters.
 | dfs.namenode.handler.count | 10 | hdfs-site.xml/core-site.xml | The number of Namenode RPC server threads that listen to requests from clients |
 | dfs.blocksize | 134217728 | hdfs-site.xml | The default block size for new files, in bytes |
 | dfs.namenode.ec.system.default.policy | RS-6-3-1024k | hdfs-site.xml | The default erasure coding policy name will be used on the path if no policy name is passed |
-| dfs.replication | | |Default block replication |
-| dfs.namenode.replication.min | ||Minimal block replication |
+| dfs.replication | 3 | hdfs-site.xml |Default block replication |
+| dfs.namenode.replication.min | 1 |hdfs-site.xml |Minimal block replication |
 
 
 ### DataNode <a name="datanodeparanalysis"></a>
@@ -30,10 +30,10 @@ In this chapter, we will see a detailed description of some parameters.
 | :---: | :---: | :---: | :---: |
 | dfs.datanode.handler.count | 10 | hdfs-site.xml/core-site.xml| The number of server threads for the datanode |
 |dfs.stream-buffer-size | 4096 |hdfs-site.xml | The size of buffer to stream files|
-|dfs.datanode.fsdatasetcache.max.threads.per.volume | 4 | hdfs-site.xml | The maximum number of threads per volume to use for caching new data on the datanode|
+|dfs.datanode.fsdatasetcache.<br>max.threads.per.volume | 4 | hdfs-site.xml | The maximum number of threads per volume to use for caching new data on the datanode|
 |dfs.datanode.volumes.replica-add.threadpool.size | ||Specifies the maximum number of threads to use for adding block in volume |
-|dfs.datanode.max.transfer.threads | ||Specifies the maximum number of threads to use for transferring data in and out of the DataNode |
-|dfs.datanode.data.dir |||Comma separated list of paths on the local filesystem of a DataNode |
+|dfs.datanode.max.transfer.threads | 4096|hdfs-site.xml|Specifies the maximum number of threads to use for transferring data in and out of the DataNode |
+|dfs.datanode.data.dir |file://${hadoop.tmp.dir}/dfs/data|hdfs-site.xml|Comma separated list of paths on the local filesystem of a DataNode |
 
 
 ## MapReduce <a name="maprredparanalysis"></a> <sup>[[14]](References.md#mapred_default_xml)</sup>
@@ -48,7 +48,7 @@ In this chapter, we will see a detailed description of some parameters.
 |mapreduce.reduce.resource.vcores | 1 | mapred-site.xml | Sets the CPU requested for the all reduce task containers to the value  |
 
 
-## YARN <a name="yarnparanalysis"></a> <sup>[[15]](References.md#yarn_default_xml)</sup>
+## YARN <a name="yarnparanalysis"></a> <sup>[[15]](References.md#yarn_default_xml)</sup><sup>[[16]](References.md#yarn_resource_configuration)</sup>
 
 ### ResourceMenager <a name="resourcemanagerparanalysis"></a>
 | Parameter | Default Value | Configuration File | Description |
