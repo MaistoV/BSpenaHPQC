@@ -1,13 +1,14 @@
 # Environment Setup
 
-## Overview <a name="Overview"></a>
+## Overview <a name="overview"></a>
 Virtual machine running **Ubuntu 22.04 LTS** :
   * 8 GB of RAM 
   * 4 cores
   * 150 GB of memory
 
-## Tools
-### Java 1.8
+## Tools <a name="tool"></a>
+
+### Java 1.8 <a name="java1.8"></a>
 * Install
 ```bash
 $ sudo apt install openjdk-8-jdk
@@ -22,25 +23,22 @@ $ sudo reboot
 $ echo $JAVA_HOME                               
 ```
 
-### Maven 3.6
+### Maven 3.6 <a name="maven3.6"></a>
 ```bash
 sudo apt-get -y install maven
 ```
 
-> [!NOTE]
-> [Here](https://maven.apache.org/guides/getting-started/index.html) the Maven doc.
-
-### Hadoop 3.3.5 <a name="hadoop_3.3.5"></a>
+### Hadoop 3.3.5 <a name="hadoop3"></a>
 ```bash
 $ git clone https://github.com/apache/hadoop.git --branch rel/release-3.3.5 --single-branch
 ```
 
-### Native libraries
+### Native libraries <a name="nl"></a>
 ```bash
 $ sudo apt-get -y install build-essential autoconf automake libtool cmake zlib1g-dev pkg-config libssl-dev libsasl2-dev
 ```
 
-### Protocol Buffers 3.7.1
+### Protocol Buffers 3.7.1 <a name="pb3.7"></a>
 It is required to build native code
 ```bash
 $ curl -L -s -S https://github.com/protocolbuffers/protobuf/releases/download/v3.7.1/protobuf-java-3.7.1.tar.gz -o protobuf-3.7.1.tar.gz
@@ -50,7 +48,7 @@ $ ./configure
 $ make -j$(nproc)
 $ sudo make install
 ```
-### Other Packages
+### Other Packages <a name="op"></a>
 * Snappy compression (only used for hadoop-mapreduce-client-nativetask)
 ```bash
 $ sudo apt-get install snappy libsnappy-dev
@@ -68,7 +66,7 @@ $ sudo apt-get install fuse libfuse-dev
 $ sudo apt-get install libzstd1-dev
 ```
 
-### SSH and PDSH
+### SSH and PDSH <a name="ssh"></a>
 * Install 
 ```bash
 $ sudo apt-get install ssh
@@ -86,15 +84,12 @@ $ cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
 $ chmod 0600 ~/.ssh/authorized_keys
 ```
 
-## Build ???
+## Building Hadoop <a name="build"></a>
+To build Hadoop from within the build enviroment run the following command :
+
 ```bash
-$ mvn package -Pdist -Dtar -DskipTests
-$ mvn compile -Pdist -Dtar -DskipTests
-$ mvn package -Pdist,native -DskipTests -Dtar   # https://hadoop.apache.org/docs/current/hadoop-project-dist/hadoop-common/NativeLibraries.html
+$ mvn package -Pdist,native -DskipTests -Dtar
 ```
-
-
-* hadoop/hadoop-dist/target/hadoop-3.3.5/
-
-## EC 
-bin/hdfs ec -listPolicies  --> Lists all (enabled, disabled and removed) erasure coding policies registered in HDFS. Only the enabled policies are suitable for use with the setPolicy command.
+* **-DskipTests** flag : Makes a build without running the unit tests. 
+* **-Pdist** and **-Dtar** flags :  Produce a distribution with a .tar.gz file extension.
+* **native** flag : Build the native hadoop library.

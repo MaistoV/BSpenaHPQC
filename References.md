@@ -3,8 +3,6 @@
 1. <a id="hadoop_architecture"></a> [Apache Hadoop Architecture – HDFS, YARN & MapReduce](https://techvidvan.com/tutorials/hadoop-architecture/)
 1. <a id="hadoop_features"></a> [10 Features Of Hadoop That Made It The Most Popular](https://data-flair.training/blogs/features-of-hadoop-and-design-principles/)
 1. <a id="hdfs_architecture"></a> [HDFS Architecture](https://hadoop.apache.org/docs/r3.3.5/hadoop-project-dist/hadoop-hdfs/HdfsDesign.html)
-1. <a id="EC"></a> [HDFS Erasure Coding](https://hadoop.apache.org/docs/r3.3.5/hadoop-project-dist/hadoop-hdfs/HDFSErasureCoding.html)
-1. <a id="RS"></a> [What is Reed–Solomon Code?](https://www.geeksforgeeks.org/what-is-reed-solomon-code/)
 1. <a id="mapred_tutorial"></a> [MapReduce Tutorial](https://hadoop.apache.org/docs/r3.3.5/hadoop-mapreduce-client/hadoop-mapreduce-client-core/MapReduceTutorial.html)
 1. <a id="mapred_paper"></a> "MapReduce: Simplified Data Processing on Large Cluster",Jeffrey Dean,Sanjay Ghemawat
 1. <a id="mapred_flow"></a> [Hadoop MapReduce Flow – How data flows in MapReduce?](https://data-flair.training/blogs/hadoop-mapreduce-flow/)
@@ -12,8 +10,9 @@
 1. <a id="yarn_intro"></a> [Introduction to YARN](https://www.youtube.com/watch?v=5vmP1-6xd6Y&ab_channel=OracleLearning)
 1. <a id="yarn_tutorial"></a> [Hadoop Yarn Tutorial for Beginners](https://data-flair.training/blogs/hadoop-yarn-tutorial/)
 1. <a id="yarn_app"></a> [Hadoop: Writing YARN Applications](https://hadoop.apache.org/docs/r3.3.5/hadoop-yarn/hadoop-yarn-site/WritingYarnApplications.html)
-1. <a id="cluster_setup"></a> [Hadoop Cluster Setup](https://hadoop.apache.org/docs/r3.3.5/hadoop-project-dist/hadoop-common/ClusterSetup.html)  
+1. <a id="cluster_setup"></a> [Hadoop Cluster Setup](https://hadoop.apache.org/docs/r3.3.5/hadoop-project-dist/hadoop-common/ClusterSetup.html) 
 1. <a id="hdfs_default_xml"></a> [hdfs-defult.xml File](https://hadoop.apache.org/docs/r3.3.5/hadoop-project-dist/hadoop-hdfs/hdfs-default.xml)
+1. <a id="mapred_default_xml"></a> [mapred-default.xml File](https://hadoop.apache.org/docs/r3.3.5/hadoop-mapreduce-client/hadoop-mapreduce-client-core/mapred-default.xml)
 1. <a id="yarn_default_xml"></a> [yarn-defult.xml File](https://hadoop.apache.org/docs/r3.3.5/hadoop-yarn/hadoop-yarn-common/yarn-default.xml)
 1. <a id="yarn_resource_configuration"></a> [Hadoop: YARN Resource Configuration](https://hadoop.apache.org/docs/r3.3.5/hadoop-yarn/hadoop-yarn-site/ResourceModel.html)
 1. <a id="dfsio"></a> [Distributed I/O Benchmark of HDFS](https://bdaafall2015.readthedocs.io/en/latest/dfsio.html)
@@ -21,12 +20,25 @@
 1. <a id="fair_scheduler"></a> [Hadoop: Fair Scheduler](https://hadoop.apache.org/docs/r3.3.5/hadoop-yarn/hadoop-yarn-site/FairScheduler.html)
 
 
-# References Utili
+# Useful References <a name="usefullref"></a>
+
+* [Hadoop HDFS Data Read and Write Operations](https://data-flair.training/blogs/hadoop-hdfs-data-read-and-write-operations/)
+* [Rack Awareness in Hadoop HDFS – An Introductory Guide](https://data-flair.training/blogs/rack-awareness-hadoop-hdfs/)
+* [HDFS Erasure Coding](https://hadoop.apache.org/docs/r3.3.5/hadoop-project-dist/hadoop-hdfs/HDFSErasureCoding.html)
+* [What is Reed–Solomon Code?](https://www.geeksforgeeks.org/what-is-reed-solomon-code/)
+* [How Hadoop MapReduce Works – MapReduce Tutorial](https://data-flair.training/blogs/how-hadoop-mapreduce-works/)
+
+* [Maven Getting Started Guide](https://maven.apache.org/guides/getting-started/index.html)
+
+
+* https://stackoverflow.com/questions/53293102/hadoop-multiple-datanode-configuration-in-pseudo-distributed-mode
+
 ## hadoop
 * https://data-flair.training/blogs/hadoop-architecture/
 * https://ercoppa.github.io/HadoopInternals/HadoopConfigurationParameters.html
 * https://kontext.tech/article/265/default-ports-used-by-hadoop-services-hdfs-mapreduce-yarn  (porti)
 * https://hadoop.apache.org/docs/r3.3.5/hadoop-project-dist/hadoop-common/CommandsManual.html
+* https://hadoop.apache.org/docs/r3.3.5/hadoop-project-dist/hadoop-common/NativeLibraries.html
 
 ## mapreduce
 * https://hadoop.apache.org/docs/r3.3.5/hadoop-mapreduce-client/hadoop-mapreduce-client-core/MapReduceTutorial.html
@@ -53,9 +65,7 @@
 ## issue searcher
 * https://issues.apache.org/jira/browse/ZOOKEEPER-4802?jql=
 
-## EC e RS
-* https://www.geeksforgeeks.org/what-is-reed-solomon-code/
-* https://docs.cloudera.com/HDPDocuments/HDP3/HDP-3.1.0/data-storage/content/erasure_coding_examples.html
+
 
 ## Note 
 * Per configurare la dimensione del block modificare la proprietà dfs.block.size in hdfs-site.xml (https://data-flair.training/blogs/data-block/)
