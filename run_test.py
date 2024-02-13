@@ -4,8 +4,7 @@ if __name__=='__main__':
 #2 Read test_list.csv file 
     #2.1 Save the parameters in a structure (dictionary/dataframe ???)
 
-#3 Parameters configuration in *-site.xml file
-    #3.1 Comparing parameters to identify the right xml file
+#3 Comparing parameters to identify the *-site.xml file 
 
     # Solution 1: Comparing name fild with strings such as "dfs","mapreduce" and "yarn"
     for i in parameters :                       # Parameters is a dummy structure
@@ -27,3 +26,5 @@ if __name__=='__main__':
 #6 Start the measurement scripts
     #6.1 Read the results in different structures (dictionary/dataframe ???)
     #6.2 Write results in test_result.csv
+
+#7 Clean up test results
