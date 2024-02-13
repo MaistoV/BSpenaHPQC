@@ -22,7 +22,6 @@ During this phase, the user will set the parameters in the *test_list.csv* file 
 
 > [!NOTE]
 > By deafult the results are saved in TestDFSIO_results.log file in /benchmarks/TestDFSIO directory.
->
 > The read test of TestDFSIO does not generate its own input files. For this reason, it is a convenient practice to first run a write test and then follow-up with a read test (using the same parameters).
 
 

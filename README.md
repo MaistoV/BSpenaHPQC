@@ -32,7 +32,7 @@ Il file system è virtualmente distribuito perché i vari componenti sono dei co
 1. [Exeperiment Script](Experiments.md)
     * [Introdution](Experiments.md#scriptintro)
     * [Configuration Phase](Experiments.md#confphase)
-    * [Configuration Phase](Experiments.md#exphase)
+    * [Execution Phase](Experiments.md#exphase)
 1. [Troubleshooting](Troubleshooting.md)
 1. [References](References.md)
     * [Useful References](References.md#usefullref)
