@@ -1,30 +1,52 @@
+import pandas
+from lxml import etree as ET
+
+
 if __name__=='__main__':
-#1 Stop hdfs and yarn deamons
 
-#2 Read test_list.csv file 
-    #2.1 Save the parameters in a structure (dictionary/dataframe ???)
+#1 Read test_list.csv file and saves the parameters in a dataframe
+    dataframe = pandas.read_csv('test_list.csv',names = ['dfs.namenode.handler.count','dfs.datanode.handler.count','mapreduce.job.reduces'])
+    dataframe.index = ['test1','test2']
 
-#3 Comparing parameters to identify the *-site.xml file 
+# For each dataframe row are executed the other steps
+    i = 1
+    while i < 3 :
+        test_num = 'test' + str(i)
+        
+#2 Configures the Hadoop clusters by setting **-site.xml* files
+    tree = ET.parse('hdfs-site.xml')                                    # Parse the XML file
+    root = tree.getroot()                                               # Get the root element
 
-    # Solution 1: Comparing name fild with strings such as "dfs","mapreduce" and "yarn"
-    for i in parameters :                       # Parameters is a dummy structure
-        if "dfs" in parameters.name :           # Parameters.name is the name field 
-                save_to_hdfs_site()             # Start the right function for the parameters configuration
-        # same goes for mapreduce and yarn
+    # Effettuare la rimozione delle property già presenti
 
-    # Solution 2: Comparing parameters with https://hadoop.apache.org/docs/r3.3.5/hadoop-project-dist/hadoop-hdfs/hdfs-default.xml
-    # (same goes for mapreduce/yarn-default.xml)
+    # Aggingere controllo se il valore è un valore corretto
 
-#4 Start the cluster in pseudo-distributed mode
-    #4.1 Format the filesystem
-    #4.2 Start hdfs and yarn deamons
-    #4.3 Make the HDFS directories required to execute MapReduce jobs
-    #4.4 Copy the input files into the distributed filesystem
 
-#5 Start the DSFIO test
+    property = ET.Element('property')                                     # Create property,name and value elements
+    name = ET.Element('name')
+    value = ET.Element('value')
 
-#6 Start the measurement scripts
-    #6.1 Read the results in different structures (dictionary/dataframe ???)
-    #6.2 Write results in test_result.csv
+    name.text = 'dfs.namenode.handler.count'                                          # Set the new tags
+    value.text = str(dataframe.at[test_num,'dfs.namenode.handler.count'])
 
-#7 Clean up test results
+    root.append(property)                                               # Add the new elements to the root element
+    property.append(name)
+    property.append(value)
+
+    tree.write('hdfs-site.xml', encoding="utf-8", xml_declaration=True,pretty_print=True)       # Write on xml file
+
+#3 Start the cluster in pseudo-distributed mode
+    # Stop hdfs and yarn deamons (va fatto per ogni test)
+    # Format the filesystem (da commentare)
+    # Start hdfs and yarn deamons (va fatto per ogni test)
+    # Make the HDFS directories required to execute MapReduce jobs (va fatto per ogni test)
+    # Copy the input files into the distributed filesystem (va fatto per ogni test)
+
+#4 Start the DFSIO test (in background) -- > prima fork
+    # Start online test linuxperf (output elaborato prime colonne)
+                
+#5 Start the measurement scripts (offline test) (output secode colonne) and saves the results in *test_result.csv* file
+
+#6 Clean up test results 
+        
+    i = i + 1                                                           # Increment

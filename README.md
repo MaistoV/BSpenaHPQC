@@ -21,6 +21,7 @@ Il file system è virtualmente distribuito perché i vari componenti sono dei co
         * [Other Packages](Setup.md#op)
         * [SSH and PDSH](Setup.md#ssh)
     * [Building Hadoop](Setup.md#build)
+    * [Setting up Hadoop Cluster](Setup.md#cluster)
 1. [Cluster Configuration](Parameters.md)
     * [HDFS](Parameters.md#hdfsparanalysis)
         * [NameNode](Parameters.md#namenodeparanalysis)
@@ -29,18 +30,13 @@ Il file system è virtualmente distribuito perché i vari componenti sono dei co
     * [YARN](Parameters.md#yarnparanalysis)
         * [ResourceMenager](Parameters.md#resourcemanagerparanalysis)
         * [NodeMenager](Parameters.md#nodemagaerparanalysis)
-1. [Exeperiment Script](Experiments.md)
+1. [Test Cases Script](Experiments.md)
     * [Introdution](Experiments.md#scriptintro)
-    * [Configuration Phase](Experiments.md#confphase)
-    * [Execution Phase](Experiments.md#exphase)
+    * [Script Description](Experiments.md#scriptdesc)
 1. [Troubleshooting](Troubleshooting.md)
 1. [References](References.md)
     * [Useful References](References.md#usefullref)
 
-
-# Cose da fare
-* Risolvere problema fair scheduling
-* Capire profondità script di misura
 
 # Script
 1. Definire la lista test da eseguire in termini di parametri in un file di configurazione (test_list.csv):

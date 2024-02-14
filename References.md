@@ -10,6 +10,8 @@
 1. <a id="yarn_intro"></a> [Introduction to YARN](https://www.youtube.com/watch?v=5vmP1-6xd6Y&ab_channel=OracleLearning)
 1. <a id="yarn_tutorial"></a> [Hadoop Yarn Tutorial for Beginners](https://data-flair.training/blogs/hadoop-yarn-tutorial/)
 1. <a id="yarn_app"></a> [Hadoop: Writing YARN Applications](https://hadoop.apache.org/docs/r3.3.5/hadoop-yarn/hadoop-yarn-site/WritingYarnApplications.html)
+1. <a id="singlenode"></a> [Hadoop: Setting up a Single Node Cluster](https://hadoop.apache.org/docs/r3.3.5/hadoop-project-dist/hadoop-common/SingleCluster.html)
+1. <a id="clustermodes"></a> [Hadoop – Different Modes of Operation](https://www.geeksforgeeks.org/hadoop-different-modes-of-operation/)
 1. <a id="cluster_setup"></a> [Hadoop Cluster Setup](https://hadoop.apache.org/docs/r3.3.5/hadoop-project-dist/hadoop-common/ClusterSetup.html) 
 1. <a id="hdfs_default_xml"></a> [hdfs-defult.xml File](https://hadoop.apache.org/docs/r3.3.5/hadoop-project-dist/hadoop-hdfs/hdfs-default.xml)
 1. <a id="mapred_default_xml"></a> [mapred-default.xml File](https://hadoop.apache.org/docs/r3.3.5/hadoop-mapreduce-client/hadoop-mapreduce-client-core/mapred-default.xml)
@@ -17,7 +19,6 @@
 1. <a id="yarn_resource_configuration"></a> [Hadoop: YARN Resource Configuration](https://hadoop.apache.org/docs/r3.3.5/hadoop-yarn/hadoop-yarn-site/ResourceModel.html)
 1. <a id="dfsio"></a> [Distributed I/O Benchmark of HDFS](https://bdaafall2015.readthedocs.io/en/latest/dfsio.html)
 1. <a id="benchmark"></a> [Benchmarking and Stress Testing an Hadoop Cluster with TeraSort, TestDFSIO & Co.](https://www.michael-noll.com/blog/2011/04/09/benchmarking-and-stress-testing-an-hadoop-cluster-with-terasort-testdfsio-nnbench-mrbench/)
-1. <a id="fair_scheduler"></a> [Hadoop: Fair Scheduler](https://hadoop.apache.org/docs/r3.3.5/hadoop-yarn/hadoop-yarn-site/FairScheduler.html)
 
 
 # Useful References <a name="usefullref"></a>
@@ -28,6 +29,7 @@
 * [How Hadoop MapReduce Works – MapReduce Tutorial](https://data-flair.training/blogs/how-hadoop-mapreduce-works/)
 
 * [Maven Getting Started Guide](https://maven.apache.org/guides/getting-started/index.html)
+
 
 
 * https://stackoverflow.com/questions/53293102/hadoop-multiple-datanode-configuration-in-pseudo-distributed-mode
@@ -41,7 +43,6 @@
 
 ## mapreduce
 * https://hadoop.apache.org/docs/r3.3.5/hadoop-mapreduce-client/hadoop-mapreduce-client-core/MapReduceTutorial.html
-* https://hadoop.apache.org/docs/r3.3.5/hadoop-mapreduce-client/hadoop-mapreduce-client-core/mapred-default.xml
 * https://hadoop.apache.org/docs/r3.3.5/hadoop-mapreduce-client/hadoop-mapreduce-client-core/MapredCommands.html
 * https://cwiki.apache.org/confluence/display/HADOOP2/HowManyMapsAndReduces#
 
@@ -54,7 +55,6 @@
 
 ## installazione
 * https://www.adaltas.com/en/2020/08/04/installing-hadoop-from-source/
-* https://hadoop.apache.org/docs/r3.3.5/hadoop-project-dist/hadoop-common/SingleCluster.html
 
 ## maven
 * https://maven.apache.org/guides/getting-started/maven-in-five-minutes.html
