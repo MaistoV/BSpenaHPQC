@@ -1,7 +1,7 @@
 # Test Cases Script
 
 ## Introdution <a name="scriptintro"></a>
-The script is designed to run on a node set in **Pseudo-distributed Mode**. To run the script you need to set up the **test cases** in the in *test_list.csv* file; along the rows are set the teste cases, while parameters are set along the columns. There are two types of parameters :
+The script is designed to run on a node set in **Pseudo-distributed Mode**. To run the script you need to set up the **test cases** in the in *test_list.csv* file; along the rows are set the test cases, while parameters are set along the columns. There are two types of parameters :
 * **cluster configuration parameters** for the three Hadoop layers :
     * [HDFS](Parameters.md#hdfsparanalysis)
     * [MapReduce](Parameters.md#maprredparanalysis)
@@ -32,35 +32,32 @@ Configures the Hadoop clusters by setting **-site.xml* files.
 
 ### Step 3
 Start the cluster in pseudo-distributed mode : 
-  * Stop hdfs and yarn deamons
+  * Stop HDFS deamons,YARN deamons and JobHistoryServer
     ```bash
-  $ sbin/stop-dfs.sh
-  $ sbin/stop-yarn.sh
+  $ $HADOOP_HOME/sbin/stop-dfs.sh
+  $ $HADOOP_HOME/sbin/stop-yarn.sh
+  $ $HADOOP_HOME/sbin/mr-jobhistory-daemon.sh --config $HADOOP_HOME/etc/hadoop stop historyserver
     ```
   * Format the filesystem
   ```bash
-  $ bin/hdfs namenode -format
+  $ $HADOOP_HOME/bin/hdfs namenode -format
   ```
-  * Start hdfs and yarn deamons
+  * Start HDFS deamons,YARN deamons and JobHistoryServer
   ```bash
-  $ sbin/start-dfs.sh
-  $ sbin/start-yarn.sh
+  $ $HADOOP_HOME/sbin/start-dfs.sh
+  $ $HADOOP_HOME/sbin/start-yarn.sh
+  $ $HADOOP_HOME/sbin/mr-jobhistory-daemon.sh --config $HADOOP_HOME/etc/hadoop start historyserver
   ```
   * Make the HDFS directories required to execute MapReduce jobs
   ```bash
-  $ bin/hdfs dfs -mkdir /user
-  $ bin/hdfs dfs -mkdir /user/<username>
-  ```
-  * Copy the input files into the distributed filesystem
-  ```bash
-  $ bin/hdfs dfs -mkdir input
-  $ bin/hdfs dfs -put etc/hadoop/*.xml input
+  $ $HADOOP_HOME/bin/hdfs dfs -mkdir /user
+  $ $HADOOP_HOME/bin/hdfs dfs -mkdir /user/<username>
   ```
 
 ### Step 4 
-Start the DSFIO test
+Start the DFSIO test
 ```bash
-$ bin/hadoop jar $HADOOP_HOME/hadoop-*test*.jar TestDFSIO -read | -write [-nrFiles N] [-fileSize MB] [-resFile resultFileName] [-bufferSize Bytes]
+$ $HADOOP_HOME/bin/hadoop jar $HADOOP_HOME/hadoop-*test*.jar TestDFSIO -read | -write [-nrFiles N] [-fileSize MB] [-resFile resultFileName] [-bufferSize Bytes]
 ```
 
 ### Step 5
@@ -69,8 +66,9 @@ Start the measurement scripts and saves the results in *test_result.csv* file.
 ### Step 6
 Clean up test results using the same values used for run the test
 ```bash
-$ bin/hadoop jar $HADOOP_HOME/hadoop-*test*.jar TestDFSIO -clean [-nrFiles N] [-fileSize MB] [-resFile resultFileName] [-bufferSize Bytes]
+$ $HADOOP_HOME/bin/hadoop jar $HADOOP_HOME/hadoop-*test*.jar TestDFSIO -clean [-nrFiles N] [-fileSize MB] [-resFile resultFileName] [-bufferSize Bytes]
 ```
+
 
 
 ## ????
@@ -84,17 +82,19 @@ $ bin/hadoop jar $HADOOP_HOME/hadoop-*test*.jar TestDFSIO -clean [-nrFiles N] [-
   * yarn.resourcemanager.scheduler.class
 * **Response variables** : 
   * number of map tasks
-  * timeout for each map task
-  * timeout for each reduce task
-  * vcores allocated for the job execution
-  * memory allocated for the job execution
-  * bandwidth
+  * execution time of the job (elapsed time)
+  * vcores allocated for the application
+  * memory allocated for the application
+  * execution time of the map tasks
+  * execution time of the reduce tasks
 
 
 ## Comandi di misura
 * bin/yarn application -list
 * bin/yarn application -status <appID>
 * bin/mapred job -list all
+* bin/mapred job -history <jobID>
+* bin/mared job -status <jobID>
 
 
 ## ???
@@ -102,12 +102,9 @@ $ bin/hadoop jar $HADOOP_HOME/hadoop-*test*.jar TestDFSIO -clean [-nrFiles N] [-
   * NameNode - http://localhost:9870/
   * DataNode -  http://localhost:9864/
   * ResourceManager - http://localhost:8088/
-  * JobHistory - http://localhost:19888/ ???
-      * in map-site.xml
-      ```xml
-        <property>
-            <name>mapreduce.jobhistory.webapps.address</name>
-            <value>localhost:19888</value>
-        </property>
-      ```
+  * JobHistory - http://localhost:19888/
+     
 * Logs : Into /logs directory
+
+
+$HADOOP_HOME/bin/hadoop jar $HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-client-jobclient-3.3.5-tests.jar TestDFSIO -write -nrFiles 16 -fileSize 100MB

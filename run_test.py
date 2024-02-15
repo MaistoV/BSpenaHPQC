@@ -40,7 +40,6 @@ if __name__=='__main__':
     # Format the filesystem (da commentare)
     # Start hdfs and yarn deamons (va fatto per ogni test)
     # Make the HDFS directories required to execute MapReduce jobs (va fatto per ogni test)
-    # Copy the input files into the distributed filesystem (va fatto per ogni test)
 
 #4 Start the DFSIO test (in background) -- > prima fork
     # Start online test linuxperf (output elaborato prime colonne)

@@ -20,6 +20,10 @@
 1. <a id="dfsio"></a> [Distributed I/O Benchmark of HDFS](https://bdaafall2015.readthedocs.io/en/latest/dfsio.html)
 1. <a id="benchmark"></a> [Benchmarking and Stress Testing an Hadoop Cluster with TeraSort, TestDFSIO & Co.](https://www.michael-noll.com/blog/2011/04/09/benchmarking-and-stress-testing-an-hadoop-cluster-with-terasort-testdfsio-nnbench-mrbench/)
 
+* https://hadoop.apache.org/docs/r3.3.5/hadoop-mapreduce-client/hadoop-mapreduce-client-core/MapredCommands.html
+* https://hadoop.apache.org/docs/r3.3.5/hadoop-project-dist/hadoop-common/SingleCluster.html
+
+
 
 # Useful References <a name="usefullref"></a>
 * [Hadoop HDFS Data Read and Write Operations](https://data-flair.training/blogs/hadoop-hdfs-data-read-and-write-operations/)
@@ -43,7 +47,7 @@
 
 ## mapreduce
 * https://hadoop.apache.org/docs/r3.3.5/hadoop-mapreduce-client/hadoop-mapreduce-client-core/MapReduceTutorial.html
-* https://hadoop.apache.org/docs/r3.3.5/hadoop-mapreduce-client/hadoop-mapreduce-client-core/MapredCommands.html
+
 * https://cwiki.apache.org/confluence/display/HADOOP2/HowManyMapsAndReduces#
 
 ## Yarn

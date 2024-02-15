@@ -14,13 +14,13 @@ Virtual machine running **Ubuntu 22.04 LTS** :
 $ sudo apt install openjdk-8-jdk
 ```
 
-* Setting the JAVA_HOME environment variable 
+* Setting JAVA_HOME environment variable 
 ```bash
 $ sudo nano /etc/environment                    
 JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64"   # Add this line to the end of the file
 $ source /etc/environment                       
 $ sudo reboot                                   
-$ echo $JAVA_HOME                               
+$ echo $JAVA_HOME                         
 ```
 
 ### Maven 3.6 <a name="maven3.6"></a>
@@ -29,8 +29,15 @@ sudo apt-get -y install maven
 ```
 
 ### Hadoop 3.3.5 <a name="hadoop3"></a>
+* Install
 ```bash
 $ git clone https://github.com/apache/hadoop.git --branch rel/release-3.3.5 --single-branch
+```
+* Setting HADOOP_HOME environment variable
+```bash
+$ nano ~/.bashrc                                      # Open the bashrc file
+export HADOOP_HOME=/path/to/hadoop-3.3.5/direcotry    # Add at the end of the file
+$ source  ~/.bashrc                                   # For changes to take effect
 ```
 
 ### Native libraries <a name="nl"></a>

@@ -41,10 +41,10 @@ In this chapter, we will see a detailed description of some parameters.
 | mapreduce.job.maps | 2 | The number of map tasks is determinated by the number of input splits | The default number of map tasks per job |
 | mapreduce.job.reduces | 1 | mapred-site.xml | The default number of reduce tasks per job |
 |mapreduce.task.timeout | 600000 | mapred-site.xml | The number of milliseconds before a task will be terminated if it neither reads an input, writes an output, nor updates its status string|
-|mapreduce.map.resource.vcores | 1 |mapred-site.xml | Sets the CPU requested for the all map task containers to the value|
-|mapreduce.map.resource.memory-mb | 1024 | mapred-site.xml | Sets the memory requested for the all map task containers to the value in MB|
-|mapreduce.reduce.resource.memory-mb | 1024 | mapred-site.xml | Sets the memory requested for the all reduce task containers to the value in MB  |
-|mapreduce.reduce.resource.vcores | 1 | mapred-site.xml | Sets the CPU requested for the all reduce task containers to the value  |
+|mapreduce.map.cpu.vcores | 1 |mapred-site.xml | The number of virtual cores to request from the scheduler for each map task|
+|mapreduce.map.memory.mb | -1 | mapred-site.xml | The amount of memory to request from the scheduler for each map task|
+|mapreduce.reduce.cpu.vcores | 1 | mapred-site.xml | The amount of memory to request from the scheduler for each reduce task |
+|mapreduce.reduce.memory.mb | -1 | mapred-site.xml | Sets the memory requested for the all reduce task containers to the value in MB  |
 
 
 ## YARN <a name="yarnparanalysis"></a> <sup>[[17]](References.md#yarn_default_xml)</sup><sup>[[18]](References.md#yarn_resource_configuration)</sup>
