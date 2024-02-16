@@ -4,6 +4,7 @@ The Hadoop's cluster can be configured by setting the parameters of the three la
 * hdfs-site.xml.
 * yarn-site.xml.
 * mapred-site.xml.
+
 Besides. there are **read-only default configuration files** which contain parameters deafult values :
   * core-default.xml.
   * hdfs-default.xml. 
@@ -15,7 +16,7 @@ In this chapter, we will see a detailed description of some parameters.
 
 ## HDFS <a name="hdfsparanalysis"></a> <sup>[[15]](References.md#hdfs_default_xml)</sup>
 
-### NameNode <a name="namenodeparanalysis"></a>
+### NameNode
 | Parameter | Default Value | Configuration File | Description |
 | :---: | :---: | :---: | :---: |
 | dfs.namenode.handler.count | 10 | hdfs-site.xml/core-site.xml | The number of Namenode RPC server threads that listen to requests from clients |
@@ -24,7 +25,7 @@ In this chapter, we will see a detailed description of some parameters.
 | dfs.namenode.replication.min | 1 |hdfs-site.xml |Minimal block replication |
 
 
-### DataNode <a name="datanodeparanalysis"></a>
+### DataNode
 | Parameter | Default Value | Configuration File | Description |
 | :---: | :---: | :---: | :---: |
 | dfs.datanode.handler.count | 10 | hdfs-site.xml/core-site.xml| The number of server threads for the datanode |
@@ -49,16 +50,16 @@ In this chapter, we will see a detailed description of some parameters.
 
 ## YARN <a name="yarnparanalysis"></a> <sup>[[17]](References.md#yarn_default_xml)</sup><sup>[[18]](References.md#yarn_resource_configuration)</sup>
 
-### ResourceMenager <a name="resourcemanagerparanalysis"></a>
+### ResourceMenager
 | Parameter | Default Value | Configuration File | Description |
 | :---: | :---: | :---: | :---: |
 | yarn.resourcemanager.scheduler.class | org.apache.hadoop.yarn.<br>server.resourcemanager.<br>scheduler.capacity.<br>CapacityScheduler | yarn-site.xml | The class to use as the resource scheduler |
-| yarn.scheduler.minimum-allocation-vcores | 1 | yarn-site.xml | Minimum allocation for every container request at the RM in terms of virtual CPU cores |
+| yarn.scheduler.minimum-allocation-vcores | 1 | yarn-site.xml |The minimum allocation for every container request at the RM in terms of virtual CPU cores |
 | yarn.scheduler.maximum-allocation-vcores |4  | yarn-site.xml | The maximum allocation for every container request at the RM in terms of virtual CPU cores|
 |yarn.scheduler.minimum-allocation-mb| 1024 | yarn-site.xml | The minimum allocation for every container request at the RM in MBs|
 |yarn.scheduler.maximum-allocation-mb| 8192 | yarn-site.xml | The maximum allocation for every container request at the RM in MBs|
 
-### NodeMenager <a name="nodemagaerparanalysis"></a>
+### NodeMenager
 | Parameter | Default Value | Configuration File | Description |
 | :---: | :---: | :---: | :---: |
 |yarn.nodemanager.resource.memory-mb | -1 | yarn-site.xml | Defines total available resources on the NodeManager to be made available to running containers |

@@ -1,6 +1,5 @@
 # Environment Setup
 
-## Overview <a name="overview"></a>
 Virtual machine running **Ubuntu 22.04 LTS** :
   * 8 GB of RAM 
   * 4 cores
@@ -40,13 +39,14 @@ export HADOOP_HOME=/path/to/hadoop-3.3.5/direcotry    # Add at the end of the fi
 $ source  ~/.bashrc                                   # For changes to take effect
 ```
 
-### Native libraries <a name="nl"></a>
+### Libraries <a name="l"></a>
+
+* Native libraries
 ```bash
 $ sudo apt-get -y install build-essential autoconf automake libtool cmake zlib1g-dev pkg-config libssl-dev libsasl2-dev
 ```
 
-### Protocol Buffers 3.7.1 <a name="pb3.7"></a>
-It is required to build native code
+* Protocol Buffers 3.7.1 (required to build native code)
 ```bash
 $ curl -L -s -S https://github.com/protocolbuffers/protobuf/releases/download/v3.7.1/protobuf-java-3.7.1.tar.gz -o protobuf-3.7.1.tar.gz
 $ mkdir protobuf-3.7-src
@@ -55,7 +55,7 @@ $ ./configure
 $ make -j$(nproc)
 $ sudo make install
 ```
-### Other Packages <a name="op"></a>
+
 * Snappy compression (only used for hadoop-mapreduce-client-nativetask)
 ```bash
 $ sudo apt-get install snappy libsnappy-dev
@@ -89,6 +89,16 @@ $ ssh localhost
 $ ssh-keygen -t rsa -P '' -f ~/.ssh/id_rsa
 $ cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
 $ chmod 0600 ~/.ssh/authorized_keys
+```
+
+### Python Libraries <a name="pl"></a>
+* pandas
+```bash
+$ pip install pandas
+```
+* requests ???
+```bash
+$ pip install requests
 ```
 
 ## Building Hadoop <a name="build"></a>

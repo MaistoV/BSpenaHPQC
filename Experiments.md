@@ -1,6 +1,4 @@
 # Test Cases Script
-
-## Introdution <a name="scriptintro"></a>
 The script is designed to run on a node set in **Pseudo-distributed Mode**. To run the script you need to set up the **test cases** in the in *test_list.csv* file; along the rows are set the test cases, while parameters are set along the columns. There are two types of parameters :
 * **cluster configuration parameters** for the three Hadoop layers :
     * [HDFS](Parameters.md#hdfsparanalysis)
@@ -24,6 +22,9 @@ The results of each test case will be saved in the rows of *test_result.csv* fil
 ## Script Description <a name="scriptdesc"></a>
 The script execution following steps.
 
+### Step 0
+Variables and structures needed
+
 ### Step 1
 Reads *test_list.csv* file and saves the parameters in a dataframe; for each dataframe row are executed the steps from 2 to 6.
 
@@ -31,13 +32,13 @@ Reads *test_list.csv* file and saves the parameters in a dataframe; for each dat
 Configures the Hadoop clusters by setting **-site.xml* files.
 
 ### Step 3
-Start the cluster in pseudo-distributed mode : 
+Start the cluster in pseudo-distributed mode : (using os module)
   * Stop HDFS deamons,YARN deamons and JobHistoryServer
-    ```bash
+  ```bash
   $ $HADOOP_HOME/sbin/stop-dfs.sh
   $ $HADOOP_HOME/sbin/stop-yarn.sh
   $ $HADOOP_HOME/sbin/mr-jobhistory-daemon.sh --config $HADOOP_HOME/etc/hadoop stop historyserver
-    ```
+  ```
   * Format the filesystem
   ```bash
   $ $HADOOP_HOME/bin/hdfs namenode -format
@@ -61,7 +62,9 @@ $ $HADOOP_HOME/bin/hadoop jar $HADOOP_HOME/hadoop-*test*.jar TestDFSIO -read | -
 ```
 
 ### Step 5
-Start the measurement scripts and saves the results in *test_result.csv* file. 
+Start the measurement scripts and saves the results in *test_result.csv* file. (using subprocess module)
+
+SCrivere python 3.10
 
 ### Step 6
 Clean up test results using the same values used for run the test
@@ -70,13 +73,17 @@ $ $HADOOP_HOME/bin/hadoop jar $HADOOP_HOME/hadoop-*test*.jar TestDFSIO -clean [-
 ```
 
 
+### Tenere conto di 
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+
 
 ## ????
+Motivare la scelta dei fattori (scheduling/calcolo) e le variabili di risposta (tempistiche)
 * **Indipendent Factors** : 
   * dfs.namenode.handler.count
   * dfs.datanode.handler.count
   * mapreduce.job.reduces
-  * mapreduce.reduce.resource.vcores
+  * mapreduce.reduce.cpu.vcores
   * yarn.scheduler.minimum-allocation-vcores
   * yarn.scheduler.maximum-allocation-vcores
   * yarn.resourcemanager.scheduler.class
@@ -88,6 +95,8 @@ $ $HADOOP_HOME/bin/hadoop jar $HADOOP_HOME/hadoop-*test*.jar TestDFSIO -clean [-
   * execution time of the map tasks
   * execution time of the reduce tasks
 
+* Motivare scelta parametri applicacioni
+* Definire job/applicazione nell'intro di hadoop
 
 ## Comandi di misura
 * bin/yarn application -list
