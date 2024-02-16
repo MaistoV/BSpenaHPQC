@@ -35,7 +35,7 @@ $ git clone https://github.com/apache/hadoop.git --branch rel/release-3.3.5 --si
 * Setting HADOOP_HOME environment variable
 ```bash
 $ nano ~/.bashrc                                      # Open the bashrc file
-export HADOOP_HOME=/path/to/hadoop-3.3.5/direcotry    # Add at the end of the file
+export HADOOP_HOME=/path/to/hadoop-3.3.5/directory    # Add at the end of the file
 $ source  ~/.bashrc                                   # For changes to take effect
 ```
 

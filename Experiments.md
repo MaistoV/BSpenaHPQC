@@ -52,7 +52,7 @@ Start the cluster in pseudo-distributed mode : (using os module)
   * Make the HDFS directories required to execute MapReduce jobs
   ```bash
   $ $HADOOP_HOME/bin/hdfs dfs -mkdir /user
-  $ $HADOOP_HOME/bin/hdfs dfs -mkdir /user/<username>
+  $ $HADOOP_HOME/bin/hdfs dfs -mkdir /user/$(whoami)
   ```
 
 ### Step 4 

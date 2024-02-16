@@ -1,6 +1,7 @@
 import pandas
 import xml.etree.ElementTree as ET
 import os
+import subprocess
 
 # Function to configure di parameters, it receives :
 # 1. the xml file root (configuration)
@@ -69,6 +70,9 @@ if __name__=='__main__':
             # Format the filesystem (da commentare)
             # Start hdfs and yarn deamons (va fatto per ogni test)
             # Make the HDFS directories required to execute MapReduce jobs (va fatto per ogni test)
+        os.system('$HADOOP_HOME/sbin/start-dfs.sh')
+        #os.system('$HADOOP_HOME/sbin/stop-dfs.sh')
+        #subprocess.run('$HADOOP_HOME/sbin/stop-dfs.sh',shell = True ,capture_output=True)
 
         #4 Start the DFSIO test (in background) -- > prima fork
             # Start online test linuxperf (output elaborato prime colonne)
