@@ -53,7 +53,7 @@ Start the cluster in pseudo-distributed mode : (using os module)
 ### Step 4 
 Start the DFSIO test
 ```bash
-$ $HADOOP_HOME/bin/hadoop jar $HADOOP_HOME/hadoop-*test*.jar TestDFSIO -read | -write [-nrFiles N] [-fileSize MB] [-resFile resultFileName] [-bufferSize Bytes]
+$ $HADOOP_HOME/bin/hadoop jar $HADOOP_HOME/share/hadoop/mapreduce/hadoop-*test*.jar TestDFSIO -read | -write [-nrFiles N] [-fileSize MB] [-resFile resultFileName] [-bufferSize Bytes]
 ```
 
 ### Step 5
@@ -62,10 +62,12 @@ Start the measurement scripts and saves the results in *test_result.csv* file. (
 SCrivere python 3.10
 
 ### Step 6
-Clean up test results using the same values used for run the test
-```bash
-$ $HADOOP_HOME/bin/hadoop jar $HADOOP_HOME/hadoop-*test*.jar TestDFSIO -clean [-nrFiles N] [-fileSize MB] [-resFile resultFileName] [-bufferSize Bytes]
+Clean up test results
+```python
+os.system('$HADOOP_HOME/bin/hadoop jar $HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-client-jobclient-3.3.5-tests.jar TestDFSIO -clean')
 ```
+
+$HADOOP_HOME/bin/hadoop jar $HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-client-jobclient-3.3.5-tests.jar TestDFSIO -write -nrFiles 16 -fileSize 100MB
 
 
 ### Tenere conto di 
@@ -109,6 +111,3 @@ Motivare la scelta dei fattori (scheduling/calcolo) e le variabili di risposta (
   * JobHistory - http://localhost:19888/
      
 * Logs : Into /logs directory
-
-
-$HADOOP_HOME/bin/hadoop jar $HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-client-jobclient-3.3.5-tests.jar TestDFSIO -write -nrFiles 16 -fileSize 100MB

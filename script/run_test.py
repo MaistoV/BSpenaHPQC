@@ -49,6 +49,7 @@ def update_xml(file,row,tuple):
 
     tree.write(file, encoding="utf-8", xml_declaration=True)        # Write on xml file
 
+
 # Function for the cluster configuration, it takes:
 #1. the path to the hdfs-site.xml
 #2. the tuple with hdfs parameters
@@ -78,6 +79,7 @@ if __name__=='__main__':
         config_cluster(path_to_hdfs_site,hdfs_p,path_to_mapred_site,mapred_p,path_to_yarn_site,yarn_p,row)
         
         #3 Start the cluster in pseudo-distributed mode
+        print("Step 3 : Start the cluster in pseudo-distributed mode \n")
             # Stop hdfs and yarn deamons (va fatto per ogni test)
             # Format the filesystem (da commentare)
             # Start hdfs and yarn deamons (va fatto per ogni test)
@@ -92,3 +94,6 @@ if __name__=='__main__':
         #5 Start the measurement scripts (offline test) (output secode colonne) and saves the results in *test_result.csv* file
 
         #6 Clean up test results 
+        print("Step 6 :Clean up test results \n")
+        os.system('$HADOOP_HOME/bin/hadoop jar $HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-client-jobclient-3.3.5-tests.jar TestDFSIO -clean')
+        
