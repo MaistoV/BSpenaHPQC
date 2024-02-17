@@ -1,21 +1,21 @@
 # Test Cases Script
-The script is designed to run on a node set in **Pseudo-distributed Mode**. To run the script you need to set up the **test cases** in the in *test_list.csv* file; along the rows are set the test cases, while parameters are set along the columns. There are two types of parameters :
+The script is designed to run on a node set in **Pseudo-Distributed Mode**. To run the script you need to set up the **test cases** in the in *test_list.csv* file, by setting the parameters along the columns. There are two types of parameters :
 * **cluster configuration parameters** for the three Hadoop layers :
     * [HDFS](Parameters.md#hdfsparanalysis)
     * [MapReduce](Parameters.md#maprredparanalysis)
     * [YARN](Parameters.md#yarnparanalysis)
 * **DFSIO benchmark parameters and values**<sup>[[19]](References.md#dfsio)</sup><sup>[[20]](References.md#benchmark)</sup> :
   * **-write** : Runs the write test.
-  * **-read** : Runs the read test.
+  * **-read** : Runs the read test. 
   * **-nrFiles** : The number of files (equal to the number of map tasks).
   * **-fileSize** : The size of a file to generate B|KB|MB|GB|TB is allowed.
   * **-resFile** : Set the file name where the results will be saved (by deafult the results are saved in TestDFSIO_results.log file in /benchmarks/TestDFSIO directory)
   * **-bufferSize** : The buffer size flag describes the length of the write buffer in bytes.
 
-The results of each test case will be saved in the rows of *test_result.csv* file.
+Missing parameters must be set as the tocken * , as convention. Besides, it is convenient to first run a write test and then follow-up with a read test (using the same parameters).
 
-> [!NOTE]
-> The read test of TestDFSIO does not generate its own input files. For this reason, it is a convenient practice to first run a write test and then follow-up with a read test (using the same parameters).
+The **response variables** can be captured throught an "online test" (like linuxperf), which is not implemented yed, and throught an "offline test". The results of each test case will be saved in the rows of *test_result.csv* file.
+
 
 ## Script Description <a name="scriptdesc"></a>
 The script execution following steps.
@@ -92,7 +92,7 @@ Motivare la scelta dei fattori (scheduling/calcolo) e le variabili di risposta (
   * execution time of the map tasks
   * execution time of the reduce tasks
 
-* Motivare scelta parametri applicacioni
+* Motivare scelta parametri applicazioni
 * Definire job/applicazione nell'intro di hadoop
 
 ## Comandi di misura

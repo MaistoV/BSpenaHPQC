@@ -32,7 +32,7 @@ sudo apt-get -y install maven
 ```bash
 $ git clone https://github.com/apache/hadoop.git --branch rel/release-3.3.5 --single-branch
 ```
-* Setting HADOOP_HOME environment variable
+* Setting HADOOP_HOME environment variable (necessary to run the test cases script)
 ```bash
 $ nano ~/.bashrc                                      # Open the bashrc file
 export HADOOP_HOME=/path/to/hadoop-3.3.5/directory    # Add at the end of the file
