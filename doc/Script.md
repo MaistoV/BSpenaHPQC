@@ -9,27 +9,22 @@ The script is designed to run on a node set in **Pseudo-distributed Mode**. To r
   * **-read** : Runs the read test.
   * **-nrFiles** : The number of files (equal to the number of map tasks).
   * **-fileSize** : The size of a file to generate B|KB|MB|GB|TB is allowed.
-  * **-resFile** : Set the file name where the results will be saved.
+  * **-resFile** : Set the file name where the results will be saved (by deafult the results are saved in TestDFSIO_results.log file in /benchmarks/TestDFSIO directory)
   * **-bufferSize** : The buffer size flag describes the length of the write buffer in bytes.
 
 The results of each test case will be saved in the rows of *test_result.csv* file.
 
 > [!NOTE]
-> By deafult the results are saved in TestDFSIO_results.log file in /benchmarks/TestDFSIO directory.
->
 > The read test of TestDFSIO does not generate its own input files. For this reason, it is a convenient practice to first run a write test and then follow-up with a read test (using the same parameters).
 
 ## Script Description <a name="scriptdesc"></a>
 The script execution following steps.
 
-### Step 0
-Variables and structures needed
-
 ### Step 1
 Reads *test_list.csv* file and saves the parameters in a dataframe; for each dataframe row are executed the steps from 2 to 6.
 
 ### Step 2
-Configures the Hadoop clusters by setting **-site.xml* files.
+Cluster configuration by setting **-site.xml* files.
 
 ### Step 3
 Start the cluster in pseudo-distributed mode : (using os module)

@@ -35,7 +35,7 @@ HDFS has a **master-slave architecture** :
 * **DataNode**  : There is one **slave daemon** per node in the cluster, it executes read/write operation from the file system’s client. The DataNode performs data blocks operations (creation, deletion and replication) and stores the actual data. Moreover, DataNodes ara gathered together in **racks**.
 
 > [!NOTE]
-> The deafult replication factor is 3, it generates an 200% overhead in storage space and other resources. The solution is the **Erasure Coding**, which provides the same level of fault-tolerance with much less storage space
+> The deafult replication factor is 3, it generates an 200% overhead in storage space and other resources. The solution is the **Erasure Coding**, which provides the same level of fault-tolerance with much less storage space.
 
 <p align="center">
   <img src="https://techvidvan.com/tutorials/wp-content/uploads/sites/2/2020/03/HDFS-Architecture.jpg" width="600">

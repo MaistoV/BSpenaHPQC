@@ -38,8 +38,7 @@ def update_xml(file,row,tuple):
 
 
 if __name__=='__main__':
-
-    #0 Variables and structures needed
+    
     # xml and csv files path
     path_to_hdfs_site = 
     #path_to_mapred_site =
