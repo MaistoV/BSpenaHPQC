@@ -1,7 +1,9 @@
 import pandas
 import xml.etree.ElementTree as ET
 import os
+import requests
 import subprocess
+import time
 
 # xml and csv files path
 path_to_hdfs_site = '/home/spena/Desktop/hdfs-site.xml'
@@ -14,6 +16,7 @@ path_to_test_list = '/home/spena/Desktop/test_list.csv'
 hdfs_p = ('dfs.namenode.handler.count','dfs.datanode.handler.count')
 mapred_p = ('mapreduce.job.reduces','mapreduce.reduce.cpu.vcores')
 yarn_p = ('yarn.scheduler.minimum-allocation-vcores','yarn.scheduler.maximum-allocation-vcores','yarn.resourcemanager.scheduler.class')
+
 
 
 # Function to configure di parameters, it receives :
@@ -34,9 +37,9 @@ def update_tags(root,n,v):
 
 
 # Function to Cofigure the xml file site, it receives :
-# 1. the xml fila path
-# 2. the dataframe row
-# 3. the tuple with the configuration parameters
+#1. the xml fila path
+#2. the dataframe row
+#3. the tuple with the configuration parameters
 def update_xml(file,row,tuple):    
     tree = ET.parse(file)                                           # Parse the XML file
     root = tree.getroot()  
@@ -64,9 +67,29 @@ def config_cluster(path_to_hdfs_site,hdfs_p,path_to_mapred_site,mapred_p,path_to
     #update_xml(path_to_yarn_site,row,yarn_p)
 
 
+# Function to start the cluster cluster
+def start_cluster():
+    os.system('$HADOOP_HOME/sbin/stop-dfs.sh')                    # Stop HDFS deamons,YARN deamons and JobHistoryServer
+    os.system('$HADOOP_HOME/sbin/stop-yarn.sh')
+    os.system('$HADOOP_HOME/sbin/mr-jobhistory-daemon.sh --config $HADOOP_HOME/etc/hadoop stop historyserver')
+
+    time.sleep(2)
+
+    os.system('$HADOOP_HOME/bin/hdfs namenode -format')           # Format the filesystem
+
+    time.sleep(2)
+
+    os.system('$HADOOP_HOME/sbin/start-dfs.sh')                   # Start hdfs and yarn deamons 
+    os.system('$HADOOP_HOME/sbin/start-dfs.sh')
+    os.system('$HADOOP_HOME/sbin/mr-jobhistory-daemon.sh --config $HADOOP_HOME/etc/hadoop start historyserver')
+
+    os.system('$HADOOP_HOME/bin/hdfs dfs -mkdir /user')           # Make the HDFS directories required to execute MapReduce jobs
+    os.system('$HADOOP_HOME/bin/hdfs dfs -mkdir /user/$(whoami)')
+
+
 if __name__=='__main__':
-    
-    #1 Read test_list.csv file and saves the parameters in a dataframe
+
+    #1. Read test_list.csv file and saves the parameters in a dataframe
     print("Step 1 : Read test_list.csv \n")
     dataframe = pandas.read_csv(path_to_test_list)                  
     dataframe.index = ['test1','test2']
@@ -78,22 +101,21 @@ if __name__=='__main__':
         print("Step 2 : Cluster Configuration \n")
         config_cluster(path_to_hdfs_site,hdfs_p,path_to_mapred_site,mapred_p,path_to_yarn_site,yarn_p,row)
         
-        #3 Start the cluster in pseudo-distributed mode
+        #3. Start the cluster in pseudo-distributed mode
         print("Step 3 : Start the cluster in pseudo-distributed mode \n")
-            # Stop hdfs and yarn deamons (va fatto per ogni test)
-            # Format the filesystem (da commentare)
-            # Start hdfs and yarn deamons (va fatto per ogni test)
-            # Make the HDFS directories required to execute MapReduce jobs (va fatto per ogni test)
-        os.system('$HADOOP_HOME/sbin/start-dfs.sh')
-        #os.system('$HADOOP_HOME/sbin/stop-dfs.sh')
-        #subprocess.run('$HADOOP_HOME/sbin/stop-dfs.sh',shell = True ,capture_output=True)
-
-        #4 Start the DFSIO test (in background) -- > prima fork
+        start_cluster()
+        
+        #4. Start the DFSIO test (in background) -- > prima fork
+            
+            
             # Start online test linuxperf (output elaborato prime colonne)
+        #subprocess.run('$HADOOP_HOME/sbin/stop-dfs.sh',shell = True ,capture_output=True)
                     
-        #5 Start the measurement scripts (offline test) (output secode colonne) and saves the results in *test_result.csv* file
+        #5. Start the measurement scripts (offline test) (output secode colonne) and saves the results in *test_result.csv* file
+        #response = requests.get('http://localhost:19888/ws/v1/history/mapreduce/jobs')
+        #data = response.text
+        #print(data)
 
         #6 Clean up test results 
         print("Step 6 :Clean up test results \n")
         os.system('$HADOOP_HOME/bin/hadoop jar $HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-client-jobclient-3.3.5-tests.jar TestDFSIO -clean')
-        
