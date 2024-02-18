@@ -58,8 +58,8 @@ def start_cluster():
     os.system('$HADOOP_HOME/sbin/stop-yarn.sh')
     os.system('$HADOOP_HOME/sbin/mr-jobhistory-daemon.sh --config $HADOOP_HOME/etc/hadoop stop historyserver')
     time.sleep(2)
-    #os.system('$HADOOP_HOME/bin/hdfs namenode -format')            # Format the filesystem
-    #time.sleep(2)
+    os.system('$HADOOP_HOME/bin/hdfs namenode -format')            # Format the filesystem
+    time.sleep(2)
     os.system('$HADOOP_HOME/sbin/start-dfs.sh')                     # Start hdfs and yarn deamons 
     os.system('$HADOOP_HOME/sbin/start-yarn.sh')
     os.system('$HADOOP_HOME/sbin/mr-jobhistory-daemon.sh --config $HADOOP_HOME/etc/hadoop start historyserver')
@@ -85,7 +85,7 @@ def start_dfsio(row,dfsio_t):
 if __name__=='__main__':
 
     # xml and csv files path
-    path_to_hdfs_site = '/home/spena/Desktop/hdfs-site.xml'
+    path_to_hdfs_site = '/home/spena/hadoop/hadoop-dist/target/hadoop-3.3.5/etc/hadoop/hdfs-site.xml'
     path_to_mapred_site = '$HADOOP_HOME/etc/hadoop/mapred-site.xml'
     path_to_yarn_site = '$HADOOP_HOME/etc/hadoop/yarn-site.xml'
     path_to_test_list = '/home/spena/Desktop/test_list.csv'
@@ -101,7 +101,7 @@ if __name__=='__main__':
     #1. Read test_list.csv file and saves the parameters in a dataframe
     print("Step 1 : Read test_list.csv \n")
     dataframe = pandas.read_csv(path_to_test_list)                  
-    dataframe.index = ['test1','test2']
+    dataframe.index = ['test1']
 
 
     for i,row in dataframe.iterrows():
@@ -114,6 +114,7 @@ if __name__=='__main__':
         print("Step 3 : Start the cluster in pseudo-distributed mode")
         start_cluster()
         
+        print("\n")
         #4. Start the DFSIO test
         print("Step 4 : Start the TestDFSIO")
         start_dfsio(row,dfsio_t)
@@ -124,6 +125,7 @@ if __name__=='__main__':
         #print(data)
         #subprocess.run('$HADOOP_HOME/sbin/stop-dfs.sh',shell = True ,capture_output=True)
 
+        print("\n")
         #6 Clean up test results 
-        print("Step 6 :Clean up test results \n")
+        print("Step 6 :Clean up test results")
         os.system('$HADOOP_HOME/bin/hadoop jar $HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-client-jobclient-3.3.5-tests.jar TestDFSIO -clean')
