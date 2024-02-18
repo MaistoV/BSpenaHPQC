@@ -69,8 +69,10 @@ $HADOOP_HOME/bin/hadoop jar $HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce
 
 ## How to run the Script <a name="scriptrun"></a>
 ### Prerequisites
-  * set test_list.csv
-  * set *site.xml as shown in Single Cluster.....
+Set : 
+* mapred-site.xml and yarn-site.xml files as shown in Single Cluster.....
+* The test_list.csv
+* The tuples with the choosen parameters
 
 ### Run
 

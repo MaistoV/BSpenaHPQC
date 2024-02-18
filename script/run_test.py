@@ -48,10 +48,10 @@ def update_xml(file,row,tuple):
     #5. the path to the yarn-site.xml
     #6. the tuple with yarn parameters
     #7. the dataframe row
-def config_cluster(path_to_hdfs_site,hdfs_p,path_to_mapred_site,mapred_p,path_to_yarn_site,yarn_p,row):
-    update_xml(path_to_hdfs_site,row,hdfs_p)
-    update_xml(path_to_mapred_site,row,mapred_p)
-    update_xml(path_to_yarn_site,row,yarn_p)
+def config_cluster(path_to_hdfs_site,hdfs_t,path_to_mapred_site,mapred_t,path_to_yarn_site,yarn_t,row):
+    update_xml(path_to_hdfs_site,row,hdfs_t)
+    update_xml(path_to_mapred_site,row,mapred_t)
+    update_xml(path_to_yarn_site,row,yarn_t)
 
 
 # Function to start the cluster cluster
@@ -88,15 +88,15 @@ if __name__=='__main__':
 
     # xml and csv files path
     path_to_hdfs_site = '/home/spena/hadoop/hadoop-dist/target/hadoop-3.3.5/etc/hadoop/hdfs-site.xml'
-    path_to_mapred_site = '$HADOOP_HOME/etc/hadoop/mapred-site.xml'
-    path_to_yarn_site = '$HADOOP_HOME/etc/hadoop/yarn-site.xml'
+    path_to_mapred_site = '/home/spena/hadoop/hadoop-dist/target/hadoop-3.3.5/etc/hadoop/mapred-site.xml'
+    path_to_yarn_site = '/home/spena/hadoop/hadoop-dist/target/hadoop-3.3.5/etc/hadoop/yarn-site.xml'
     path_to_test_list = '/home/spena/Desktop/test_list.csv'
     #path_to_test_result = 
 
     # Tuples with the parameters (same order as of test_list file)
-    hdfs_p = ('dfs.namenode.handler.count','dfs.datanode.handler.count')
-    mapred_p = ('mapreduce.job.reduces','mapreduce.reduce.cpu.vcores')
-    yarn_p = ('yarn.scheduler.minimum-allocation-vcores','yarn.scheduler.maximum-allocation-vcores','yarn.resourcemanager.scheduler.class')
+    hdfs_t = ('dfs.namenode.handler.count','dfs.datanode.handler.count')
+    mapred_t = ('mapreduce.job.reduces','mapreduce.reduce.cpu.vcores')
+    yarn_t = ('yarn.scheduler.minimum-allocation-vcores','yarn.scheduler.maximum-allocation-vcores','yarn.resourcemanager.scheduler.class')
     dfsio_t = ('nrFiles','fileSize','resFile','bufferSize')
 
 
@@ -110,7 +110,7 @@ if __name__=='__main__':
         
         #2. Cluster configuration by setting **-site.xml* files
         print("Step 2 : Cluster Configuration \n")
-        config_cluster(path_to_hdfs_site,hdfs_p,path_to_mapred_site,mapred_p,path_to_yarn_site,yarn_p,row)
+        config_cluster(path_to_hdfs_site,hdfs_t,path_to_mapred_site,mapred_t,path_to_yarn_site,yarn_t,row)
         
         #3. Start the cluster in Pseudo-Distributed Mode
         print("Step 3 : Start the cluster in pseudo-distributed mode")
