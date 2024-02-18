@@ -10,15 +10,14 @@ import time
     # 2. the name of the parameter
     # 3. the value of the paramter
 def update_tags(root,n,v):
-    if v != '*':                                                    # Check for missing values
-        property = ET.Element('property')                           # Create property,name and value elements
-        name = ET.Element('name')
-        value = ET.Element('value')
-        name.text = n                                               # Set the new tags
-        value.text = str(v)
-        root.append(property)                                       # Add the new elements to the root element
-        property.append(name)
-        property.append(value)
+    property = ET.Element('property')                           # Create property,name and value elements
+    name = ET.Element('name')
+    value = ET.Element('value')
+    name.text = n                                               # Set the new tags
+    value.text = str(v)
+    root.append(property)                                       # Add the new elements to the root element
+    property.append(name)
+    property.append(value)
 
 
 # Function to Cofigure the xml file site, it receives :
@@ -75,8 +74,7 @@ def start_cluster():
 def start_dfsio(row,dfsio_t):
     s = '$HADOOP_HOME/bin/hadoop jar $HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-client-jobclient-3.3.5-tests.jar TestDFSIO -' + str(row['operation'])
     for t in dfsio_t:
-        if row[t] != '*' :                                          # Check for missing values
-            s = s + ' -' + t + ' ' + str(row[t])  
+        s = s + ' -' + t + ' ' + str(row[t])  
 
     os.system(s)
 

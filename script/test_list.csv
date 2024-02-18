@@ -1,3 +1,2 @@
-dfs.namenode.handler.count,dfs.datanode.handler.count,mapreduce.job.reduces,operation,nrFiles,fileSize,resFile,bufferSize
-2,5,20,write,*,100MB,/tmp/$USER-dfsio-read.txt,15
-3,*,5,read,*,1GB,*,*
+dfs.namenode.handler.count,dfs.datanode.handler.count,mapreduce.job.reduces,mapreduce.reduce.cpu.vcores,yarn.scheduler.minimum-allocation-vcores,operation,nrFiles,fileSize
+2,5,20,15,2,write,16,100MB

@@ -16,7 +16,7 @@ The script is designed to run on a node set in **Pseudo-Distributed Mode**.
   * **-resFile** : Set the file name where the results will be saved (by deafult the results are saved in TestDFSIO_results.log file in /benchmarks/TestDFSIO directory)
   * **-bufferSize** : The buffer size flag describes the length of the write buffer in bytes.
 
-Missing parameters must be set as the tocken * , as convention. Besides, it is convenient to first run a write test and then follow-up with a read test (using the same parameters).
+It is convenient to first run a write test and then follow-up with a read test (using the same parameters).
 
 The **response variables** can be captured throught an "online test" (like linuxperf), which is not implemented yed, and throught an "offline test". The results of each test case will be saved in the rows of *test_result.csv* file.
 
@@ -77,7 +77,7 @@ Set :
 ### Run
 
 
-## ????
+## My Test Cases
 Motivare la scelta dei fattori (scheduling/calcolo) e le variabili di risposta (tempistiche)
 * **Indipendent Factors** : 
   * dfs.namenode.handler.count
@@ -92,19 +92,19 @@ Motivare la scelta dei fattori (scheduling/calcolo) e le variabili di risposta (
   * execution time of the job (elapsed time)
   * vcores allocated for the application
   * memory allocated for the application
-  * execution time of the map tasks
-  * execution time of the reduce tasks
+  * execution time of the map tasks           ???
+  * execution time of the reduce tasks        ???
 
 * Motivare scelta parametri applicazioni
-* Definire job/applicazione nell'intro di hadoop
+
 
 ## Comandi di misura
 * bin/yarn application -list
 * bin/yarn application -status <appID>
 * bin/mapred job -list all
 * bin/mapred job -history <jobID>
-* bin/mared job -status <jobID>
-
+* bin/mared job -status <jobID>  --> to get stat of the job
+* mapred job -status {job_id} | grep "CPU time" --> execution time for a job
 
 ## ???
 * Web UI
