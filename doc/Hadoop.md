@@ -49,21 +49,17 @@ The architecture can be **rebalanced** moving data from one Datanode to another.
 
 
 ## MapReduce <a name="mapred"></a>
-MapReduce<sup>[[5]](References.md#mapred_tutorial)</sup> is a software framework for writing applications (which need not be written in Java) that process large datasets in parallel on large clusters. The framework :
-* Operates on sets of **<key,value> pairs**.
+MapReduce<sup>[[2]](References.md#hadoop_architecture)</sup><sup>[[5]](References.md#mapred_tutorial)</sup> is a software framework for writing applications (which need not be written in Java) that process large datasets in parallel on large clusters. The framework :
+* Works on sets of **<key,value> pairs**.
 * Splits input into fixed-size splits called **InputSplit** in order to be processed. 
-* Starts up many copies of the program on the nodes of the cluster, the copies are divided into :
-  * **Master** : There is only one master who assigns each worker a **map task** or a **reduce task**. MapReduce creates a map task for each InputSplit, instead the number of reduce task can be set by the user (set as zero if no reduction is desired).
-  * **Workers** : Execute tasks. A worker is known as **mapper** if it is assigned a map task, insted it is known as **reducer** if it is assigned a reduce task.
 
-Each map task uses a user-defined **map function** which is implemented through interfaces and/or abstract-classes, the same goes for each reduce task with a **reduce function**.
+A **MapReduce job**  is the unit of work the client wants to perform, it is performed throught the execution of **map tasks** and **reduce tasks**. Each map task uses a user-defined **map function** which is implemented through interfaces and/or abstract-classes, the same goes for each reduce task with a **reduce function**. MapReduce creates a map task for each InputSplit, instead the number of reduce task can be set by the user (set as zero if no reduction is desired).
 
-A **MapReduce job** is a complete execution of a **map phase** and a **reduce phase**<sup>[[6]](References.md#mapred_tutorial)</sup><sup>[[7]](References.md#mapred_flow)</sup> : 
-* **Map Phase** : The mapper maps the input <key,value> pair to zero or multiple **intermetdiate <key,value> pairs**.
-* **Shuffling and Sorting** (occur simultaneously) :
-  * **Shuffle Phase** : Fetches the values of the output of the mappers.
-  * **Sort Phase** : Groups the intermediate pairs by keys.
-* **Reduce Phase** : The reducer reduces set of intermediate values, which share a key, to a **smaller set of values**. The smaller set is the final output.
+MapReduce has two phases<sup>[[6]](References.md#mapred_tutorial)</sup><sup>[[7]](References.md#mapred_flow)</sup> : 
+* **Map Phase** : Maps the input <key,value> pair to zero or multiple **intermetdiate <key,value> pairs**.
+* **Reduce Phase** : Reduces set of intermediate values, which share a key, to a **smaller set of values**. The smaller set is the final output. This phase has **Shuffle** and **Sort** sub-phases which occur simultaneously :
+  * **Shuffle** : Fetches the values of the output of the mappers.
+  * **Sort** : Groups the intermediate pairs by keys.
 
 <p align="center">
   <img src="https://data-flair.training/blogs/wp-content/uploads/sites/2/2016/11/how-map-reduce-work-together-tutorial.jpg" width="800">
@@ -72,13 +68,13 @@ A **MapReduce job** is a complete execution of a **map phase** and a **reduce ph
 
 ## YARN <a name="YARN"></a>
 YARN (Yet Another Resource Negotiator)<sup>[[8]](References.md#yarn)</sup><sup>[[9]](References.md#yarn_intro)</sup><sup>[[10]](References.md#yarn_tutorial)</sup> is a freamwork for distributed computing which separates resorse menagement and processing components. YARN :
-* Allows the exectution of different kind of **applications**, like MapReduce job, DAG of job , Stream processing, etc... 
+* Allows the exectution of an **application**, it can be a **single MapReduce job** or **DAG of jobs**. 
 * Sends computations where the data is stored on locak disks (property of **data locality**)
 * Uses the **containers**, collection of all the resources necessary to run an application on a node in a cluster.
 * Has a **master-slave nodes architecture**.
 
 YARN has the following components :
-* **ResourceManager** : The **master daemon** runs on master node. It manages the resources among all the applications in the system. The daemon assigns tasks to the NodeManager and schedules containers. The ResourceManager has two main components :
+* **ResourceManager** : The **master daemon** runs on master node. It manages the resources among all the applications in the system. The daemon assigns map and reduce tasks to the NodeManager and schedules containers. The ResourceManager has two main components :
     * **Scheduler** : It is a pure scheduler (does not perform monitoring or tracking of the applications' status), it allocates resources or container to the running applications.
     * **ApplicationsManager** : Accepts **job submissions** by the clients<sup>[[11]](References.md#yarn_app)</sup> and secures resources on a node (an operation known as "**negotiating the first container**") to launch the ApplicationMaster.
 * **NodeManager** : The **slave deamon** runs on the worker node. It launches, manages and monitors resource usage of the containers on a node.

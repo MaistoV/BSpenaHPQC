@@ -4,7 +4,6 @@
 1. <a id="hadoop_features"></a> [10 Features Of Hadoop That Made It The Most Popular](https://data-flair.training/blogs/features-of-hadoop-and-design-principles/)
 1. <a id="hdfs_architecture"></a> [HDFS Architecture](https://hadoop.apache.org/docs/r3.3.5/hadoop-project-dist/hadoop-hdfs/HdfsDesign.html)
 1. <a id="mapred_tutorial"></a> [MapReduce Tutorial](https://hadoop.apache.org/docs/r3.3.5/hadoop-mapreduce-client/hadoop-mapreduce-client-core/MapReduceTutorial.html)
-1. <a id="mapred_paper"></a> "MapReduce: Simplified Data Processing on Large Cluster",Jeffrey Dean,Sanjay Ghemawat
 1. <a id="mapred_flow"></a> [Hadoop MapReduce Flow – How data flows in MapReduce?](https://data-flair.training/blogs/hadoop-mapreduce-flow/)
 1. <a id="yarn"></a> [Apache Hadoop YARN](https://hadoop.apache.org/docs/r3.3.5/hadoop-yarn/hadoop-yarn-site/YARN.html)
 1. <a id="yarn_intro"></a> [Introduction to YARN](https://www.youtube.com/watch?v=5vmP1-6xd6Y&ab_channel=OracleLearning)

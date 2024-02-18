@@ -21,34 +21,27 @@ The **response variables** can be captured throught an "online test" (like linux
 The script execution following steps.
 
 ### Step 1
-Reads *test_list.csv* file and saves the parameters in a dataframe; for each dataframe row are executed the steps from 2 to 6.
+Reads *test_list.csv* file and saves the parameters in a dataframe. For each dataframe row are executed the steps from 2 to 6.
 
 ### Step 2
-Cluster configuration by setting **-site.xml* files.
+Cluster configuration by setting **-site.xml* files by using the xml.etree.ElementTree module.
 
 ### Step 3
-Start the cluster in pseudo-distributed mode : (using os module)
-  * Stop HDFS deamons,YARN deamons and JobHistoryServer
-  ```bash
-  $ $HADOOP_HOME/sbin/stop-dfs.sh
-  $ $HADOOP_HOME/sbin/stop-yarn.sh
-  $ $HADOOP_HOME/sbin/mr-jobhistory-daemon.sh --config $HADOOP_HOME/etc/hadoop stop historyserver
-  ```
-  * Format the filesystem
-  ```bash
-  $ $HADOOP_HOME/bin/hdfs namenode -format
-  ```
-  * Start HDFS deamons,YARN deamons and JobHistoryServer
-  ```bash
-  $ $HADOOP_HOME/sbin/start-dfs.sh
-  $ $HADOOP_HOME/sbin/start-yarn.sh
-  $ $HADOOP_HOME/sbin/mr-jobhistory-daemon.sh --config $HADOOP_HOME/etc/hadoop start historyserver
-  ```
-  * Make the HDFS directories required to execute MapReduce jobs
-  ```bash
-  $ $HADOOP_HOME/bin/hdfs dfs -mkdir /user
-  $ $HADOOP_HOME/bin/hdfs dfs -mkdir /user/$(whoami)
-  ```
+Start the cluster in Start the cluster in Pseudo-Distributed Mode using the os module
+```python
+os.system('$HADOOP_HOME/sbin/stop-dfs.sh')                      # Stop HDFS deamons,YARN deamons and JobHistoryServer
+os.system('$HADOOP_HOME/sbin/stop-yarn.sh')
+os.system('$HADOOP_HOME/sbin/mr-jobhistory-daemon.sh --config $HADOOP_HOME/etc/hadoop stop historyserver')
+
+os.system('$HADOOP_HOME/bin/hdfs namenode -format')             # Format the filesystem
+
+os.system('$HADOOP_HOME/sbin/start-dfs.sh')                     # Start hdfs and yarn deamons 
+os.system('$HADOOP_HOME/sbin/start-dfs.sh')
+os.system('$HADOOP_HOME/sbin/mr-jobhistory-daemon.sh --config $HADOOP_HOME/etc/hadoop start historyserver')
+
+os.system('$HADOOP_HOME/bin/hdfs dfs -mkdir /user')             # Make the HDFS directories required to execute MapReduce jobs
+os.system('$HADOOP_HOME/bin/hdfs dfs -mkdir /user/$(whoami)')
+```
 
 ### Step 4 
 Start the DFSIO test

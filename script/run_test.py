@@ -110,7 +110,7 @@ if __name__=='__main__':
         print("Step 2 : Cluster Configuration \n")
         config_cluster(path_to_hdfs_site,hdfs_p,path_to_mapred_site,mapred_p,path_to_yarn_site,yarn_p,row)
         
-        #3. Start the cluster in pseudo-distributed mode
+        #3. Start the cluster in Pseudo-Distributed Mode
         print("Step 3 : Start the cluster in pseudo-distributed mode")
         start_cluster()
         
