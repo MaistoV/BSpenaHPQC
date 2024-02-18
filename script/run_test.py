@@ -61,7 +61,7 @@ def start_cluster():
     #os.system('$HADOOP_HOME/bin/hdfs namenode -format')            # Format the filesystem
     #time.sleep(2)
     os.system('$HADOOP_HOME/sbin/start-dfs.sh')                     # Start hdfs and yarn deamons 
-    os.system('$HADOOP_HOME/sbin/start-dfs.sh')
+    os.system('$HADOOP_HOME/sbin/start-yarn.sh')
     os.system('$HADOOP_HOME/sbin/mr-jobhistory-daemon.sh --config $HADOOP_HOME/etc/hadoop start historyserver')
     os.system('$HADOOP_HOME/bin/hdfs dfs -mkdir /user')             # Make the HDFS directories required to execute MapReduce jobs
     os.system('$HADOOP_HOME/bin/hdfs dfs -mkdir /user/$(whoami)')

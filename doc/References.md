@@ -20,8 +20,6 @@
 1. <a id="benchmark"></a> [Benchmarking and Stress Testing an Hadoop Cluster with TeraSort, TestDFSIO & Co.](https://www.michael-noll.com/blog/2011/04/09/benchmarking-and-stress-testing-an-hadoop-cluster-with-terasort-testdfsio-nnbench-mrbench/)
 
 * https://hadoop.apache.org/docs/r3.3.5/hadoop-mapreduce-client/hadoop-mapreduce-client-core/MapredCommands.html
-* https://hadoop.apache.org/docs/r3.3.5/hadoop-project-dist/hadoop-common/SingleCluster.html
-
 
 
 # Further References <a name="fref"></a>
