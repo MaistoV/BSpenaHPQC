@@ -1,5 +1,9 @@
 # Test Cases Script
-The script is designed to run on a node set in **Pseudo-Distributed Mode**. To run the script you need to set up the **test cases** in the in *test_list.csv* file, by setting the parameters along the columns. There are two types of parameters :
+The script is designed to run on a node set in **Pseudo-Distributed Mode**. 
+
+* Descrizione DFSIO ....
+
+* Questo da mettere nel paragrafo di run. To run the script you need to set up the **test cases** in the in *test_list.csv* file, by setting the parameters along the columns. There are two types of parameters :
 * **cluster configuration parameters** for the three Hadoop layers :
     * [HDFS](Parameters.md#hdfsparanalysis)
     * [MapReduce](Parameters.md#maprredparanalysis)
@@ -17,7 +21,7 @@ Missing parameters must be set as the tocken * , as convention. Besides, it is c
 The **response variables** can be captured throught an "online test" (like linuxperf), which is not implemented yed, and throught an "offline test". The results of each test case will be saved in the rows of *test_result.csv* file.
 
 
-## Script Description <a name="scriptdesc"></a>
+## How the Script works <a name="scriptwork"></a>
 The script execution following steps.
 
 ### Step 1
@@ -52,7 +56,7 @@ $ $HADOOP_HOME/bin/hadoop jar $HADOOP_HOME/share/hadoop/mapreduce/hadoop-*test*.
 ### Step 5
 Start the measurement scripts and saves the results in *test_result.csv* file. (using subprocess module)
 
-SCrivere python 3.10
+Scrivere python 3.10 ???
 
 ### Step 6
 Clean up test results
@@ -63,8 +67,12 @@ os.system('$HADOOP_HOME/bin/hadoop jar $HADOOP_HOME/share/hadoop/mapreduce/hadoo
 $HADOOP_HOME/bin/hadoop jar $HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-client-jobclient-3.3.5-tests.jar TestDFSIO -write -nrFiles 16 -fileSize 100MB
 
 
-### Tenere conto di 
-<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+## How to run the Script <a name="scriptrun"></a>
+### Prerequisites
+  * set test_list.csv
+  * set *site.xml as shown in Single Cluster.....
+
+### Run
 
 
 ## ????
@@ -104,3 +112,7 @@ Motivare la scelta dei fattori (scheduling/calcolo) e le variabili di risposta (
   * JobHistory - http://localhost:19888/
      
 * Logs : Into /logs directory
+
+
+### Tenere conto di 
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>

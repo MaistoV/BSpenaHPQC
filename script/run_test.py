@@ -30,7 +30,9 @@ def update_xml(file,row,tuple):
     root = tree.getroot()  
 
     for property in root.findall('property'):                       # Remove the previous tags
-        root.remove(property)
+        name = property.find('name').text                           # Find the tags with the parameters configured for the pseudo-distributed mode 
+        if name != 'mapreduce.framework.name' and name != 'mapreduce.application.classpath' and name != 'yarn.nodemanager.aux-services' and name != 'yarn.nodemanager.env-whitelist':
+            root.remove(property)
 
     for t in tuple:
         update_tags(root,t,row[t])                                  # Configure the parameters
@@ -48,8 +50,8 @@ def update_xml(file,row,tuple):
     #7. the dataframe row
 def config_cluster(path_to_hdfs_site,hdfs_p,path_to_mapred_site,mapred_p,path_to_yarn_site,yarn_p,row):
     update_xml(path_to_hdfs_site,row,hdfs_p)
-    #update_xml(path_to_mapred_site,row,mapred_p)
-    #update_xml(path_to_yarn_site,row,yarn_p)
+    update_xml(path_to_mapred_site,row,mapred_p)
+    update_xml(path_to_yarn_site,row,yarn_p)
 
 
 # Function to start the cluster cluster
@@ -58,7 +60,7 @@ def start_cluster():
     os.system('$HADOOP_HOME/sbin/stop-yarn.sh')
     os.system('$HADOOP_HOME/sbin/mr-jobhistory-daemon.sh --config $HADOOP_HOME/etc/hadoop stop historyserver')
     time.sleep(2)
-    os.system('$HADOOP_HOME/bin/hdfs namenode -format')            # Format the filesystem
+    os.system('$HADOOP_HOME/bin/hdfs namenode -format')             # Format the filesystem
     time.sleep(2)
     os.system('$HADOOP_HOME/sbin/start-dfs.sh')                     # Start hdfs and yarn deamons 
     os.system('$HADOOP_HOME/sbin/start-yarn.sh')
@@ -78,7 +80,7 @@ def start_dfsio(row,dfsio_t):
 
     os.system(s)
 
-    # Start online test like linuxperf (not included yet)
+    # Start online test like linuxperf (not implemented yet)
 
 
 
@@ -113,8 +115,8 @@ if __name__=='__main__':
         #3. Start the cluster in Pseudo-Distributed Mode
         print("Step 3 : Start the cluster in pseudo-distributed mode")
         start_cluster()
-        
         print("\n")
+
         #4. Start the DFSIO test
         print("Step 4 : Start the TestDFSIO")
         start_dfsio(row,dfsio_t)
@@ -124,8 +126,8 @@ if __name__=='__main__':
         #data = response.text
         #print(data)
         #subprocess.run('$HADOOP_HOME/sbin/stop-dfs.sh',shell = True ,capture_output=True)
-
         print("\n")
+
         #6 Clean up test results 
         print("Step 6 :Clean up test results")
         os.system('$HADOOP_HOME/bin/hadoop jar $HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-client-jobclient-3.3.5-tests.jar TestDFSIO -clean')
