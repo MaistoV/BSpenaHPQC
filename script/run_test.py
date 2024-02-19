@@ -5,38 +5,43 @@ import requests
 import subprocess
 import time
 
-# Function to configure di parameters, it receives :
+
+# Function to add tags to the xml file, it receives :
     # 1. the xml file root (configuration)
     # 2. the name of the parameter
     # 3. the value of the paramter
-def update_tags(root,n,v):
-    property = ET.Element('property')                           # Create property,name and value elements
+def add_tags(root,n,v):
+    property = ET.Element('property')                               # Create property,name and value elements
     name = ET.Element('name')
     value = ET.Element('value')
-    name.text = n                                               # Set the new tags
+    name.text = n                                                   # Set the new tags
     value.text = str(v)
-    root.append(property)                                       # Add the new elements to the root element
+    root.append(property)                                           # Add the new elements to the root element
     property.append(name)
     property.append(value)
 
 
-# Function to Cofigure the xml file site, it receives :
+
+# Function to update the xml file, it receives :
     #1. the xml fila path
     #2. the dataframe row
     #3. the tuple with the configuration parameters
-def update_xml(file,row,tuple):    
+    #4. the special parameters need for the cluster configuration
+def update_xml(file,row,tuple,special_parameters):    
     tree = ET.parse(file)                                           # Parse the XML file
     root = tree.getroot()  
 
     for property in root.findall('property'):                       # Remove the previous tags
         name = property.find('name').text                           # Find the tags with the parameters configured for the pseudo-distributed mode 
-        if name != 'mapreduce.framework.name' and name != 'mapreduce.application.classpath' and name != 'yarn.nodemanager.aux-services' and name != 'yarn.nodemanager.env-whitelist':
+        if name not in special_parameters:    
             root.remove(property)
 
     for t in tuple:
-        update_tags(root,t,row[t])                                  # Configure the parameters
+        add_tags(root,t,row[t])                                  
 
+    ET.indent(tree, space='  ', level=0)                            # Indent the xml file
     tree.write(file, encoding="utf-8", xml_declaration=True)        # Write on xml file
+
 
 
 # Function for the cluster configuration, it takes:
@@ -47,13 +52,14 @@ def update_xml(file,row,tuple):
     #5. the path to the yarn-site.xml
     #6. the tuple with yarn parameters
     #7. the dataframe row
-def config_cluster(path_to_hdfs_site,hdfs_t,path_to_mapred_site,mapred_t,path_to_yarn_site,yarn_t,row):
-    update_xml(path_to_hdfs_site,row,hdfs_t)
-    update_xml(path_to_mapred_site,row,mapred_t)
-    update_xml(path_to_yarn_site,row,yarn_t)
+    #8. the special parameters need for the cluster configuration
+def config_cluster(path_to_hdfs_site,hdfs_t,path_to_mapred_site,mapred_t,path_to_yarn_site,yarn_t,row,special_parameters):
+    update_xml(path_to_hdfs_site,row,hdfs_t,special_parameters)                 # Configure hdfs-site.xml
+    update_xml(path_to_mapred_site,row,mapred_t,special_parameters)             # Configure mapred-site.xml
+    update_xml(path_to_yarn_site,row,yarn_t,special_parameters)                 # Configure yarn-site.xml
 
 
-# Function to start the cluster cluster
+# Function to start the cluster
 def start_cluster():
     os.system('$HADOOP_HOME/sbin/stop-dfs.sh')                      # Stop HDFS deamons,YARN deamons and JobHistoryServer
     os.system('$HADOOP_HOME/sbin/stop-yarn.sh')
@@ -67,19 +73,27 @@ def start_cluster():
     os.system('$HADOOP_HOME/bin/hdfs dfs -mkdir /user')             # Make the HDFS directories required to execute MapReduce jobs
     os.system('$HADOOP_HOME/bin/hdfs dfs -mkdir /user/$(whoami)')
 
+    # Togliere le sleep, aggiustare i comandi in un solo script bash (????)
+
 
 # Function to create (using the paramters from test_list.csv) and start the dfsio test, it takes:
     #1. the dataframe row
     #2. the tuple with dfsio parameters
 def start_dfsio(row,dfsio_t):
-    s = '$HADOOP_HOME/bin/hadoop jar $HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-client-jobclient-3.3.5-tests.jar TestDFSIO -' + str(row['operation'])
+    s = '$HADOOP_HOME/bin/hadoop jar $HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-client-jobclient-3.3.5-tests.jar TestDFSIO -' + str(row['dfsio.operation'])
     for t in dfsio_t:
-        s = s + ' -' + t + ' ' + str(row[t])  
+        s = s + ' -' + t.split('.')[1] + ' ' + str(row[t])  
 
     os.system(s)
 
     # Start online test like linuxperf (not implemented yet)
 
+    # Effettuare fork e poi join
+
+
+
+def start_offline_test():
+    print("\n")
 
 
 if __name__=='__main__':
@@ -95,37 +109,38 @@ if __name__=='__main__':
     hdfs_t = ('dfs.namenode.handler.count','dfs.datanode.handler.count')
     mapred_t = ('mapreduce.job.reduces','mapreduce.reduce.cpu.vcores')
     yarn_t = ('yarn.scheduler.minimum-allocation-vcores','yarn.scheduler.maximum-allocation-vcores','yarn.resourcemanager.scheduler.class')
-    dfsio_t = ('nrFiles','fileSize','resFile','bufferSize')
+    dfsio_t = ('dfsio.nrFiles','dfsio.fileSize')
+
+    # String array with the special parameters needed for the cluster configuration in psuedo-distributed mode
+    special_parameters = ['mapreduce.framework.name','mapreduce.application.classpath','yarn.nodemanager.aux-services','yarn.nodemanager.env-whitelist']  
 
 
-    #1. Read test_list.csv file and saves the parameters in a dataframe
-    print("Step 1 : Read test_list.csv \n")
+    #Step 1: Read test_list.csv file and saves the parameters in a dataframe
+    print("Step 1: Read test_list.csv \n")
     dataframe = pandas.read_csv(path_to_test_list)                  
     dataframe.index = ['test1']
 
 
     for i,row in dataframe.iterrows():
         
-        #2. Cluster configuration by setting **-site.xml* files
-        print("Step 2 : Cluster Configuration \n")
-        config_cluster(path_to_hdfs_site,hdfs_t,path_to_mapred_site,mapred_t,path_to_yarn_site,yarn_t,row)
+        #Step 2: Cluster configuration by setting **-site.xml* files
+        print("Step 2: Cluster Configuration \n")
+        config_cluster(path_to_hdfs_site,hdfs_t,path_to_mapred_site,mapred_t,path_to_yarn_site,yarn_t,row,special_parameters)
         
-        #3. Start the cluster in Pseudo-Distributed Mode
-        print("Step 3 : Start the cluster in pseudo-distributed mode")
+        #Step 3: Start the cluster in Pseudo-Distributed Mode
+        print("Step 3: Start the cluster in pseudo-distributed mode")
         start_cluster()
         print("\n")
 
-        #4. Start the DFSIO test
-        print("Step 4 : Start the TestDFSIO")
+        #Step 4: Start the DFSIO test
+        print("Step 4: Start the TestDFSIO")
         start_dfsio(row,dfsio_t)
                                 
-        #5. Start the measurement scripts (offline test) (output secode colonne) and saves the results in *test_result.csv* file
-        #response = requests.get('http://localhost:19888/ws/v1/history/mapreduce/jobs')
-        #data = response.text
-        #print(data)
-        #subprocess.run('$HADOOP_HOME/sbin/stop-dfs.sh',shell = True ,capture_output=True)
+        #Step 5: Start the offline test and saves the results in *test_result.csv* file
+        print("Step 5: Start the Offline Test")
+        start_offline_test()
         print("\n")
 
-        #6 Clean up test results 
-        print("Step 6 :Clean up test results")
+        #Step 6: Clean up test results 
+        print("Step 6: Clean up test results")
         os.system('$HADOOP_HOME/bin/hadoop jar $HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-client-jobclient-3.3.5-tests.jar TestDFSIO -clean')

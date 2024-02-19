@@ -1,2 +1,3 @@
-dfs.namenode.handler.count,dfs.datanode.handler.count,mapreduce.job.reduces,mapreduce.reduce.cpu.vcores,yarn.scheduler.minimum-allocation-vcores,operation,nrFiles,fileSize
+dfs.namenode.handler.count,dfs.datanode.handler.count,mapreduce.job.reduces,mapreduce.reduce.cpu.vcores,yarn.scheduler.minimum-allocation-vcores,dfsio.operation,dfsio.nrFiles,dfsio.fileSize
 2,5,20,15,2,write,16,100MB
+30,79,10,8,6,write,16,100MB

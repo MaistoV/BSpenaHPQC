@@ -92,8 +92,8 @@ Motivare la scelta dei fattori (scheduling/calcolo) e le variabili di risposta (
   * execution time of the job (elapsed time)
   * vcores allocated for the application
   * memory allocated for the application
-  * execution time of the map tasks           ???
-  * execution time of the reduce tasks        ???
+  * execution time of the map tasks       
+  * execution time of the reduce tasks
 
 * Motivare scelta parametri applicazioni
 
@@ -103,7 +103,7 @@ Motivare la scelta dei fattori (scheduling/calcolo) e le variabili di risposta (
 * bin/yarn application -status <appID>
 * bin/mapred job -list all
 * bin/mapred job -history <jobID>
-* bin/mared job -status <jobID>  --> to get stat of the job
+* bin/mapred job -status <jobID>  --> to get stat of the job
 * mapred job -status {job_id} | grep "CPU time" --> execution time for a job
 
 ## ???
