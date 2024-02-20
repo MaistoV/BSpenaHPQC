@@ -71,3 +71,9 @@ $ jps
 # If NameNodes doesn't appear in java processes running list, check the error through
 $ bin/hadoop namenode
 ```
+
+
+
+Cannot delete /benchmarks/TestDFSIO/io_control. Name node is in safe mode.
+
+https://stackoverflow.com/questions/15803266/name-node-is-in-safe-mode-not-able-to-leave

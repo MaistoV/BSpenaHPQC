@@ -75,7 +75,7 @@ Set :
 * The tuples with the choosen parameters
 
 ### Run
-
+* at the start run $HADOOP_HOME/bin/hdfs namenode -format
 
 ## My Test Cases
 Motivare la scelta dei fattori (scheduling/calcolo) e le variabili di risposta (tempistiche)
