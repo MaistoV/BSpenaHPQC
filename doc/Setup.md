@@ -112,7 +112,7 @@ $ mvn package -Pdist,native -DskipTests -Dtar
 * **native** flag : Build the native hadoop library.
 
 ## Setting up Hadoop Cluster <a name="cluster"></a>
-The Hadoop Cluster supports three different modes  <sup>[[12]](References.md#singlenode)</sup> <sup>[[13]](References.md#clustermodes)</sup>:
+The Hadoop Cluster supports three different modes  <sup>[[12]](References.md#)</sup> <sup>[[13]](References.md#cluster_modes)</sup>:
 * **Standalone Mode** : Hadoop is configured as a single java process where none of the deamons run.
 * **Pseudo-Distributed Mode** : It is used on a single node and each deamon runs as a separate process on separate JVM.
 * **Fully-Distributed Mode** : Hadoop runs on multiple nodes.
