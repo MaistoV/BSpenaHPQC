@@ -1,5 +1,5 @@
-import config_file as cf                        # Module with all the paramters
-import functions as f                           # MOdule with all the functions
+import config_file as cf                        # Variables module
+import functions as f                           # Functions module
 import pandas
 import os
 import csv

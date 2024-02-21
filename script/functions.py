@@ -1,5 +1,5 @@
 import xml.etree.ElementTree as ET                                  # Module for parsing and creating XML data
-import linecache                                                    # Module to axtract and access specific lines in python
+import linecache                                                    # Module to extract and access specific lines in python
 import subprocess                                                   # Module to spawn new processes and capture stout/stderr
 import os
 import requests                                                     # Module to execute http requests
@@ -7,7 +7,7 @@ import csv
 
 
 
-##################### STEP 2 FUNCTIONS ######################################
+############################# STEP 2 FUNCTIONS ######################################
 
 # Function to add tags to the xml file, it receives :
     # 1. the xml file root (configuration)
@@ -42,6 +42,7 @@ def update_xml(file,row,tuple,special_parameters):
         add_tags(root,t,row[t])                                  
 
     ET.indent(tree, space='  ', level=0)                            # Indent the xml file
+                                                                    # level = 0 means that you are starting the indentation from the root
     tree.write(file, encoding="utf-8", xml_declaration=True)        # Write on xml file
 
 
@@ -61,7 +62,7 @@ def config_cluster(path_hdfs_site,hdfs_t,path_mapred_site,mapred_t,path_yarn_sit
 
 
 
-##################### STEP 4 FUNCTIONS ######################################
+############################# STEP 4 FUNCTIONS ######################################
     
 # Function to create (using the paramters from test_list.csv) and start the dfsio test, it takes:
     #1. the dataframe row
@@ -81,7 +82,7 @@ def start_dfsio(row,dfsio_t):
 
 
 
-##################### STEP 5 FUNCTIONS ######################################
+############################# STEP 5 FUNCTIONS ######################################
 
 # Function to start test via command line
 def test_via_command_line():
@@ -103,7 +104,7 @@ def test_via_command_line():
 
 
 # Function to read response variables from TestDFSIO logs, it takes:
-    #1. index of the test, to increase the row
+    #1. index to increase the rows
     #2. path to the log file
 def test_dfsio_logs(index,file):
     throughput_line =  5 + (9 * index)                                      # Position of the lines
