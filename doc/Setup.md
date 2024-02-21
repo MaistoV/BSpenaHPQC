@@ -22,6 +22,16 @@ $ sudo reboot
 $ echo $JAVA_HOME                         
 ```
 
+### Python Libraries <a name="pl"></a>
+* pandas
+```bash
+$ pip install pandas
+```
+* requests ???
+```bash
+$ pip install requests
+```
+
 ### Maven 3.6 <a name="maven3.6"></a>
 ```bash
 sudo apt-get -y install maven
@@ -91,16 +101,6 @@ $ cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
 $ chmod 0600 ~/.ssh/authorized_keys
 ```
 
-### Python Libraries <a name="pl"></a>
-* pandas
-```bash
-$ pip install pandas
-```
-* requests ???
-```bash
-$ pip install requests
-```
-
 ## Building Hadoop <a name="build"></a>
 To build Hadoop from within the build enviroment run the following command :
 
@@ -112,7 +112,6 @@ $ mvn package -Pdist,native -DskipTests -Dtar
 * **native** flag : Build the native hadoop library.
 
 ## Setting up Hadoop Cluster <a name="cluster"></a>
-The Hadoop Cluster supports three different modes  <sup>[[12]](References.md#)</sup> <sup>[[13]](References.md#cluster_modes)</sup>:
-* **Standalone Mode** : Hadoop is configured as a single java process where none of the deamons run.
-* **Pseudo-Distributed Mode** : It is used on a single node and each deamon runs as a separate process on separate JVM.
-* **Fully-Distributed Mode** : Hadoop runs on multiple nodes.
+Mettere come settare i site
+
+<sup>[[15]](References.md#single_node_cluster)</sup>. 

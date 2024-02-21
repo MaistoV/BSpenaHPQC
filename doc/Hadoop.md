@@ -55,7 +55,7 @@ MapReduce<sup>[[2]](References.md#hadoop_architecture)</sup><sup>[[5]](Reference
 
 A **MapReduce job**  is the unit of work the client wants to perform, it is performed throught the execution of **map tasks** and **reduce tasks**. Each map task uses a user-defined **map function** which is implemented through interfaces and/or abstract-classes, the same goes for each reduce task with a **reduce function**. MapReduce creates a map task for each InputSplit, instead the number of reduce task can be set by the user (set as zero if no reduction is desired).
 
-MapReduce has two phases<sup>[[6]](References.md#mapred_tutorial)</sup><sup>[[7]](References.md#mapred_flow)</sup> : 
+MapReduce has two phases<sup>[[5]](References.md#mapred_tutorial)</sup><sup>[[6]](References.md#mapred_flow)</sup> : 
 * **Map Phase** : Maps the input <key,value> pair to zero or multiple **intermetdiate <key,value> pairs**.
 * **Reduce Phase** : Reduces set of intermediate values, which share a key, to a **smaller set of values**. The smaller set is the final output. This phase has **Shuffle** and **Sort** sub-phases which occur simultaneously :
   * **Shuffle** : Fetches the values of the output of the mappers.
@@ -67,7 +67,7 @@ MapReduce has two phases<sup>[[6]](References.md#mapred_tutorial)</sup><sup>[[7]
 
 
 ## YARN <a name="YARN"></a>
-YARN (Yet Another Resource Negotiator)<sup>[[8]](References.md#yarn)</sup><sup>[[9]](References.md#yarn_intro)</sup><sup>[[10]](References.md#yarn_tutorial)</sup> is a freamwork for distributed computing which separates resorse menagement and processing components. YARN :
+YARN (Yet Another Resource Negotiator)<sup>[[7]](References.md#yarn)</sup><sup>[[8]](References.md#yarn_intro)</sup><sup>[[9]](References.md#yarn_tutorial)</sup> is a freamwork for distributed computing which separates resorse menagement and processing components. YARN :
 * Allows the exectution of an **application**, it can be a **single MapReduce job** or **DAG of jobs**. 
 * Sends computations where the data is stored on locak disks (property of **data locality**)
 * Uses the **containers**, collection of all the resources necessary to run an application on a node in a cluster.
@@ -76,7 +76,7 @@ YARN (Yet Another Resource Negotiator)<sup>[[8]](References.md#yarn)</sup><sup>[
 YARN has the following components :
 * **ResourceManager** : The **master daemon** runs on master node. It manages the resources among all the applications in the system. The daemon assigns map and reduce tasks to the NodeManager and schedules containers. The ResourceManager has two main components :
     * **Scheduler** : It is a pure scheduler (does not perform monitoring or tracking of the applications' status), it allocates resources or container to the running applications.
-    * **ApplicationsManager** : Accepts **job submissions** by the clients<sup>[[11]](References.md#yarn_app)</sup> and secures resources on a node (an operation known as "**negotiating the first container**") to launch the ApplicationMaster.
+    * **ApplicationsManager** : Accepts **job submissions** by the clients<sup>[[10]](References.md#yarn_app)</sup> and secures resources on a node (an operation known as "**negotiating the first container**") to launch the ApplicationMaster.
 * **NodeManager** : The **slave deamon** runs on the worker node. It launches, manages and monitors resource usage of the containers on a node.
 * **ApplicationMaster** : It is a framework specific library, so there is one per application. The ApplicationMaster negotiates resources for the running application from the ResourceManager and works with the NodeManager to execute and monitor the tasks. 
 
@@ -84,7 +84,7 @@ YARN has the following components :
   <img src="https://techvidvan.com/tutorials/wp-content/uploads/sites/2/2020/03/apache-hadoop-yarn.jpg" width="600">
 </p> 
 
-ResourceManager/NodeManager rapresents the **data-computation framework**. YARN supports the following schedulers<sup>[[9]](References.md#yarn_intro)</sup> :
+ResourceManager/NodeManager rapresents the **data-computation framework**. YARN supports the following schedulers<sup>[[8]](References.md#yarn_intro)</sup> :
 * **FIFO** : Allocates resources based on arrival time.
 * **Capacity scheduler** (default in hadoop) : Allocates resources to pools or queues, with FIFO scheduling to each pool.
 * **Fair scheduler** : Organizes applications into queues or pools and allows to share resources fairly between quees (every application belongs to a queue). It grants container with the least amount of allocated resources.

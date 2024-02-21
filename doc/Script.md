@@ -1,5 +1,5 @@
 # Test Cases Script
-The script is designed to run on a node set in **Pseudo-Distributed Mode**. 
+
 
 * Descrizione DFSIO ....
 

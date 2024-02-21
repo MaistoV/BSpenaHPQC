@@ -49,13 +49,12 @@ def update_xml(file,row,tuple,special_parameters):
             root.remove(property)
 
     for t in tuple:
-        #add_tags(root,t,row[t])  
-        property = ET.Element('property')                               # Create property,name and value elements
+        property = ET.Element('property')                           # Create property,name and value elements
         name = ET.Element('name')
         value = ET.Element('value')
-        name.text = t                                                   # Set the new tags
+        name.text = t                                               # Set the new tags
         value.text = str(row[t])
-        root.append(property)                                           # Add the new elements to the root element
+        root.append(property)                                       # Add the new elements to the root element
         property.append(name)
         property.append(value)
                                 
@@ -76,7 +75,7 @@ def update_xml(file,row,tuple,special_parameters):
     #8. the special parameters need for the cluster configuration
 def config_cluster(path_hdfs_site,hdfs_t,path_mapred_site,mapred_t,path_yarn_site,yarn_t,row,special_parameters):
     update_xml(path_hdfs_site,row,hdfs_t,special_parameters)                # Configure hdfs-site.xml
-    update_xml(path_mapred_site,row,mapred_t,special_parameters)           # Configure mapred-site.xml
+    update_xml(path_mapred_site,row,mapred_t,special_parameters)            # Configure mapred-site.xml
     #update_xml(path_yarn_site,row,yarn_t,special_parameters)               # Configure yarn-site.xml
 
 
@@ -136,9 +135,9 @@ def test_via_command_line():
     #1. index to increase the rows
     #2. path to the log file
 def test_dfsio_logs(index,file):
-    throughput_line =  5 + (9 * index)                                      # Position of the lines
+    throughput_line =  5 + (9 * index)                                                      # Position of the lines
     avarege_io_line =  6 + (9 * index)
-    throughput_value = float(linecache.getline(file, throughput_line).split(':')[1])              # Get a specific line
+    throughput_value = float(linecache.getline(file, throughput_line).split(':')[1])        # Get a specific line
     avarege_io_value = float(linecache.getline(file, avarege_io_line).split(':')[1])
     return throughput_value,avarege_io_value
 

@@ -9,11 +9,9 @@
 1. <a id="yarn_intro"></a> [Introduction to YARN](https://www.youtube.com/watch?v=5vmP1-6xd6Y&ab_channel=OracleLearning)
 1. <a id="yarn_tutorial"></a> [Hadoop Yarn Tutorial for Beginners](https://data-flair.training/blogs/hadoop-yarn-tutorial/)
 1. <a id="yarn_app"></a> [Hadoop: Writing YARN Applications](https://hadoop.apache.org/docs/r3.3.5/hadoop-yarn/hadoop-yarn-site/WritingYarnApplications.html)
-1. <a id="cluster_modes"></a> [Hadoop – Different Modes of Operation](https://www.geeksforgeeks.org/hadoop-different-modes-of-operation/)
-1. <a id="cluster_setup"></a> [Hadoop Cluster Setup](https://hadoop.apache.org/docs/r3.3.5/hadoop-project-dist/hadoop-common/ClusterSetup.html) 
-1. <a id="hdfs_default_xml"></a> [hdfs-defult.xml File](https://hadoop.apache.org/docs/r3.3.5/hadoop-project-dist/hadoop-hdfs/hdfs-default.xml)
-1. <a id="mapred_default_xml"></a> [mapred-default.xml File](https://hadoop.apache.org/docs/r3.3.5/hadoop-mapreduce-client/hadoop-mapreduce-client-core/mapred-default.xml)
-1. <a id="yarn_default_xml"></a> [yarn-defult.xml File](https://hadoop.apache.org/docs/r3.3.5/hadoop-yarn/hadoop-yarn-common/yarn-default.xml)
+1. <a id="hdfs_default_xml"></a> [Default Configuration File hdfs-defult.xml](https://hadoop.apache.org/docs/r3.3.5/hadoop-project-dist/hadoop-hdfs/hdfs-default.xml)
+1. <a id="mapred_default_xml"></a> [Default Configuration File mapred-default.xml](https://hadoop.apache.org/docs/r3.3.5/hadoop-mapreduce-client/hadoop-mapreduce-client-core/mapred-default.xml)
+1. <a id="yarn_default_xml"></a> [Default Configuration File yarn-defult.xml](https://hadoop.apache.org/docs/r3.3.5/hadoop-yarn/hadoop-yarn-common/yarn-default.xml)
 1. <a id="yarn_resource_configuration"></a> [Hadoop: YARN Resource Configuration](https://hadoop.apache.org/docs/r3.3.5/hadoop-yarn/hadoop-yarn-site/ResourceModel.html)
 1. <a id="single_node_cluster"></a> [Hadoop: Setting up a Single Node Cluster](https://hadoop.apache.org/docs/r3.3.5/hadoop-project-dist/hadoop-common/SingleCluster.html)
 1. <a id="dfsio"></a> [Distributed I/O Benchmark of HDFS](https://bdaafall2015.readthedocs.io/en/latest/dfsio.html)
@@ -32,6 +30,8 @@
 
 * [Maven Getting Started Guide](https://maven.apache.org/guides/getting-started/index.html)
 
+1. <a id="cluster_modes"></a> [Hadoop – Different Modes of Operation](https://www.geeksforgeeks.org/hadoop-different-modes-of-operation/)
+1. <a id="cluster_setup"></a> [Hadoop Cluster Setup](https://hadoop.apache.org/docs/r3.3.5/hadoop-project-dist/hadoop-common/ClusterSetup.html) 
 
 
 * https://stackoverflow.com/questions/53293102/hadoop-multiple-datanode-configuration-in-pseudo-distributed-mode

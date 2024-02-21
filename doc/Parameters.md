@@ -1,5 +1,5 @@
 # Cluster Configuration
-The Hadoop's cluster can be configured by setting the parameters of the three layers in the **site-specific configuration files**<sup>[[14]](References.md#cluster_setup)</sup> such as:
+The Hadoop's cluster can be configured by setting the parameters of the three layers in the **site-specific configuration files** such as:
 * core-site.xml.
 * hdfs-site.xml.
 * yarn-site.xml.
@@ -14,7 +14,7 @@ Besides. there are **read-only default configuration files** which contain param
 In this chapter, we will see a detailed description of some parameters.
 
 
-## HDFS <a name="hdfsparanalysis"></a> <sup>[[15]](References.md#hdfs_default_xml)</sup>
+## HDFS <a name="hdfsparanalysis"></a> <sup>[[11]](References.md#hdfs_default_xml)</sup>
 
 ### NameNode
 | Parameter | Default Value | Configuration File | Description |
@@ -36,7 +36,7 @@ In this chapter, we will see a detailed description of some parameters.
 |dfs.datanode.data.dir |file://${hadoop.tmp.dir}/dfs/data|hdfs-site.xml|Comma separated list of paths on the local filesystem of a DataNode |
 
 
-## MapReduce <a name="maprredparanalysis"></a> <sup>[[16]](References.md#mapred_default_xml)</sup>
+## MapReduce <a name="maprredparanalysis"></a> <sup>[[12]](References.md#mapred_default_xml)</sup>
 | Parameter | Default Value | Configuration File | Description |
 | :---: | :---: | :---: | :---: |
 | mapreduce.job.maps | 2 | The number of map tasks is determinated by the number of input splits | The default number of map tasks per job |
@@ -48,7 +48,7 @@ In this chapter, we will see a detailed description of some parameters.
 |mapreduce.reduce.memory.mb | -1 | mapred-site.xml | Sets the memory requested for the all reduce task containers to the value in MB  |
 
 
-## YARN <a name="yarnparanalysis"></a> <sup>[[17]](References.md#yarn_default_xml)</sup><sup>[[18]](References.md#yarn_resource_configuration)</sup>
+## YARN <a name="yarnparanalysis"></a> <sup>[[13]](References.md#yarn_default_xml)</sup><sup>[[14]](References.md#yarn_resource_configuration)</sup>
 
 ### ResourceMenager
 | Parameter | Default Value | Configuration File | Description |
