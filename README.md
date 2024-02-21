@@ -20,7 +20,7 @@ The purpose of the project is to develop a script that, given **independent fact
         * [Libraries](doc/Setup.md#l)
         * [SSH and PDSH](doc/Setup.md#ssh)
     * [Building Hadoop](doc/Setup.md#build)
-    * [Setting up Hadoop Cluster](doc/Setup.md#cluster)
+    * [Setting up the Hadoop Cluster](doc/Setup.md#cluster)
 1. [Test Cases Script](doc/Experiments.md)
     * [How the Script works](doc/Experiments.md#scriptwork)
     * [How to run the Script](doc/Experiments.md#scriptrun)

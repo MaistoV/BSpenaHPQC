@@ -27,10 +27,6 @@ $ echo $JAVA_HOME
 ```bash
 $ pip install pandas
 ```
-* requests ???
-```bash
-$ pip install requests
-```
 
 ### Maven 3.6 <a name="maven3.6"></a>
 ```bash
@@ -112,6 +108,20 @@ $ mvn package -Pdist,native -DskipTests -Dtar
 * **native** flag : Build the native hadoop library.
 
 ## Setting up Hadoop Cluster <a name="cluster"></a>
-Mettere come settare i site
+To run the single-node cluster in pseudo-distributed mode, set the **-site.xml* file as following<sup>[[15]](References.md#single_node_cluster)</sup>:
+* etc/hadoop/core-site.xml :
+```xml
 
-<sup>[[15]](References.md#single_node_cluster)</sup>. 
+```
+*
+```xml
+
+```
+*
+```xml
+
+```
+*
+```xml
+
+```
