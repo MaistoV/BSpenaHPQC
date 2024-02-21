@@ -21,6 +21,7 @@
 
 * https://hadoop.apache.org/docs/r3.3.5/hadoop-mapreduce-client/hadoop-mapreduce-client-core/MapredCommands.html
 
+* https://hadoop.apache.org/docs/r3.3.5/hadoop-project-dist/hadoop-common/CommandsManual.html
 
 # Further References <a name="fref"></a>
 * [Hadoop HDFS Data Read and Write Operations](https://data-flair.training/blogs/hadoop-hdfs-data-read-and-write-operations/)
