@@ -1,8 +1,6 @@
 import config_file as cf                        # Variables module
 import functions as f                           # Functions module
-import pandas
 import os
-import csv
 
 
 if __name__=='__main__':

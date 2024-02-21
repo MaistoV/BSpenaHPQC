@@ -24,5 +24,5 @@ columns_name = ['maps.number','cpu.time.map.task','cpu.time.reduce.tasks','cpu.t
 ########################### DO NOT MODIFY ######################################
 
 # String array with the special parameters needed for the cluster configuration in psuedo-distributed mode
-special_parameters = ['mapreduce.framework.name','mapreduce.application.classpath','yarn.nodemanager.aux-services','yarn.nodemanager.env-whitelist']  
+special_parameters = ['dfs.replication','mapreduce.framework.name','mapreduce.application.classpath','yarn.nodemanager.aux-services','yarn.nodemanager.env-whitelist']  
 

@@ -135,9 +135,9 @@ def test_via_command_line():
     #1. index to increase the rows
     #2. path to the log file
 def test_dfsio_logs(index,file):
-    throughput_line =  5 + (9 * index)                                                      # Position of the lines
+    throughput_line =  5 + (9 * index)                                                  # Position of the lines
     avarege_io_line =  6 + (9 * index)
-    throughput_value = float(linecache.getline(file, throughput_line).split(':')[1])        # Get a specific line
+    throughput_value = float(linecache.getline(file, throughput_line).split(':')[1])    # Get a specific line
     avarege_io_value = float(linecache.getline(file, avarege_io_line).split(':')[1])
     return throughput_value,avarege_io_value
 
