@@ -7,17 +7,14 @@ import csv
 
 if __name__=='__main__':
 
-    #Step 1: Read test_list.csv file and saves the parameters in a dataframe
-    print("Step 1: Read test_list.csv \n")
-    dataframe = pandas.read_csv(cf.path_test_list)                  
-    dataframe.index = cf.tests_numer
+    #Step 1: Read test_list.csv and test_result.csv files in dataframes
+    print("Step 1: Read test_list.csv and test_result.csv\n")
+    df_test_list = f.read_csv(cf.path_test_list,cf.tests_numer,cf.path_test_result,cf.columns_name)             
 
-    #Step 1.1 : Define colums names of test_result.csv
-    with open(cf.path_test_result,'a') as file:          
-        writer=csv.writer(file)
-        writer.writerow(cf.colums_name)
+    for i,row in df_test_list.iterrows():
 
-    for i,row in dataframe.iterrows():
+        # Index to increase the rows in the TestDFSIO log file 
+        index_log = int(i.split('test')[1]) - 1
         
         #Step 2: Cluster configuration by setting **-site.xml* files
         print("Step 2: Cluster Configuration \n")
@@ -30,12 +27,13 @@ if __name__=='__main__':
 
         #Step 4: Start the DFSIO test
         print("Step 4: Start the TestDFSIO")
-        f.start_dfsio(row,cf.dfsio_t)
+        f.create_dfsio(row,cf.dfsio_t)
         print("\n")
                                 
         #Step 5: Start the offline test and save save response variables in *test_result.csv* file
         print("Step 5: Start the Offline Test")
-        f.start_offline_test(int(i.split('test')[1]),cf.path_test_dfsio_logs,cf.path_test_result)
+        f.start_offline_test(index_log,cf.path_test_dfsio_logs,cf.path_test_result)
+        print("\n")
 
         #Step 6: Clean up test results 
         print("Step 6: Clean up test results")

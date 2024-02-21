@@ -17,14 +17,12 @@ dfsio_t = ('dfsio.nrFiles','dfsio.fileSize')
 
 
 # String array with the colums names of test_result.csv
-colums_name = ['maps.number','cpu.time.map.task','cpu.time.reduce.tasks','cpu.time.tot','throughput_value','avarege_io_value']
+columns_name = ['maps.number','cpu.time.map.task','cpu.time.reduce.tasks','cpu.time.tot','throughput_value','avarege_io_value']
+
 
 
 ########################### DO NOT MODIFY ######################################
 
 # String array with the special parameters needed for the cluster configuration in psuedo-distributed mode
 special_parameters = ['mapreduce.framework.name','mapreduce.application.classpath','yarn.nodemanager.aux-services','yarn.nodemanager.env-whitelist']  
-
-# Index to increase the rows in the TestDFSIO log file 
-index_log = 0
 
