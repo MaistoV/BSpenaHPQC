@@ -1,13 +1,13 @@
 # Environment Setup
 
-Virtual machine running **Ubuntu 22.04 LTS** :
+Virtual machine running `Ubuntu 22.04 LTS` :
   * 8 GB of RAM 
   * 4 cores
   * 150 GB of memory
 
 ## Tools <a name="tool"></a>
 
-### Java 1.8 <a name="java1.8"></a>
+### Java 1.8
 * Install
 ```bash
 $ sudo apt install openjdk-8-jdk
@@ -22,18 +22,18 @@ $ sudo reboot
 $ echo $JAVA_HOME                         
 ```
 
-### Python Libraries <a name="pl"></a>
+### Python Libraries
 * pandas
 ```bash
 $ pip install pandas
 ```
 
-### Maven 3.6 <a name="maven3.6"></a>
+### Maven 3.6
 ```bash
 sudo apt-get -y install maven
 ```
 
-### Hadoop 3.3.5 <a name="hadoop3"></a>
+### Hadoop 3.3.5
 * Install
 ```bash
 $ git clone https://github.com/apache/hadoop.git --branch rel/release-3.3.5 --single-branch
@@ -45,7 +45,7 @@ export HADOOP_HOME=/path/to/hadoop-3.3.5/directory    # Add at the end of the fi
 $ source  ~/.bashrc                                   # For changes to take effect
 ```
 
-### Libraries <a name="l"></a>
+### Libraries
 
 * Native libraries
 ```bash
@@ -79,7 +79,7 @@ $ sudo apt-get install fuse libfuse-dev
 $ sudo apt-get install libzstd1-dev
 ```
 
-### SSH and PDSH <a name="ssh"></a>
+### SSH and PDSH
 * Install 
 ```bash
 $ sudo apt-get install ssh
@@ -103,12 +103,12 @@ To build Hadoop from within the build enviroment run the following command :
 ```bash
 $ mvn package -Pdist,native -DskipTests -Dtar
 ```
-* **-DskipTests** flag : Makes a build without running the unit tests. 
-* **-Pdist** and **-Dtar** flags :  Produce a distribution with a .tar.gz file extension.
-* **native** flag : Build the native hadoop library.
+* `-DskipTests` flag : Makes a build without running the unit tests. 
+* `-Pdist` and `-Dtar` flags :  Produce a distribution with a .tar.gz file extension.
+* `native` flag : Build the native hadoop library.
 
 ## Setting up Hadoop Cluster <a name="cluster"></a>
-To run the single-node cluster in pseudo-distributed mode, set the **-site.xml* file as following<sup>[[15]](References.md#single_node_cluster)</sup>:
+To run the single-node cluster in pseudo-distributed mode, set the **-site.xml* file as following<sup>[[16]](References.md#single_node_cluster)</sup>:
 * etc/hadoop/core-site.xml :
 ```xml
 <configuration>

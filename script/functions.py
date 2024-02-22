@@ -6,7 +6,7 @@ import os
 import requests                                           # Module to execute http requests
 import csv
 import pandas
-import multiprocessing as mp                              # Modue to spaw new processes
+import multiprocessing as mp                              # Module to spaw new processes
 
 
 
@@ -103,7 +103,7 @@ def test_via_command_line():
     map_number_sub = subprocess.run('$HADOOP_HOME/bin/mapred job -status ' + job_id + ' | grep "Number of maps"',shell = True ,capture_output=True)
     map_number = int(map_number_sub.stdout.decode().split(':')[1])
 
-    #2: the CPU time spent for map tasks and reduce tasks
+    #2: CPU time spent by MapReduce Framework, map tasks and reduce tasks
     cpu_time_sub = subprocess.run('$HADOOP_HOME/bin/mapred job -history ' + job_id + ' | grep "CPU time spent"',shell = True ,capture_output=True)
     cpu_time_map = int(cpu_time_sub.stdout.decode().replace(',','').split('|')[3])
     cpu_time_red = int(cpu_time_sub.stdout.decode().replace(',','').split('|')[4])

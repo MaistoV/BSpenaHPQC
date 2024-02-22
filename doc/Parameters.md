@@ -1,20 +1,6 @@
-# Cluster Configuration
-The Hadoop's cluster can be configured by setting the parameters of the three layers in the **site-specific configuration files** such as:
-* core-site.xml.
-* hdfs-site.xml.
-* yarn-site.xml.
-* mapred-site.xml.
+# Configuration Parameters
 
-Besides. there are **read-only default configuration files** which contain parameters deafult values :
-  * core-default.xml.
-  * hdfs-default.xml. 
-  * yarn-default.xml.
-  * mapred-default.xml.
-
-In this chapter, we will see a detailed description of some parameters.
-
-
-## HDFS <a name="hdfsparanalysis"></a> <sup>[[11]](References.md#hdfs_default_xml)</sup>
+## HDFS <a name="hdfsparanalysis"></a> <sup>[[12]](References.md#hdfs_default_xml)</sup>
 
 ### NameNode
 | Parameter | Default Value | Configuration File | Description |
@@ -36,7 +22,7 @@ In this chapter, we will see a detailed description of some parameters.
 |dfs.datanode.data.dir |file://${hadoop.tmp.dir}/dfs/data|hdfs-site.xml|Comma separated list of paths on the local filesystem of a DataNode |
 
 
-## MapReduce <a name="maprredparanalysis"></a> <sup>[[12]](References.md#mapred_default_xml)</sup>
+## MapReduce <a name="maprredparanalysis"></a> <sup>[[13]](References.md#mapred_default_xml)</sup>
 | Parameter | Default Value | Configuration File | Description |
 | :---: | :---: | :---: | :---: |
 | mapreduce.job.maps | 2 | The number of map tasks is determinated by the number of input splits | The default number of map tasks per job |
@@ -48,7 +34,7 @@ In this chapter, we will see a detailed description of some parameters.
 |mapreduce.reduce.memory.mb | -1 | mapred-site.xml | Sets the memory requested for the all reduce task containers to the value in MB  |
 
 
-## YARN <a name="yarnparanalysis"></a> <sup>[[13]](References.md#yarn_default_xml)</sup><sup>[[14]](References.md#yarn_resource_configuration)</sup>
+## YARN <a name="yarnparanalysis"></a> <sup>[[14]](References.md#yarn_default_xml)</sup><sup>[[15]](References.md#yarn_resource_configuration)</sup>
 
 ### ResourceMenager
 | Parameter | Default Value | Configuration File | Description |
@@ -63,3 +49,24 @@ In this chapter, we will see a detailed description of some parameters.
 | Parameter | Default Value | Configuration File | Description |
 | :---: | :---: | :---: | :---: |
 |yarn.nodemanager.resource.memory-mb | -1 | yarn-site.xml | Defines total available resources on the NodeManager to be made available to running containers |
+
+
+## My Test Cases
+Motivare la scelta dei fattori (scheduling/calcolo) e le variabili di risposta (tempistiche)
+* `Indipendent Factors` : 
+  * dfs.namenode.handler.count
+  * dfs.datanode.handler.count
+  * mapreduce.job.reduces
+  * mapreduce.reduce.cpu.vcores
+  * yarn.scheduler.minimum-allocation-vcores
+  * yarn.scheduler.maximum-allocation-vcores
+  * yarn.resourcemanager.scheduler.class
+* `Response variables` : 
+  * number of map tasks
+  * execution time of the job (elapsed time)
+  * vcores allocated for the application
+  * memory allocated for the application
+  * execution time of the map tasks       
+  * execution time of the reduce tasks
+
+* Motivare scelta parametri applicazioni
