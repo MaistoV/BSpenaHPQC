@@ -23,7 +23,7 @@ stateDiagram-v2
 
         state join_state <<join>>
         TestDFSIO --> join_state
-        Online Test --> join_state
+        Online_Test --> join_state
         join_state --> Step_5
         Step_5 --> Step_6
         Step_6 --> [*]
