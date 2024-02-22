@@ -52,8 +52,7 @@
 
 
 ## My Test Cases
-Motivare la scelta dei fattori (scheduling/calcolo) e le variabili di risposta (tempistiche)
-* `Indipendent Factors` : 
+* `Indipendent Factors` (scheduling): 
   * dfs.namenode.handler.count
   * dfs.datanode.handler.count
   * mapreduce.job.reduces
@@ -61,12 +60,10 @@ Motivare la scelta dei fattori (scheduling/calcolo) e le variabili di risposta (
   * yarn.scheduler.minimum-allocation-vcores
   * yarn.scheduler.maximum-allocation-vcores
   * yarn.resourcemanager.scheduler.class
-* `Response variables` : 
+* `Response variables` (time) : 
   * number of map tasks
-  * execution time of the job (elapsed time)
-  * vcores allocated for the application
-  * memory allocated for the application
-  * execution time of the map tasks       
-  * execution time of the reduce tasks
-
-* Motivare scelta parametri applicazioni
+  * CPU time spent by the map tasks       
+  * CPU time spent by the reduce tasks
+  * CPU time spent by the mapreduce framework
+  * avarege io
+  * throughput

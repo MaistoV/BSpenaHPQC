@@ -28,6 +28,16 @@ stateDiagram-v2
         Step_5 --> Step_6
         Step_6 --> [*]
 ```
+* `Step_1` : Read test_list.csv and test_result.csv.
+* `Step_2` : Cluster Configuration.
+* `Step_3` : Start the cluster in pseudo-distributed mode.
+* `Step_4` : Start the TestDFSIO, the python program generates two `child processe` (throught the system call fork()) and the join() method blocks until the processes are terminated.
+    * `TestDFSIO` : Start TestDFSIO
+    * `Online_Test` : Start Online Test to measure the response variables.
+* `Step_5` : Start the Offline Test to measure the response variables.
+* `Step_6` : Clean up test results.
+
+
 
 ## Python Modules <a name="python_mod"></a>
 * `csv` : Module to work with csv files.
@@ -70,27 +80,27 @@ def read_csv(path_test_list,tests_numer,path_test_result,columns_name):
 * `Description` : Update the specific *-site.xml* file (`Step 2`).
 ```python
 def update_xml(file,row,tuple,special_parameters):    
-    tree = ET.parse(file)                                             # Parse the XML file
+    tree = ET.parse(file)                                           # Parse the XML file
     root = tree.getroot()  
 
-    for property in root.findall('property'):                         # Remove the previous tags
-        name = property.find('name').text                             # Find the tags with the parameters configured for the pseudo-distributed mode 
+    for property in root.findall('property'):                       # Remove the previous tags
+        name = property.find('name').text                           # Find the tags with the parameters configured for the pseudo-distributed mode 
         if name not in special_parameters:    
             root.remove(property)
 
     for t in tuple:
-        property = ET.Element('property')                             # Create property,name and value elements
+        property = ET.Element('property')                           # Create property,name and value elements
         name = ET.Element('name')
         value = ET.Element('value')
-        name.text = t                                                 # Set the new tags
+        name.text = t                                               # Set the new tags
         value.text = str(row[t])
-        root.append(property)                                         # Add the new elements to the root element
+        root.append(property)                                       # Add the new elements to the root element
         property.append(name)
         property.append(value)                  
 
-    ET.indent(tree, space='  ', level=0)                              # Indent the xml file
+    ET.indent(tree, space='  ', level=0)                            # Indent the xml file
                                                                     # level = 0 means that you are starting the indentation from the root
-    tree.write(file, encoding="utf-8", xml_declaration=True)          # Write on xml file
+    tree.write(file, encoding="utf-8", xml_declaration=True)        # Write on xml file
 ```
 
 ### os.system(start_cluster bash script)
@@ -139,7 +149,9 @@ def create_dfsio(row,dfsio_t):
 
     dfsio_process = mp.Process(target = start_dfsio, args=(s,))             # Create the new process
     dfsio_process.start()                                                   # Start the process
-    dfsio_process.join()                                                    # The method blocks until the process is terminated
+    dfsio_process.join()                                                    # Method blocks until the process is terminated
+
+    # Start online test (not implemented yet)
 ```
 
 ### start_dfsio(dfsio command)

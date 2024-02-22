@@ -77,9 +77,9 @@ def create_dfsio(row,dfsio_t):
 
     dfsio_process = mp.Process(target = start_dfsio, args=(s,))             # Create the new process
     dfsio_process.start()                                                   # Start the process
-    dfsio_process.join()                                                    # The method blocks until the process is terminated
+    dfsio_process.join()                                                    # Method blocks until the process is terminated
 
-    # Start online test like linuxperf (not implemented yet)
+    # Start online test (not implemented yet)
 
 
     ###########
