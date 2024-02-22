@@ -5,7 +5,7 @@
 ```bash
 $ mvn package -Pdist -DskipTests -Dtar
 ```
-* **Error Message** : Failed to execute goal com.github.eirslett:frontend-maven-plugin:1.6:yarn (yarn install)
+* **Error Message** : Failed to execute goal com.github.eirslett:frontend-maven-plugin:1.6:yarn (yarn install).
 * **Solution** : Check the output of the command. If there is this kind of messagge "error triple-beam@1.4.1: The engine "node" is incompatible with this module. Expected version ">= 14.0.0". Got "12.22.1" [INFO] error Found incompatible module.", go to the pom.xml file in the hadoop-yarn-applications-catalog-webapp directory and modify Node and YARN versions as follows
 ```xml
 <nodeVersion>v14.15.0</nodeVersion>
@@ -19,7 +19,7 @@ $ mvn package -Pdist -DskipTests -Dtar
 ```bash
 $ sbin/start-dfs.sh
 ```
-* **Error Message** : WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable <user>@<user>-VirtualBox:~/hadoop/hadoop-dist/targe  
+* **Error Message** : WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable <user>@<user>-VirtualBox:~/hadoop/hadoop-dist/targe.
 * **Solution** :
 ```bash
 $ mvn package -Pdist,native -DskipTests -Dtar       # Build the native hadoop library
@@ -30,7 +30,7 @@ $ mvn package -Pdist,native -DskipTests -Dtar       # Build the native hadoop li
 ```bash
 $ sbin/start-dfs.sh
 ```
-* **Error Message** : Permission denied
+* **Error Message** : Permission denied.
 * [**Solution**](https://stackoverflow.com/questions/42756555/permission-denied-error-while-running-start-dfs-sh) : 
 ```bash
 # Check if your pdsh's default rcmd is rsh
@@ -47,7 +47,7 @@ $ source ~/.bashrc
 ```bash
 $ bin/hdfs dfs -mkdir -p /user/<username>
 ```
-* **Error Message** : mkdir: Call From <username>-VirtualBox/127.0.1.1 to localhost:9000 failed on connection exception: java.net.ConnectException: Connection refused
+* **Error Message** : mkdir: Call From <username>-VirtualBox/127.0.1.1 to localhost:9000 failed on connection exception: java.net.ConnectException: Connection refused.
 * [**Solution**](https://stackoverflow.com/questions/28661285/hadoop-cluster-setup-java-net-connectexception-connection-refused) : 
 ```bash
 $ sbin/stop-all.sh                  # All deamons will stop
@@ -60,7 +60,7 @@ $ sbin/start-all.sh                 # All deamons will start
 ```bash
 $ sbin/start-yarn.sh
 ```
-* **Error Message** : resourcemanager is running as process 9365.  Stop it first and ensure /tmp/hadoop-spena-resourcemanager.pid file is empty before retry
+* **Error Message** : resourcemanager is running as process 9365.  Stop it first and ensure /tmp/hadoop-spena-resourcemanager.pid file is empty before retry.
 * [**Solution**](https://stackoverflow.com/questions/14273620/error-in-namenode-starting) : 
 ```bash
 $ sbin/stop-all.sh
@@ -72,8 +72,13 @@ $ jps
 $ bin/hadoop namenode
 ```
 
-
-
-Cannot delete /benchmarks/TestDFSIO/io_control. Name node is in safe mode.
-
-https://stackoverflow.com/questions/15803266/name-node-is-in-safe-mode-not-able-to-leave
+## Error 6
+* **Error Cause** : Start HDFS deamons using command 
+```bash
+$ sbin/start-dfs.sh 
+```
+* **Error Message** : Cannot delete /benchmarks/TestDFSIO/io_control. Name node is in safe mode.
+* [**Solution**](https://stackoverflow.com/questions/15803266/name-node-is-in-safe-mode-not-able-to-leave) : 
+```bash
+$ bin/hdfs dfsadmin -safemode leave
+```

@@ -1,5 +1,5 @@
 # HPQC
-The purpose of the project is to develop a script that, given **independent factors**, runs the **TestDFSIO benchmark** on a **Single-Node Hadoop Cluster** set in **pseudo-distributed mode** and measures the **response variables**. The independent factors are stored into the *test_list.csv* file, while the response variables are saved within the *test_result.csv* file.
+The purpose of the project is to develop a **Test Cases Script** that, given **independent factors**, runs the **TestDFSIO benchmark** on a **Single-Node Hadoop Cluster** set in **pseudo-distributed mode** and measures the **response variables**. The independent factors are stored into the *test_list.csv* file, while the response variables are saved within the *test_result.csv* file.
 
 ## Table of Contents
 1. [Apache Hadoop](doc/Hadoop.md)
@@ -21,9 +21,10 @@ The purpose of the project is to develop a script that, given **independent fact
         * [SSH and PDSH](doc/Setup.md#ssh)
     * [Building Hadoop](doc/Setup.md#build)
     * [Setting up the Hadoop Cluster](doc/Setup.md#cluster)
-1. [Test Cases Script](doc/Experiments.md)
-    * [How the Script works](doc/Experiments.md#scriptwork)
-    * [How to run the Script](doc/Experiments.md#scriptrun)
+1. [Test Cases Script](doc/Script.md)
+    * [TestDFSIO](doc/Script.md#testdfsio)
+    * [Script Steps](doc/Script.md#scriptsteps)
+    * [Run the Script](doc/Script.md#scriptrun)
 1. [Troubleshooting](doc/Troubleshooting.md)
 1. [References](doc/References.md)
     * [Further References](doc/References.md#fref)

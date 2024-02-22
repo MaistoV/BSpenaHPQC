@@ -13,15 +13,11 @@ import multiprocessing as mp                              # Modue to spaw new pr
 
 ############################# STEP 1 FUNCTIONS ######################################
 
-# Function to read csv files, it takes:
-    #1. path to test_list.csv
-    #2. row names for test_list.csv
-    #3. path to test_result.csv
-    #4. column names for test_result.csv
+# Function to read csv files
 def read_csv(path_test_list,tests_numer,path_test_result,columns_name):
     # Read test_list.csv file
     df_test_list = pandas.read_csv(path_test_list)                  
-    df_test_list.index = tests_numer
+    df_test_list.index = tests_numer                            # Set the indexes of the dataframe
 
     # Open test_result.csv file and set the column names
     with open(path_test_result,'w') as file:          
@@ -34,61 +30,46 @@ def read_csv(path_test_list,tests_numer,path_test_result,columns_name):
 
 ############################# STEP 2 FUNCTIONS ######################################
         
-# Function to update the xml file, it receives :
-    #1. the xml fila path
-    #2. the dataframe row
-    #3. the tuple with the configuration parameters
-    #4. the special parameters need for the cluster configuration
+# Function to update the xml file
 def update_xml(file,row,tuple,special_parameters):    
-    tree = ET.parse(file)                                           # Parse the XML file
+    tree = ET.parse(file)                                               # Parse the XML file
     root = tree.getroot()  
 
-    for property in root.findall('property'):                       # Remove the previous tags
-        name = property.find('name').text                           # Find the tags with the parameters configured for the pseudo-distributed mode 
+    for property in root.findall('property'):                           # Remove the previous tags
+        name = property.find('name').text                               # Find the tags with the parameters configured for the pseudo-distributed mode 
         if name not in special_parameters:    
             root.remove(property)
 
     for t in tuple:
-        property = ET.Element('property')                           # Create property,name and value elements
+        property = ET.Element('property')                               # Create property,name and value elements
         name = ET.Element('name')
         value = ET.Element('value')
-        name.text = t                                               # Set the new tags
+        name.text = t                                                   # Set the new tags
         value.text = str(row[t])
-        root.append(property)                                       # Add the new elements to the root element
+        root.append(property)                                           # Add the new elements to the root element
         property.append(name)
         property.append(value)
                                 
+    ET.indent(tree, space='  ', level=0)                                # Indent the xml file
+                                                                        # level = 0 means that you are starting the indentation from the root
+    tree.write(file, encoding="utf-8", xml_declaration=True)            # Write on xml file
 
-    ET.indent(tree, space='  ', level=0)                            # Indent the xml file
-                                                                    # level = 0 means that you are starting the indentation from the root
-    tree.write(file, encoding="utf-8", xml_declaration=True)        # Write on xml file
 
-
-# Function for the cluster configuration, it takes:
-    #1. the path to the hdfs-site.xml
-    #2. the tuple with hdfs parameters
-    #3. the path to the mapred-site.xml
-    #4. the tuple with mapred parameters
-    #5. the path to the yarn-site.xml
-    #6. the tuple with yarn parameters
-    #7. the dataframe row
-    #8. the special parameters need for the cluster configuration
+# Function for the cluster configuration
 def config_cluster(path_hdfs_site,hdfs_t,path_mapred_site,mapred_t,path_yarn_site,yarn_t,row,special_parameters):
-    update_xml(path_hdfs_site,row,hdfs_t,special_parameters)                # Configure hdfs-site.xml
-    update_xml(path_mapred_site,row,mapred_t,special_parameters)            # Configure mapred-site.xml
-    #update_xml(path_yarn_site,row,yarn_t,special_parameters)               # Configure yarn-site.xml
+    update_xml(path_hdfs_site,row,hdfs_t,special_parameters)            # Configure hdfs-site.xml
+    update_xml(path_mapred_site,row,mapred_t,special_parameters)        # Configure mapred-site.xml
+    #update_xml(path_yarn_site,row,yarn_t,special_parameters)           # Configure yarn-site.xml
 
 
 
 ############################# STEP 4 FUNCTIONS ######################################
 
-# Function to start the dfsio test, it takes the string with che command to run    
+# Function to start the dfsio test
 def start_dfsio(string):
     os.system(string)
 
-# Function to create (using the paramters from test_list.csv) the dfsio test, it takes:
-    #1. the dataframe row
-    #2. the tuple with dfsio parameters
+# Function to create (using the paramters from test_list.csv) the dfsio test
 def create_dfsio(row,dfsio_t):
     s = '$HADOOP_HOME/bin/hadoop jar $HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-client-jobclient-3.3.5-tests.jar TestDFSIO -' + str(row['dfsio.operation'])
     for t in dfsio_t:
@@ -131,9 +112,7 @@ def test_via_command_line():
     return map_number,cpu_time_map,cpu_time_red,cpu_time_tot
 
 
-# Function to read response variables from TestDFSIO logs, it takes:
-    #1. index to increase the rows
-    #2. path to the log file
+# Function to read response variables from TestDFSIO logs
 def test_dfsio_logs(index,file):
     throughput_line =  5 + (9 * index)                                                  # Position of the lines
     avarege_io_line =  6 + (9 * index)
@@ -142,11 +121,7 @@ def test_dfsio_logs(index,file):
     return throughput_value,avarege_io_value
 
 
-# Function to start offline test and to save response variables, it takes:
-    #1. dataframe of the test_result.csv file
-    #2. index of the test, to increase the row
-    #3. path to the log file
-    #4. path to the result file
+# Function to start offline test and to save response variables
 def start_offline_test(index,path_test_dfsio_logs,path_test_result):
 
     # Test via command line
@@ -155,7 +130,7 @@ def start_offline_test(index,path_test_dfsio_logs,path_test_result):
     # Results TestDFSIO via logs
     throughput_value,avarege_io_value = test_dfsio_logs(index,path_test_dfsio_logs)
 
-    # Save value on test_result.csv
+    # Save values on test_result.csv
     with open(path_test_result,'a') as file:          
         writer=csv.writer(file)
         writer.writerow([map_number,cpu_time_map,cpu_time_red,cpu_time_tot,throughput_value,avarege_io_value]) 

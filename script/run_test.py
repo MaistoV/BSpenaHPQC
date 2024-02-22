@@ -5,7 +5,7 @@ import os
 
 if __name__=='__main__':
 
-    #Step 1: Read test_list.csv and test_result.csv files in dataframes
+    #Step 1: Read test_list.csv and test_result.csv files
     print("Step 1: Read test_list.csv and test_result.csv\n")
     df_test_list = f.read_csv(cf.path_test_list,cf.tests_numer,cf.path_test_result,cf.columns_name)             
 
@@ -18,7 +18,7 @@ if __name__=='__main__':
         print("Step 2: Cluster Configuration \n")
         f.config_cluster(cf.path_hdfs_site,cf.hdfs_t,cf.path_mapred_site,cf.mapred_t,cf.path_yarn_site,cf.yarn_t,row,cf.special_parameters)
         
-        #Step 3: Start the cluster in Pseudo-Distributed Mode
+        #Step 3: Start the cluster in pseudo-distributed mode
         print("Step 3: Start the cluster in pseudo-distributed mode")
         os.system('./start_cluster.sh')
         print("\n")
