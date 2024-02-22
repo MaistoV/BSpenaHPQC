@@ -13,7 +13,7 @@ A minimal flow of controll of the script
 ```mermaid
 stateDiagram-v2
     state fork_state <<fork>>
-        [*] --> 1[Step 1]
+        [*] --> A[Step 1]
         Step 1 --> Step 2
         Step 2 --> Step 3
         Step 3 --> Step 4
