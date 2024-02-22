@@ -19,7 +19,7 @@ stateDiagram-v2
         Step_3 --> Step_4
         Step_4 --> fork_state
         fork_state --> TestDFSIO
-        fork_state --> Online Test
+        fork_state --> Online_Test
 
         state join_state <<join>>
         TestDFSIO --> join_state
