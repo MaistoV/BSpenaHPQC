@@ -14,19 +14,19 @@ A minimal flow of controll of the script
 stateDiagram-v2
     state fork_state <<fork>>
         [*] --> Step_1
-        Step 1 --> Step 2
-        Step 2 --> Step 3
-        Step 3 --> Step 4
-        Step 4 --> fork_state
+        Step_1 --> Step_2
+        Step_2 --> Step_3
+        Step_3 --> Step_4
+        Step_4 --> fork_state
         fork_state --> TestDFSIO
         fork_state --> Online Test
 
         state join_state <<join>>
         TestDFSIO --> join_state
         Online Test --> join_state
-        join_state --> Step 5
-        Step 5 --> Step 6
-        Step 6 --> [*]
+        join_state --> Step_5
+        Step_5 --> Step_6
+        Step_6 --> [*]
 ```
 
 ## Python Modules <a name="python_mod"></a>
