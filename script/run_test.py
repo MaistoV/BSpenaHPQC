@@ -5,9 +5,9 @@ import os
 
 if __name__=='__main__':
 
-    #Step 1: Read test_list.csv and test_result.csv files
-    print("Step 1: Read test_list.csv and test_result.csv\n")
-    df_test_list = f.read_csv(cf.path_test_list,cf.tests_numer,cf.path_test_result,cf.columns_name)             
+    #Step 1: Create one dataframe from test_list.csv and one needed for test_result.csv
+    print("Step 1: Create dataframes\n")
+    df_test_list,df_test_result = f.create_dataframe(cf.path_test_list,cf.tests_numer,cf.path_test_result,cf.columns_name)             
 
     for i,row in df_test_list.iterrows():
 
@@ -30,7 +30,7 @@ if __name__=='__main__':
                                 
         #Step 5: Start the offline test and save save response variables in *test_result.csv* file
         print("Step 5: Start the Offline Test")
-        f.start_offline_test(index_log,cf.path_test_dfsio_logs,cf.path_test_result)
+        f.start_offline_test(index_log,cf.path_test_dfsio_logs,df_test_result,cf.path_test_result,cf.columns_name)
         print("\n")
 
         #Step 6: Clean up test results 

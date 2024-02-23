@@ -13,18 +13,23 @@ import multiprocessing as mp                              # Module to spaw new p
 
 ############################# STEP 1 FUNCTIONS ######################################
 
-# Function to read csv files
-def read_csv(path_test_list,tests_numer,path_test_result,columns_name):
-    # Read test_list.csv file
-    df_test_list = pandas.read_csv(path_test_list)                  
+# Function to create one dataframe from test_list.csv and one needed for test_result.csv
+def create_dataframe(path_test_list,tests_numer,path_test_result,columns_name):
+
+    # Read test_list.csv
+    df_test_list = pandas.read_csv(path_test_list)                 
     df_test_list.index = tests_numer                            # Set the indexes of the dataframe
 
     # Open test_result.csv file and set the column names
-    with open(path_test_result,'w') as file:          
-        writer=csv.writer(file)
-        writer.writerow(columns_name)  
+    # with open(path_test_result,'w') as file:          
+    #     writer=csv.writer(file)
+    #     writer.writerow(columns_name)
 
-    return df_test_list
+    # Create dataframe for test_result.csv
+    df_test_result = pandas.DataFrame()                     
+    df_test_result.index = tests_numer
+
+    return df_test_list,df_test_result
 
 
 
@@ -122,7 +127,7 @@ def test_dfsio_logs(index,file):
 
 
 # Function to start offline test and to save response variables
-def start_offline_test(index,path_test_dfsio_logs,path_test_result):
+def start_offline_test(index,path_test_dfsio_logs,df_test_result,path_test_result,columns_name):
 
     # Test via command line
     map_number,cpu_time_map,cpu_time_red,cpu_time_tot = test_via_command_line()
@@ -131,6 +136,8 @@ def start_offline_test(index,path_test_dfsio_logs,path_test_result):
     throughput_value,avarege_io_value = test_dfsio_logs(index,path_test_dfsio_logs)
 
     # Save values on test_result.csv
-    with open(path_test_result,'a') as file:          
-        writer=csv.writer(file)
-        writer.writerow([map_number,cpu_time_map,cpu_time_red,cpu_time_tot,throughput_value,avarege_io_value]) 
+    # with open(path_test_result,'a') as file:          
+    #     writer=csv.writer(file)
+    #     writer.writerow([map_number,cpu_time_map,cpu_time_red,cpu_time_tot,throughput_value,avarege_io_value]) 
+    df_test_result.loc[df_test_result.index[index], columns_name] = [map_number,cpu_time_map,cpu_time_red,cpu_time_tot,throughput_value,avarege_io_value]
+    df_test_result.to_csv(path_test_result,index=False)
