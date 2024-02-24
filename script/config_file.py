@@ -5,15 +5,17 @@ path_yarn_site = '/home/spena/hadoop/hadoop-dist/target/hadoop-3.3.5/etc/hadoop/
 path_test_list = 'test_list.csv'
 path_test_result = 'test_result.csv'
 
-# Tuples with the test_list.csv file parameters
+# Tuples with the test_list.csv parameters
 hdfs_t = ('dfs.datanode.handler.count')
 mapred_t = ('mapreduce.map.cpu.vcores')
-yarn_t = ('yarn.scheduler.minimum-allocation-vcores',)
+#yarn_t = ('yarn.scheduler.minimum-allocation-vcores',)
 dfsio_t = ('dfsio.nrFiles','dfsio.fileSize')
 
+# Colums names for dataframe with response variables from test via command line
+cn_comm_line = ['maps.number','cpu.time.map.task','cpu.time.reduce.tasks','cpu.time.tot']
 
-# String array with the colums names of test_result.csv
-columns_name = ['maps.number','cpu.time.map.task','cpu.time.reduce.tasks','cpu.time.tot','throughput_value','avarege_io_value']
+# Colums names for dataframe with response variables from TestDFSIO logs 
+cn_dfsio_logs = ['throughput_value','avarege_io_value']
 
 
 

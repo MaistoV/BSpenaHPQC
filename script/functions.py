@@ -9,28 +9,35 @@ import pandas
 import multiprocessing as mp                              # Module to spaw new processes
 
 
-
 ############################# STEP 1 FUNCTIONS ######################################
 
 # Function to create one dataframe from test_list.csv and one needed for test_result.csv
-def create_dataframe(path_test_list,tests_numer,path_test_result,columns_name):
+def create_dataframe(path_test_list):
 
     # Read test_list.csv
     df_test_list = pandas.read_csv(path_test_list)                 
-    
-    # Creating custumo indeces
+
+    # Create custum indeces
     tests_number = []
     for i in range(1,len(df_test_list.index)+1):
         string = 'test' + str(i)
         tests_number.append(string)
 
-    df_test_list.index = tests_number                            # Set the dataframe indeces
+    df_test_list.index = tests_number
 
     # Create dataframe for test_result.csv
     df_test_result = pandas.DataFrame()                     
-    df_test_result.index = tests_numer
+    df_test_result.index = tests_number
 
-    return df_test_list,df_test_result
+    # Dataframe to store response variables from test via command line
+    df_comm_line = pandas.DataFrame()                   
+    df_comm_line.index = tests_number
+    
+    # Dataframe to store response variables from TestDFSIO logs 
+    df_dfsio_logs = pandas.DataFrame()                  
+    df_dfsio_logs.index = tests_number
+
+    return df_test_list,df_test_result,df_comm_line,df_dfsio_logs
 
 
 
@@ -99,42 +106,58 @@ def create_dfsio(row,dfsio_t):
 
 ############################# STEP 5 FUNCTIONS ######################################
 
-# Function to start test via command line
-def test_via_command_line():
+# Function to start the offline test
+def mapred_commands(df_comm_line,index,cn_comm_line):
+    
     # Find jobID
     job_id_sub = subprocess.run('$HADOOP_HOME/bin/mapred job -list all | grep "job_"',shell = True ,capture_output=True)
     job_id = job_id_sub.stdout.decode().split('\t')[0]
 
-    #1: Find the number of map tasks
+    # Number of map tasks
     map_number_sub = subprocess.run('$HADOOP_HOME/bin/mapred job -status ' + job_id + ' | grep "Number of maps"',shell = True ,capture_output=True)
     map_number = int(map_number_sub.stdout.decode().split(':')[1])
 
-    #2: CPU time spent by MapReduce Framework, map tasks and reduce tasks
+    # CPU time spent by MapReduce Framework, map tasks and reduce tasks
     cpu_time_sub = subprocess.run('$HADOOP_HOME/bin/mapred job -history ' + job_id + ' | grep "CPU time spent"',shell = True ,capture_output=True)
     cpu_time_map = int(cpu_time_sub.stdout.decode().replace(',','').split('|')[3])
     cpu_time_red = int(cpu_time_sub.stdout.decode().replace(',','').split('|')[4])
     cpu_time_tot = int(cpu_time_sub.stdout.decode().replace(',','').split('|')[5])
 
-    return map_number,cpu_time_map,cpu_time_red,cpu_time_tot
+    df_comm_line.loc[df_comm_line.index[index], cn_comm_line] = [map_number,cpu_time_map,cpu_time_red,cpu_time_tot]
 
+
+
+############################# STEP 7 FUNCTIONS ######################################
 
 # Function to read response variables from TestDFSIO logs
-def test_dfsio_logs(index,file):
+def test_dfsio_logs(index,path_test_dfsio_logs,df_dfsio_logs,cn_dfsio_logs):
     throughput_line =  5 + (9 * index)                                                  # Position of the lines
     avarege_io_line =  6 + (9 * index)
-    throughput_value = float(linecache.getline(file, throughput_line).split(':')[1])    # Get a specific line
-    avarege_io_value = float(linecache.getline(file, avarege_io_line).split(':')[1])
-    return throughput_value,avarege_io_value
+    throughput_value = float(linecache.getline(path_test_dfsio_logs, throughput_line).split(':')[1])    # Get a specific line
+    avarege_io_value = float(linecache.getline(path_test_dfsio_logs, avarege_io_line).split(':')[1])
 
-# Function to start offline test
-def start_offline_test(index,path_test_dfsio_logs,df_test_result,path_test_result,columns_name):
+    df_dfsio_logs.loc[df_dfsio_logs.index[index], cn_dfsio_logs] = [throughput_value,avarege_io_value]
 
-    # Test via command line
-    map_number,cpu_time_map,cpu_time_red,cpu_time_tot = test_via_command_line()
+
+
+############################# STEP 8 FUNCTION ######################################
+
+# Function to plot a Line Plot
+# def line_plot():
+
+# Function to plot a Stacked Barlot
+# def stacked_bar_plor():
     
-    # Results TestDFSIO via logs
-    throughput_value,avarege_io_value = test_dfsio_logs(index,path_test_dfsio_logs)
 
-    # Save values on test_result.csv
-    df_test_result.loc[df_test_result.index[index], columns_name] = [map_number,cpu_time_map,cpu_time_red,cpu_time_tot,throughput_value,avarege_io_value]
-    df_test_result.to_csv(path_test_result,index=False)
+# Function plot and save response variables on test_result.csv
+def plot_save(df_test_result,path_test_result,df_comm_line,df_dfsio_logs):
+    
+    df_test_result = pandas.concat([df_comm_line, df_dfsio_logs], axis=1)
+
+    # Save tresponse variables on test_result.csv
+    df_test_result.to_csv(path_test_result,index= False)
+
+    # Plot
+    # line_plot()
+
+    # stacked_bar_plot()
