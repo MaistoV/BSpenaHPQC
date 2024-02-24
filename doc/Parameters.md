@@ -52,18 +52,21 @@
 
 
 ## My Test Cases
-* `Indipendent Factors` (scheduling): 
-  * dfs.namenode.handler.count
-  * dfs.datanode.handler.count
-  * mapreduce.job.reduces
-  * mapreduce.reduce.cpu.vcores
-  * yarn.scheduler.minimum-allocation-vcores
-  * yarn.scheduler.maximum-allocation-vcores
-  * yarn.resourcemanager.scheduler.class
+Full factorial design 3^2 * 10 --> 2 indipendent factors, 3 levels and 10 replicas
+
+* `Indipendent Factors` (computation): 
+  * dfs.datanode.handler.count --> 10,12,16
+  * mapreduce.map.cpu.vcores --> 1,2,4 (non può superare il numero di vcores disponibili  nel cluster, vedi yarn.nodemanager.resource.cpu-vcores)
 * `Response variables` (time) : 
   * number of map tasks
-  * CPU time spent by the map tasks       
-  * CPU time spent by the reduce tasks
-  * CPU time spent by the mapreduce framework
-  * avarege io
-  * throughput
+  * CPU time spent by the map tasks : Total time that the all map tasks have spent executing on CPU's
+  * CPU time spent by the reduce tasks : Total time that the all reduce tasks have spent executing on CPU's
+  * CPU time spent by the mapreduce framework : Total time that the all map and reduce tasks have spent executing on CPU's
+  * TestDSFIO Average IO rate mb/sec
+  * TestDSFIO Throughput mb/sec
+
+* Istogramma --> CPU time spent by the map tasks - CPU time spent by the reduce tasks / number of files
+* lineplot --> throughput / file size
+* lineplot --> avarege io / file size
+
+* Mediana delle repliche per avere una repparesentazione più accurata del valore tipico

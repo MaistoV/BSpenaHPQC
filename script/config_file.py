@@ -5,12 +5,9 @@ path_yarn_site = '/home/spena/hadoop/hadoop-dist/target/hadoop-3.3.5/etc/hadoop/
 path_test_list = 'test_list.csv'
 path_test_result = 'test_result.csv'
 
-# String array dataframe rows index 
-tests_numer = ['test1']
-
 # Tuples with the test_list.csv file parameters
-hdfs_t = ('dfs.namenode.handler.count','dfs.datanode.handler.count')
-mapred_t = ('mapreduce.job.reduces','mapreduce.reduce.cpu.vcores')
+hdfs_t = ('dfs.datanode.handler.count')
+mapred_t = ('mapreduce.map.cpu.vcores')
 yarn_t = ('yarn.scheduler.minimum-allocation-vcores',)
 dfsio_t = ('dfsio.nrFiles','dfsio.fileSize')
 

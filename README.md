@@ -28,3 +28,13 @@ The independent factors are the `cluster configuration parameters` and are store
 1. [Troubleshooting](doc/Troubleshooting.md)
 1. [References](doc/References.md)
     * [Further References](doc/References.md#fref)
+
+
+##
+scegli due singoli fattori di interesse (e.g. mapreduce.reduce.cpu.vcores e mapreduce.job.reduces)
+scegli 3/4 valori/livelli sensati per fattore
+compila test_list.csv con righe ripetute per ogni configurazione di fattori (e.g. 10 reps)
+esegui gli esperimenti
+commenta i risultati raccolti con un paio di grafici 
+non in termini di statistica inferenziale come ad impianti
+per esempio: istorgrammi, plot fattore ingresso vs variabile uscita, mesh plot in caso di interazioni tra parametri

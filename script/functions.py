@@ -10,7 +10,6 @@ import multiprocessing as mp                              # Module to spaw new p
 
 
 
-
 ############################# STEP 1 FUNCTIONS ######################################
 
 # Function to create one dataframe from test_list.csv and one needed for test_result.csv
@@ -18,12 +17,14 @@ def create_dataframe(path_test_list,tests_numer,path_test_result,columns_name):
 
     # Read test_list.csv
     df_test_list = pandas.read_csv(path_test_list)                 
-    df_test_list.index = tests_numer                            # Set the indexes of the dataframe
+    
+    # Creating custumo indeces
+    tests_number = []
+    for i in range(1,len(df_test_list.index)+1):
+        string = 'test' + str(i)
+        tests_number.append(string)
 
-    # Open test_result.csv file and set the column names
-    # with open(path_test_result,'w') as file:          
-    #     writer=csv.writer(file)
-    #     writer.writerow(columns_name)
+    df_test_list.index = tests_number                            # Set the dataframe indeces
 
     # Create dataframe for test_result.csv
     df_test_result = pandas.DataFrame()                     
@@ -125,8 +126,7 @@ def test_dfsio_logs(index,file):
     avarege_io_value = float(linecache.getline(file, avarege_io_line).split(':')[1])
     return throughput_value,avarege_io_value
 
-
-# Function to start offline test and to save response variables
+# Function to start offline test
 def start_offline_test(index,path_test_dfsio_logs,df_test_result,path_test_result,columns_name):
 
     # Test via command line
@@ -136,8 +136,5 @@ def start_offline_test(index,path_test_dfsio_logs,df_test_result,path_test_resul
     throughput_value,avarege_io_value = test_dfsio_logs(index,path_test_dfsio_logs)
 
     # Save values on test_result.csv
-    # with open(path_test_result,'a') as file:          
-    #     writer=csv.writer(file)
-    #     writer.writerow([map_number,cpu_time_map,cpu_time_red,cpu_time_tot,throughput_value,avarege_io_value]) 
     df_test_result.loc[df_test_result.index[index], columns_name] = [map_number,cpu_time_map,cpu_time_red,cpu_time_tot,throughput_value,avarege_io_value]
     df_test_result.to_csv(path_test_result,index=False)
