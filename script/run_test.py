@@ -10,6 +10,7 @@ if __name__=='__main__':
     for i,row in df_test_list.iterrows():
  
         index = int(i.split('test')[1]) - 1                 # Index to increase the dataframe rows of the test via command line 
+        print("Test n.",index)
         
         print("Step 2: Cluster Configuration \n")
         func.config_cluster(conf.path_hdfs_site,conf.hdfs_t,conf.path_mapred_site,conf.mapred_t,conf.path_yarn_site,conf.yarn_t,row,conf.special_parameters)
