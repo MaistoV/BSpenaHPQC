@@ -52,7 +52,7 @@
 
 
 ## My Test Cases
-Full factorial design 3^2 * 10 --> 2 indipendent factors, 3 levels and 10 replicas
+Full factorial design 3^2 * 9 --> 2 indipendent factors, 3 levels and 9 replicas
 
 * `Indipendent Factors` (computation): 
   * dfs.datanode.handler.count --> 10,12,16

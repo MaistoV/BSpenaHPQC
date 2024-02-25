@@ -134,9 +134,9 @@ def test_dfsio_logs(index,path_test_dfsio_logs,df_dfsio_logs,cn_dfsio_logs):
     throughput_line =  5 + (9 * index)                                                  # Position of the lines
     avarege_io_line =  6 + (9 * index)
     throughput_value = float(linecache.getline(path_test_dfsio_logs, throughput_line).split(':')[1])    # Get a specific line
-    avarege_io_value = float(linecache.getline(path_test_dfsio_logs, avarege_io_line).split(':')[1])
+    average_io_value = float(linecache.getline(path_test_dfsio_logs, avarege_io_line).split(':')[1])
 
-    df_dfsio_logs.loc[df_dfsio_logs.index[index], cn_dfsio_logs] = [throughput_value,avarege_io_value]
+    df_dfsio_logs.loc[df_dfsio_logs.index[index], cn_dfsio_logs] = [throughput_value,average_io_value]
 
 
 

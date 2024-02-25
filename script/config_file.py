@@ -15,7 +15,7 @@ dfsio_t = ('dfsio.nrFiles','dfsio.fileSize')
 cn_comm_line = ['maps.number','cpu.time.map.task','cpu.time.reduce.tasks','cpu.time.tot']
 
 # Colums names for dataframe with response variables from TestDFSIO logs 
-cn_dfsio_logs = ['throughput_value','avarege_io_value']
+cn_dfsio_logs = ['throughput_value','average_io_value']
 
 
 
