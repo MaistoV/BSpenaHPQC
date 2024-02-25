@@ -8,8 +8,6 @@ dfs.datanode.handler.count,mapreduce.map.cpu.vcores,dfsio.operation,dfsio.nrFile
 10,1,write,10,100MB
 10,1,write,10,100MB
 10,1,write,10,100MB
-10,1,write,10,100MB
-10,2,write,10,100MB
 10,2,write,10,100MB
 10,2,write,10,100MB
 10,2,write,10,100MB
@@ -28,8 +26,6 @@ dfs.datanode.handler.count,mapreduce.map.cpu.vcores,dfsio.operation,dfsio.nrFile
 10,4,write,10,100MB
 10,4,write,10,100MB
 10,4,write,10,100MB
-10,4,write,10,100MB
-12,1,write,10,100MB
 12,1,write,10,100MB
 12,1,write,10,100MB
 12,1,write,10,100MB
@@ -48,8 +44,6 @@ dfs.datanode.handler.count,mapreduce.map.cpu.vcores,dfsio.operation,dfsio.nrFile
 12,2,write,10,100MB
 12,2,write,10,100MB
 12,2,write,10,100MB
-12,2,write,10,100MB
-12,4,write,10,100MB
 12,4,write,10,100MB
 12,4,write,10,100MB
 12,4,write,10,100MB
@@ -68,7 +62,6 @@ dfs.datanode.handler.count,mapreduce.map.cpu.vcores,dfsio.operation,dfsio.nrFile
 16,1,write,10,100MB
 16,1,write,10,100MB
 16,1,write,10,100MB
-16,1,write,10,100MB
 16,2,write,10,100MB
 16,2,write,10,100MB
 16,2,write,10,100MB
@@ -78,8 +71,6 @@ dfs.datanode.handler.count,mapreduce.map.cpu.vcores,dfsio.operation,dfsio.nrFile
 16,2,write,10,100MB
 16,2,write,10,100MB
 16,2,write,10,100MB
-16,2,write,10,100MB
-16,4,write,10,100MB
 16,4,write,10,100MB
 16,4,write,10,100MB
 16,4,write,10,100MB
