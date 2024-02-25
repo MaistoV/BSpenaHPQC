@@ -1,7 +1,6 @@
 import config_file as conf                       # Variables module
 import functions as func                         # Functions module
 import os
-import pandas
 
 if __name__=='__main__':
 

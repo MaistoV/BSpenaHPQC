@@ -6,9 +6,9 @@ path_test_list = 'test_list.csv'
 path_test_result = 'test_result.csv'
 
 # Tuples with the test_list.csv parameters
-hdfs_t = ('dfs.datanode.handler.count')
-mapred_t = ('mapreduce.map.cpu.vcores')
-#yarn_t = ('yarn.scheduler.minimum-allocation-vcores',)
+hdfs_t = ('dfs.datanode.handler.count',)
+mapred_t = ('mapreduce.map.cpu.vcores',)
+yarn_t = ('yarn.scheduler.minimum-allocation-vcores',)
 dfsio_t = ('dfsio.nrFiles','dfsio.fileSize')
 
 # Colums names for dataframe with response variables from test via command line
