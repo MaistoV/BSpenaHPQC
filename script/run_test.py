@@ -11,7 +11,7 @@ if __name__=='__main__':
     for i,row in df_test_list.iterrows():
  
         index = int(i.split('test')[1]) - 1                 # Index to increase the dataframe rows of the test via command line 
-        print("Test n.",index + 1)
+        print("Test n. " + i.split('test')[1])
         
         print("STEP 2 : Cluster Configuration \n")
         func.config_cluster(conf.path_hdfs_site,conf.hdfs_t,conf.path_mapred_site,conf.mapred_t,conf.path_yarn_site,conf.yarn_t,row,conf.special_parameters)
@@ -46,8 +46,8 @@ if __name__=='__main__':
 
     #print("\n")
 
-    #print("STEP 8: Save response variables on test_result.csv")
-    # func.save_rv(conf.path_test_result,df_test_result,df_mapred_commands,df_dfsio_logs)
+    print("STEP 7: Save response variables on test_result.csv")
+    func.save_rv(conf.path_test_result,df_test_result,df_mapred_commands,df_dfsio_logs)
     #func.plot_save(df_test_result,conf.path_test_result,df_comm_line,df_dfsio_logs)
     # df_test_result = pandas.concat([df_mapred_commands, df_dfsio_logs], axis=1)
     # df_test_result.to_csv(conf.path_test_result,index= False)

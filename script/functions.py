@@ -152,11 +152,11 @@ def test_dfsio_logs(index,path_test_dfsio_logs,df_dfsio_logs,cn_dfsio_logs):
         #content = file.read()
         lines = file.readlines()
     
-    print(float(lines[4].split(':')[1].strip()))                                    # Strip remove any leading, and trailing whitespaces
-    print(float(lines[5].split(':')[1].strip()))
+    throughput = float(lines[4].split(':')[1].strip())                                   # Strip remove any leading, and trailing whitespaces
+    average_io = float(lines[5].split(':')[1].strip())
+    df_dfsio_logs.loc[df_dfsio_logs.index[index], cn_dfsio_logs] = [throughput,average_io]
 
-
-    #df_dfsio_logs.loc[df_dfsio_logs.index[index], cn_dfsio_logs] = [throughput_value,average_io_value]
+    print(throughput, ' ' ,average_io)
 
 
 # Function to start the offline test
@@ -172,7 +172,7 @@ def offline_test(index,df_mapred_commands,cn_mapred_commands,path_test_dfsio_log
 
 def clean_up(path_test_dfsio_logs):
     os.system('$HADOOP_HOME/bin/hadoop jar $HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-client-jobclient-3.3.5-tests.jar TestDFSIO -clean')
-    os.remove(conf.path_test_dfsio_logs)
+    os.remove(path_test_dfsio_logs)
 
 
 
