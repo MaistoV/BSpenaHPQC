@@ -42,7 +42,7 @@ def stacked_bar_plot(cpu_mt_median,cpu_rt_median):
     ax.bar_label(cpu_rt_plot)                                      # Show the sum of the values above the bars
 
 
-def spline_plot(throughput_median,average_io_median):
+def line_plot(throughput_median,average_io_median):
     x=np.linspace(1,9,9)   
     
     fig = plt.figure()
@@ -79,5 +79,5 @@ if __name__=='__main__':
     average_io_median = find_median(df_test_result,'average_io_value')
 
     stacked_bar_plot(cpu_mt_median,cpu_rt_median)
-    spline_plot(throughput_median,average_io_median)
+    line_plot(throughput_median,average_io_median)
     plt.show()
