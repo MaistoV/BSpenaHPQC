@@ -56,8 +56,8 @@ def line_plot(throughput_median,average_io_median):
     fig = plt.figure() 
     ax_a = plt.axes()
     ax_a.set_xlabel('Test Numbers')                 
-    ax_a.set_ylabel('Average IO')
-    ax_a.set_title('Average IO mb/s')
+    ax_a.set_ylabel('Average IO rate')
+    ax_a.set_title('Average IO rate mb/s')
     ax_a.grid(linestyle='--', color='0.85')
     ax_a.plot(x,average_io_median, color="blue")   
 

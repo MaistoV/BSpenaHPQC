@@ -150,12 +150,12 @@ def test_dfsio_logs(index,path_test_dfsio_logs,df_dfsio_logs,cn_dfsio_logs):
     
 
 # Function plot and save response variables on test_result.csv
-def plot_save(df_test_result,path_test_result,df_comm_line,df_dfsio_logs):
+# def plot_save(df_test_result,path_test_result,df_comm_line,df_dfsio_logs):
     
-    df_test_result = pandas.concat([df_comm_line, df_dfsio_logs], axis=1)
+#     df_test_result = pandas.concat([df_comm_line, df_dfsio_logs], axis=1)
 
-    # Save tresponse variables on test_result.csv
-    df_test_result.to_csv(path_test_result,index= False)
+#     # Save tresponse variables on test_result.csv
+#     df_test_result.to_csv(path_test_result,index= False)
 
     # Plot
     # line_plot()
