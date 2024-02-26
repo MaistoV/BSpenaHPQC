@@ -5,8 +5,11 @@ $HADOOP_HOME/sbin/stop-dfs.sh
 $HADOOP_HOME/sbin/stop-yarn.sh
 $HADOOP_HOME/bin/mapred --daemon stop historyserver
 
+
+#rm -rf ./tmp/hadoop-${user}/dfs/data/*
+
 # Format the filesystem
-$HADOOP_HOME/bin/hdfs namenode -format             
+#$HADOOP_HOME/bin/hdfs namenode -format             
 
 # Start HDFS deamons,YARN deamons and JobHistoryServer
 $HADOOP_HOME/sbin/start-dfs.sh                     

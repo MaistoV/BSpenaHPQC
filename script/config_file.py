@@ -4,6 +4,7 @@ path_mapred_site = '/home/spena/hadoop/hadoop-dist/target/hadoop-3.3.5/etc/hadoo
 path_yarn_site = '/home/spena/hadoop/hadoop-dist/target/hadoop-3.3.5/etc/hadoop/yarn-site.xml'
 path_test_list = 'test_list.csv'
 path_test_result = 'test_result.csv'
+path_test_dfsio_logs = '/home/spena/Downloads/TestDFSIO_results.log'
 
 # Tuples with the test_list.csv parameters
 hdfs_t = ('dfs.datanode.handler.count',)
@@ -22,7 +23,4 @@ cn_dfsio_logs = ['throughput_value','average_io_value']
 ########################### DO NOT MODIFY ######################################
 
 # String array with the special parameters needed for the cluster configuration in psuedo-distributed mode
-special_parameters = ['dfs.replication','mapreduce.framework.name','mapreduce.application.classpath','yarn.nodemanager.aux-services','yarn.nodemanager.env-whitelist']  
-
-# TestDFSIO results log file path
-path_test_dfsio_logs = 'TestDFSIO_results.log'
+special_parameters = ['dfs.replication','mapreduce.framework.name','mapreduce.application.classpath','yarn.nodemanager.aux-services','yarn.nodemanager.env-whitelist']

@@ -7,6 +7,7 @@ import requests                                           # Module to execute ht
 import csv
 import pandas
 import multiprocessing as mp                              # Module to spaw new processes
+import config_file as conf   
 
 
 ############################# STEP 1 FUNCTIONS ######################################
@@ -88,6 +89,8 @@ def create_dfsio(row,dfsio_t):
     for t in dfsio_t:
         s = s + ' -' + t.split('.')[1] + ' ' + str(row[t])  
 
+    s = s + ' -resFile ' + conf.path_test_dfsio_logs
+
     dfsio_process = mp.Process(target = start_dfsio, args=(s,))             # Create the new process
     dfsio_process.start()                                                   # Start the process
     dfsio_process.join()                                                    # Method blocks until the process is terminated
@@ -125,18 +128,32 @@ def mapred_commands(df_comm_line,index,cn_comm_line):
 
     df_comm_line.loc[df_comm_line.index[index], cn_comm_line] = [map_number,cpu_time_map,cpu_time_red,cpu_time_tot]
 
+    #print("Rimozione log")
+    #os.remove('TestDFSIO_results.log')
+
 
 
 ############################# STEP 7 FUNCTIONS ######################################
 
 # Function to read response variables from TestDFSIO logs
 def test_dfsio_logs(index,path_test_dfsio_logs,df_dfsio_logs,cn_dfsio_logs):
-    throughput_line =  5 + (9 * index)                                                  # Position of the lines
-    avarege_io_line =  6 + (9 * index)
-    throughput_value = float(linecache.getline(path_test_dfsio_logs, throughput_line).split(':')[1])    # Get a specific line
-    average_io_value = float(linecache.getline(path_test_dfsio_logs, avarege_io_line).split(':')[1])
+    # throughput_line =  5 + (9 * index)                                                  # Position of the lines
+    # avarege_io_line =  6 + (9 * index)
+    # throughput_value = float(linecache.getline(path_test_dfsio_logs, 5).split(':')[1])    # Get a specific line
+    # average_io_value = float(linecache.getline(path_test_dfsio_logs, 6).split(':')[1])
 
-    df_dfsio_logs.loc[df_dfsio_logs.index[index], cn_dfsio_logs] = [throughput_value,average_io_value]
+    # print(throughput_value)
+    # print(average_io_value)
+
+    with open(path_test_dfsio_logs, "r") as file:
+        #content = file.read()
+        righe = file.readlines()
+    
+    print(float(righe[4].split(':')[1].strip()))
+    print(righe[5])
+
+
+    #df_dfsio_logs.loc[df_dfsio_logs.index[index], cn_dfsio_logs] = [throughput_value,average_io_value]
 
 
 
