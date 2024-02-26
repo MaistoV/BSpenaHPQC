@@ -119,7 +119,7 @@ with the following flags :
 * `-clean` : To clean up test results.
 * `-nrFiles` : The number of files (equal to the number of map tasks).
 * `-fileSize` : The size of a file to generate B|KB|MB|GB|TB is allowed.
-* `-resFile` : Set the file name where the results will be saved (by deafult the results are saved in TestDFSIO_results.log file in /benchmarks/TestDFSIO directory)
+* `-resFile` : Set the file name where the results will be saved
 * `-bufferSize` : The buffer size flag describes the length of the write buffer in bytes
 
 > [!NOTE]
