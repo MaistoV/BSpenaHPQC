@@ -31,14 +31,17 @@ def create_dataframe(path_test_list):
     df_test_result.index = tests_number
 
     # Dataframe to store response variables from test via command line
-    df_comm_line = pandas.DataFrame()                   
-    df_comm_line.index = tests_number
+    # df_comm_line = pandas.DataFrame()                   
+    # df_comm_line.index = tests_number
+
+    df_mapred_commands = pandas.DataFrame()                   
+    df_mapred_commands.index = tests_number
     
     # Dataframe to store response variables from TestDFSIO logs 
     df_dfsio_logs = pandas.DataFrame()                  
     df_dfsio_logs.index = tests_number
 
-    return df_test_list,df_test_result,df_comm_line,df_dfsio_logs
+    return df_test_list,df_test_result,df_mapred_commands,df_dfsio_logs
 
 
 
@@ -109,8 +112,8 @@ def create_dfsio(row,dfsio_t):
 
 ############################# STEP 5 FUNCTIONS ######################################
 
-# Function to start the offline test
-def mapred_commands(df_comm_line,index,cn_comm_line):
+# Function to read response variables from mapreduce commands
+def mapred_commands(index,df_mapred_commands,cn_mapred_commands):
     
     # Find jobID
     job_id_sub = subprocess.run('$HADOOP_HOME/bin/mapred job -list all | grep "job_"',shell = True ,capture_output=True)
@@ -126,7 +129,7 @@ def mapred_commands(df_comm_line,index,cn_comm_line):
     cpu_time_red = int(cpu_time_sub.stdout.decode().replace(',','').split('|')[4])
     cpu_time_tot = int(cpu_time_sub.stdout.decode().replace(',','').split('|')[5])
 
-    df_comm_line.loc[df_comm_line.index[index], cn_comm_line] = [map_number,cpu_time_map,cpu_time_red,cpu_time_tot]
+    df_mapred_commands.loc[df_mapred_commands.index[index], cn_mapred_commands] = [map_number,cpu_time_map,cpu_time_red,cpu_time_tot]
 
     #print("Rimozione log")
     #os.remove('TestDFSIO_results.log')
@@ -147,13 +150,29 @@ def test_dfsio_logs(index,path_test_dfsio_logs,df_dfsio_logs,cn_dfsio_logs):
 
     with open(path_test_dfsio_logs, "r") as file:
         #content = file.read()
-        righe = file.readlines()
+        lines = file.readlines()
     
-    print(float(righe[4].split(':')[1].strip()))
-    print(righe[5])
+    print(float(lines[4].split(':')[1].strip()))                                    # Strip remove any leading, and trailing whitespaces
+    print(float(lines[5].split(':')[1].strip()))
 
 
     #df_dfsio_logs.loc[df_dfsio_logs.index[index], cn_dfsio_logs] = [throughput_value,average_io_value]
+
+
+# Function to start the offline test
+def offline_test(index,df_mapred_commands,cn_mapred_commands,path_test_dfsio_logs,df_dfsio_logs,cn_dfsio_logs):
+
+    mapred_commands(index,df_mapred_commands,cn_mapred_commands)
+
+    test_dfsio_logs(index,path_test_dfsio_logs,df_dfsio_logs,cn_dfsio_logs)
+
+
+
+
+
+def clean_up(path_test_dfsio_logs):
+    os.system('$HADOOP_HOME/bin/hadoop jar $HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-client-jobclient-3.3.5-tests.jar TestDFSIO -clean')
+    os.remove(conf.path_test_dfsio_logs)
 
 
 
@@ -178,3 +197,7 @@ def test_dfsio_logs(index,path_test_dfsio_logs,df_dfsio_logs,cn_dfsio_logs):
     # line_plot()
 
     # stacked_bar_plot()
+
+def save_rv(path_test_result,df_test_result,df_mapred_commands,df_dfsio_logs):
+    df_test_result = pandas.concat([df_mapred_commands, df_dfsio_logs], axis=1)
+    df_test_result.to_csv(path_test_result,index= False)

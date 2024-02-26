@@ -12,8 +12,9 @@ mapred_t = ('mapreduce.map.cpu.vcores',)
 yarn_t = ('yarn.scheduler.minimum-allocation-vcores',)
 dfsio_t = ('dfsio.nrFiles','dfsio.fileSize')
 
-# Colums names for dataframe with response variables from test via command line
-cn_comm_line = ['maps.number','cpu.time.map.task','cpu.time.reduce.tasks','cpu.time.tot']
+# Colums names for dataframe with response variables from mapreduce commands
+#cn_comm_line = ['maps.number','cpu.time.map.task','cpu.time.reduce.tasks','cpu.time.tot']
+cn_mapred_commands = ['maps.number','cpu.time.map.task','cpu.time.reduce.tasks','cpu.time.tot']
 
 # Colums names for dataframe with response variables from TestDFSIO logs 
 cn_dfsio_logs = ['throughput_value','average_io_value']
