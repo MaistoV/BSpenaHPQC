@@ -1,6 +1,5 @@
 
 import xml.etree.ElementTree as ET                        # Module for parsing and creating XML data
-import linecache                                          # Module to extract and access specific lines in python
 import subprocess                                         # Module to spawn new processes and capture stout/stderr
 import os
 import requests                                           # Module to execute http requests
@@ -31,9 +30,6 @@ def create_dataframe(path_test_list):
     df_test_result.index = tests_number
 
     # Dataframe to store response variables from test via command line
-    # df_comm_line = pandas.DataFrame()                   
-    # df_comm_line.index = tests_number
-
     df_mapred_commands = pandas.DataFrame()                   
     df_mapred_commands.index = tests_number
     
@@ -92,7 +88,7 @@ def create_dfsio(row,dfsio_t):
     for t in dfsio_t:
         s = s + ' -' + t.split('.')[1] + ' ' + str(row[t])  
 
-    s = s + ' -resFile ' + conf.path_test_dfsio_logs
+    s = s + ' -resFile ' + conf.path_test_dfsio_logs                        # Add to the string the file path for test results log
 
     dfsio_process = mp.Process(target = start_dfsio, args=(s,))             # Create the new process
     dfsio_process.start()                                                   # Start the process
@@ -129,46 +125,35 @@ def mapred_commands(index,df_mapred_commands,cn_mapred_commands):
     cpu_time_red = int(cpu_time_sub.stdout.decode().replace(',','').split('|')[4])
     cpu_time_tot = int(cpu_time_sub.stdout.decode().replace(',','').split('|')[5])
 
+    # Save on the dataframe row the reponse variables
     df_mapred_commands.loc[df_mapred_commands.index[index], cn_mapred_commands] = [map_number,cpu_time_map,cpu_time_red,cpu_time_tot]
 
-    #print("Rimozione log")
-    #os.remove('TestDFSIO_results.log')
-
-
-
-############################# STEP 7 FUNCTIONS ######################################
 
 # Function to read response variables from TestDFSIO logs
 def test_dfsio_logs(index,path_test_dfsio_logs,df_dfsio_logs,cn_dfsio_logs):
-    # throughput_line =  5 + (9 * index)                                                  # Position of the lines
-    # avarege_io_line =  6 + (9 * index)
-    # throughput_value = float(linecache.getline(path_test_dfsio_logs, 5).split(':')[1])    # Get a specific line
-    # average_io_value = float(linecache.getline(path_test_dfsio_logs, 6).split(':')[1])
 
-    # print(throughput_value)
-    # print(average_io_value)
-
-    with open(path_test_dfsio_logs, "r") as file:
-        #content = file.read()
-        lines = file.readlines()
+    with open(path_test_dfsio_logs, 'r') as file:
+        lines = file.readlines()                                                            # Lines list
     
-    throughput = float(lines[4].split(':')[1].strip())                                   # Strip remove any leading, and trailing whitespaces
+    throughput = float(lines[4].split(':')[1].strip())                                      # Strip remove any leading, and trailing whitespaces
     average_io = float(lines[5].split(':')[1].strip())
-    df_dfsio_logs.loc[df_dfsio_logs.index[index], cn_dfsio_logs] = [throughput,average_io]
 
-    print(throughput, ' ' ,average_io)
+    # Save on the dataframe row the reponse variables
+    df_dfsio_logs.loc[df_dfsio_logs.index[index], cn_dfsio_logs] = [throughput,average_io]
 
 
 # Function to start the offline test
 def offline_test(index,df_mapred_commands,cn_mapred_commands,path_test_dfsio_logs,df_dfsio_logs,cn_dfsio_logs):
 
+    # Read the response variables from the mapreduce commands
     mapred_commands(index,df_mapred_commands,cn_mapred_commands)
 
+    # Read the response variables from the TestDFSIO logs
     test_dfsio_logs(index,path_test_dfsio_logs,df_dfsio_logs,cn_dfsio_logs)
 
 
 
-
+############################# STEP 6 FUNCTION ######################################
 
 def clean_up(path_test_dfsio_logs):
     os.system('$HADOOP_HOME/bin/hadoop jar $HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-client-jobclient-3.3.5-tests.jar TestDFSIO -clean')
@@ -176,28 +161,9 @@ def clean_up(path_test_dfsio_logs):
 
 
 
-############################# STEP 8 FUNCTION ######################################
+############################# STEP 7 FUNCTION ######################################
 
-# Function to plot a Line Plot
-# def line_plot():
-
-# Function to plot a Stacked Barlot
-# def stacked_bar_plor():
-    
-
-# Function plot and save response variables on test_result.csv
-# def plot_save(df_test_result,path_test_result,df_comm_line,df_dfsio_logs):
-    
-#     df_test_result = pandas.concat([df_comm_line, df_dfsio_logs], axis=1)
-
-#     # Save tresponse variables on test_result.csv
-#     df_test_result.to_csv(path_test_result,index= False)
-
-    # Plot
-    # line_plot()
-
-    # stacked_bar_plot()
-
+# Function to save the responsevariables in test_result.csv
 def save_rv(path_test_result,df_test_result,df_mapred_commands,df_dfsio_logs):
     df_test_result = pandas.concat([df_mapred_commands, df_dfsio_logs], axis=1)
     df_test_result.to_csv(path_test_result,index= False)
