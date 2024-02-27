@@ -65,8 +65,4 @@ Full factorial design 3^2 * 9 --> 2 indipendent factors, 3 levels and 9 replicas
   * TestDSFIO Average IO rate mb/sec
   * TestDSFIO Throughput mb/sec
 
-* Istogramma --> CPU time spent by the map tasks - CPU time spent by the reduce tasks / number of files
-* lineplot --> throughput / file size
-* lineplot --> avarege io / file size
-
 * Mediana delle repliche per avere una repparesentazione più accurata del valore tipico

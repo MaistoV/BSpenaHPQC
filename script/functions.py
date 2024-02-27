@@ -11,7 +11,7 @@ import config_file as conf
 
 ############################# STEP 1 FUNCTIONS ######################################
 
-# Function to create one dataframe from test_list.csv and one needed for test_result.csv
+# Function to create all the dataframes needed for the script
 def create_dataframe(path_test_list):
 
     # Read test_list.csv
@@ -29,11 +29,11 @@ def create_dataframe(path_test_list):
     df_test_result = pandas.DataFrame()                     
     df_test_result.index = tests_number
 
-    # Dataframe to store response variables from test via command line
+    # Dataframe to store response variables from mapreduce commands
     df_mapred_commands = pandas.DataFrame()                   
     df_mapred_commands.index = tests_number
     
-    # Dataframe to store response variables from TestDFSIO logs 
+    # Dataframe to store response variables from TestDFSIO log file
     df_dfsio_logs = pandas.DataFrame()                  
     df_dfsio_logs.index = tests_number
 
@@ -108,7 +108,7 @@ def create_dfsio(row,dfsio_t):
 
 ############################# STEP 5 FUNCTIONS ######################################
 
-# Function to read response variables from mapreduce commands
+# Function to measure response variables from mapreduce commands
 def mapred_commands(index,df_mapred_commands,cn_mapred_commands):
     
     # Find jobID
@@ -129,7 +129,7 @@ def mapred_commands(index,df_mapred_commands,cn_mapred_commands):
     df_mapred_commands.loc[df_mapred_commands.index[index], cn_mapred_commands] = [map_number,cpu_time_map,cpu_time_red,cpu_time_tot]
 
 
-# Function to read response variables from TestDFSIO logs
+# Function to measure response variables from TestDFSIO log file
 def test_dfsio_logs(index,path_test_dfsio_logs,df_dfsio_logs,cn_dfsio_logs):
 
     with open(path_test_dfsio_logs, 'r') as file:
@@ -142,7 +142,7 @@ def test_dfsio_logs(index,path_test_dfsio_logs,df_dfsio_logs,cn_dfsio_logs):
     df_dfsio_logs.loc[df_dfsio_logs.index[index], cn_dfsio_logs] = [throughput,average_io]
 
 
-# Function to start the offline test
+# Function to measure the response variables by launching mapreduce commands and reading the TestDFSIO log file
 def offline_test(index,df_mapred_commands,cn_mapred_commands,path_test_dfsio_logs,df_dfsio_logs,cn_dfsio_logs):
 
     # Read the response variables from the mapreduce commands
@@ -155,6 +155,7 @@ def offline_test(index,df_mapred_commands,cn_mapred_commands,path_test_dfsio_log
 
 ############################# STEP 6 FUNCTION ######################################
 
+# Function to clean up the TestDFSIO log file
 def clean_up(path_test_dfsio_logs):
     os.system('$HADOOP_HOME/bin/hadoop jar $HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-client-jobclient-3.3.5-tests.jar TestDFSIO -clean')
     os.remove(path_test_dfsio_logs)
@@ -163,7 +164,7 @@ def clean_up(path_test_dfsio_logs):
 
 ############################# STEP 7 FUNCTION ######################################
 
-# Function to save the responsevariables in test_result.csv
+# Function to save the response variables in test_result.csv
 def save_rv(path_test_result,df_test_result,df_mapred_commands,df_dfsio_logs):
-    df_test_result = pandas.concat([df_mapred_commands, df_dfsio_logs], axis=1)
+    df_test_result = pandas.concat([df_mapred_commands, df_dfsio_logs], axis=1)     # Concatenate pandas objects along a particular axis
     df_test_result.to_csv(path_test_result,index= False)

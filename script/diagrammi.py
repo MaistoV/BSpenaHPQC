@@ -1,83 +1,88 @@
 import pandas
 from matplotlib import pyplot as plt 
 import numpy as np
-from scipy.interpolate import CubicSpline
+import statistics
 
-def find_median(df_test_result,string):
-    median_list = []
-    i = 1       
-    j = 9
+
+def find_mean(df_test_result,string):
+    list = []
+    i = 0       
+    j = 8
 
     while(j <= 81):
-        lower_bound = 'test' + str(i)
-        upper_bound = 'test' + str(j)
-        group = df_test_result.loc[lower_bound : upper_bound]   # Extract the rows            
-        median_list.append(group[string].median())              # Add the median of the choosen row to the list
+        group = df_test_result.iloc[i : j]   # Extract the rows            
+        list.append(statistics.mean(group[string]))             # Add the mean of the choosen row to the list
         i = i + 9
         j = j + 9
 
-    return median_list
+    return list
 
 
-def stacked_bar_plot(cpu_mt_median,cpu_rt_median):    
-    fig = plt.figure(figsize=(8,6))
+def bar_plot(y,title,x_label,y_label):    
+    plt.figure(figsize=(6,5))
     ax = plt.axes()
-    ax.set_title('CPU Time Spent')
-    ax.grid(linestyle='--', color='0.75', axis = 'y')
-    ax.set_axisbelow(True)                                         # Grid behind the bars
-    width = 0.75                                                   # Bar width
+    ax.bar([1,2,4],y,color='blue',width = 0.35)                    
+    ax.set_title(title)                                  
+    ax.set_xlabel(x_label)                 
+    ax.set_ylabel(y_label)
+ 
 
-    test_numbers =  []
-    for i in range(1,len(cpu_mt_median)+1):
-        string = 'Test ' + str(i)
-        test_numbers.append(string)
-
-    cpu_mt_plot = ax.bar(test_numbers, cpu_mt_median, width, label='cpu.time.map.task')
-    cpu_rt_plot = ax.bar(test_numbers, cpu_rt_median, width, bottom= cpu_mt_median,label='cpu.time.reduce.tasks')
-
-    ax.bar_label(cpu_mt_plot, label_type='center')                 # Show the values inside the bars                     
-    ax.bar_label(cpu_rt_plot, label_type='center')    
-                                                                                   
-    ax.legend()
-    ax.bar_label(cpu_rt_plot)                                      # Show the sum of the values above the bars
-
-
-def line_plot(throughput_median,average_io_median):
-    x=np.linspace(1,9,9)   
-    
-    fig = plt.figure()
-    ax_t = plt.axes()
-    ax_t.set_title('Throughput mb/s')
-    ax_t.set_xlabel('Test Numbers')                 
-    ax_t.set_ylabel('Throughput')
-    ax_t.grid(linestyle='--', color='0.85')                                                   
-    ax_t.plot(x,throughput_median, color="red") 
-
-    fig = plt.figure() 
-    ax_a = plt.axes()
-    ax_a.set_xlabel('Test Numbers')                 
-    ax_a.set_ylabel('Average IO rate')
-    ax_a.set_title('Average IO rate mb/s')
-    ax_a.grid(linestyle='--', color='0.85')
-    ax_a.plot(x,average_io_median, color="blue")   
+def line_plot(y,title,x_label,y_label):  
+    plt.figure(figsize=(6,5))
+    ax = plt.axes()
+    ax.set_title(title)
+    ax.set_xlabel(x_label)                 
+    ax.set_ylabel(y_label)
+    ax.grid(linestyle='--', color='0.85')  
+    x= [10,12,16]                                                 
+    ax.plot(x,y, color='red') 
 
 
 if __name__=='__main__':
 
+    df_test_list = pandas.read_csv('test_list.csv')  
     df_test_result = pandas.read_csv('test_result.csv')                 
 
     tests_number = []
-    for i in range(1,len(df_test_result.index)+1):
+    for i in range(1,len(df_test_list.index)+1):
         string = 'test' + str(i)
         tests_number.append(string)
 
+    df_test_list.index = tests_number
     df_test_result.index = tests_number
 
-    cpu_mt_median = find_median(df_test_result,'cpu.time.map.task')
-    cpu_rt_median = find_median(df_test_result,'cpu.time.reduce.tasks')
-    throughput_median = find_median(df_test_result,'throughput_value')
-    average_io_median = find_median(df_test_result,'average_io_value')
+    df_total = pandas.concat([df_test_list, df_test_result], axis=1)    #Concatenate pandas objects along a particular axis
+    df_total_sort = df_total.sort_values(by=['mapreduce.map.cpu.vcores','dfs.datanode.handler.count'])
 
-    stacked_bar_plot(cpu_mt_median,cpu_rt_median)
-    line_plot(throughput_median,average_io_median)
+    pandas.set_option('display.max_rows', None)                         # Display all dataframe rows
+    #pandas.set_option('display.max_columns', None)                     # Display all dataframe columns
+
+    # Mean values
+    throughput_mean = find_mean(df_total_sort,'throughput_value')
+    average_io_mean = find_mean(df_total,'average_io_value')
+    cpu_mt_mean = find_mean(df_total,'cpu.time.map.task')
+    # cpu_rt_mean = find_mean(df_total,'cpu.time.reduce.tasks')
+
+    # Labels
+    x_label_t_a = 'Number of Server Threads for DataNode'
+    y_label_t = 'Throughput mb/s'
+
+    x_label_cpu = 'Number of Server Threads for DataNode'
+    y_label_cpu = 'Throughput mb/s'
+      
+    # Line Plots Throughput
+    line_plot(throughput_mean[0:3],'Throughput (1 Vcore for each Map Task)',x_label_t_a,y_label_t)
+    line_plot(throughput_mean[3:6],'Throughput (2 Vcores for each Map Task)',x_label_t_a,y_label_t)
+    line_plot(throughput_mean[6:9],'Throughput (4 Vcores for each Map Task)',x_label_t_a,y_label_t)
+
+    # Line Plots Average IO
+    line_plot(average_io_mean[0:3],'Average IO rate (1 Vcore for each Map Task)',x_label_t_a,y_label_t)
+    line_plot(average_io_mean[3:6],'Average IO rate (2 Vcores for each Map Task)',x_label_t_a,y_label_t)
+    line_plot(average_io_mean[6:9],'Average IO rate (4 Vcores for each Map Task)',x_label_t_a,y_label_t)
+
+    # Bar Plots
+    bar_plot(cpu_mt_mean[0:3],'CPU Time Spent by all Map Tasks (10 Server Threads for Datanode)',x_label_cpu,y_label_cpu)
+    bar_plot(cpu_mt_mean[3:6],'CPU Time Spent by all Map Tasks (12 Server Threads for Datanode)',x_label_cpu,y_label_cpu)
+    bar_plot(cpu_mt_mean[6:9],'CPU Time Spent by all Map Tasks (14 Server Threads for Datanode)',x_label_cpu,y_label_cpu)
+
     plt.show()

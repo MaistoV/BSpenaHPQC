@@ -26,58 +26,76 @@ stateDiagram-v2
         Online_Test --> join_state
         join_state --> Step_5
         Step_5 --> Step_6
-        Step_6 --> [*]
+        Step_6 --> Step_7
+        Step_7 --> [*]
 ```
-* `Step_1` : Read test_list.csv and test_result.csv.
+* `Step_1` : Create all the dataframes needed for the script.
 * `Step_2` : Cluster Configuration.
 * `Step_3` : Start the cluster in pseudo-distributed mode.
 * `Step_4` : Start the TestDFSIO, the python program generates two `child processe` (throught the system call fork()) and the join() method blocks until the processes are terminated.
     * `TestDFSIO` : Start TestDFSIO
-    * `Online_Test` : Start Online Test to measure the response variables.
+    * `Online_Test` : Start Online Test to measure the response variables (not implemented yet).
 * `Step_5` : Start the Offline Test to measure the response variables.
 * `Step_6` : Clean up test results.
-
+* `Step_7` : Save response variables on test_result.csv.
 
 
 ## Python Modules <a name="python_mod"></a>
 * `csv` : Module to work with csv files.
 * `pandas` : Module for data manipulation and analysis.
 * `xml.etree.ElementTree module` : Module for parsing and creating XML data.
-* `linecache` : Module to extract and access specific lines in python.
 * `subprocess` : Module to spawn new processes and capture stout/stderr.
 * `os` : Module to use operating system dependent functionality.
 * `multiprocessing` : Module to spaw new processes.
 
+
 ## Functions <a name="func"></a>
 
-### read_csv (test_list.csv file path, test_list.csv row indeces, test_result.csv file path , test_result.csv column indeces) 
-
-* `Description` : Read *test_list.csv* file, saving the indipendet factors in a dataframe, and the *test_result.csv* file (`Step 1`).
+### create_dataframe(test_list.csv file path) 
+* `Description` : Create all the dataframes needed for the script (`Step 1`).
+* `Implementation` :
 ```python
-def read_csv(path_test_list,tests_numer,path_test_result,columns_name):
-    df_test_list = pandas.read_csv(path_test_list)                  
-    df_test_list.index = tests_numer                          # Set the indeces of the dataframe
+def create_dataframe(path_test_list):
 
-    with open(path_test_result,'w') as file:                  # Open/create test_result.csv file
-        writer=csv.writer(file)
-        writer.writerow(columns_name)  
+    # Read test_list.csv
+    df_test_list = pandas.read_csv(path_test_list)                 
 
-    return df_test_list                                       # Return the test_list dataframe
+    # Create custum indeces
+    tests_number = []
+    for i in range(1,len(df_test_list.index)+1):
+        string = 'test' + str(i)
+        tests_number.append(string)
+
+    df_test_list.index = tests_number
+
+    # Create dataframe for test_result.csv
+    df_test_result = pandas.DataFrame()                     
+    df_test_result.index = tests_number
+
+    # Dataframe to store response variables from mapreduce commands
+    df_mapred_commands = pandas.DataFrame()                   
+    df_mapred_commands.index = tests_number
+    
+    # Dataframe to store response variables from TestDFSIO logs 
+    df_dfsio_logs = pandas.DataFrame()                  
+    df_dfsio_logs.index = tests_number
+
+    return df_test_list,df_test_result,df_mapred_commands,df_dfsio_logs
 ```
 
-### config_cluster (hdfs-site.xml file path, hdfs parameters tuple, mapred-site.xml file path, mapred parameters tuple, yarn-site.xml file path, yarn parameters tuple, test_list dataframe row, cluster configuration special parameters)
-
+### config_cluster(hdfs-site.xml file path, hdfs parameters tuple, mapred-site.xml file path, mapred parameters tuple, yarn-site.xml file path, yarn parameters tuple, test_list dataframe row, cluster configuration special parameters)
 * `Description` : Configure the Hadoop cluster by setting *-site.xml* files of the three layers (`Step 2`).
+* `Implementation` :
 ```python
-    def config_cluster(path_hdfs_site,hdfs_t,path_mapred_site,mapred_t,path_yarn_site,yarn_t,row,special_parameters):
-        update_xml(path_hdfs_site,row,hdfs_t,special_parameters)          # Configure hdfs-site.xml
-        update_xml(path_mapred_site,row,mapred_t,special_parameters)      # Configure mapred-site.xml
-        update_xml(path_yarn_site,row,yarn_t,special_parameters)          # Configure yarn-site.xml
+def config_cluster(path_hdfs_site,hdfs_t,path_mapred_site,mapred_t,path_yarn_site,yarn_t,row,special_parameters):
+    update_xml(path_hdfs_site,row,hdfs_t,special_parameters)          # Configure hdfs-site.xml
+    update_xml(path_mapred_site,row,mapred_t,special_parameters)      # Configure mapred-site.xml
+    update_xml(path_yarn_site,row,yarn_t,special_parameters)          # Configure yarn-site.xml
 ```
 
 ### update_xml(xml file path,configuration parameters tuple, cluster configuration special parameters)
-
 * `Description` : Update the specific *-site.xml* file (`Step 2`).
+* `Implementation` :
 ```python
 def update_xml(file,row,tuple,special_parameters):    
     tree = ET.parse(file)                                           # Parse the XML file
@@ -103,8 +121,9 @@ def update_xml(file,row,tuple,special_parameters):
     tree.write(file, encoding="utf-8", xml_declaration=True)        # Write on xml file
 ```
 
-### os.system(start_cluster bash script)
+### os.system(bash script)
 * `Description` : Start the single-node cluster in pseudo-distributed mode (`Step 3`).
+* `Implementation` :
 ```python
 os.system('./start_cluster.sh')
 ```
@@ -138,14 +157,16 @@ $HADOOP_HOME/bin/hdfs dfs -mkdir input
 $HADOOP_HOME/bin/hdfs dfs -put $HADOOP_HOME/etc/hadoop/*.xml input
 ```
 
-
 ### create_dfsio(test_list dataframe row, dfsio parameters tuple)
 * `Description` : Create the TestDFSIO and create a new `Python Interpreter Process` through the `system call fork` (`Step 4`).
+* `Implementation` :
 ```python
 def create_dfsio(row,dfsio_t):
     s = '$HADOOP_HOME/bin/hadoop jar $HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-client-jobclient-3.3.5-tests.jar TestDFSIO -' + str(row['dfsio.operation'])
     for t in dfsio_t:
         s = s + ' -' + t.split('.')[1] + ' ' + str(row[t])  
+
+    s = s + ' -resFile ' + conf.path_test_dfsio_logs                        # Add to the string the file path for test results log
 
     dfsio_process = mp.Process(target = start_dfsio, args=(s,))             # Create the new process
     dfsio_process.start()                                                   # Start the process
@@ -154,34 +175,33 @@ def create_dfsio(row,dfsio_t):
     # Start online test (not implemented yet)
 ```
 
-### start_dfsio(dfsio command)
+### start_dfsio(TestDFSIO command)
 * `Description` : Start the TestDFSIO (`Step 4`).
+* `Implementation` :
 ```python
 def start_dfsio(string):
     os.system(string)
 ```
 
-### start_offline_test(test index, TestDFSIO_results.log file path, test_result file path)
-* `Description` : Measure the response variables and save the results in *test_result.csv* file (`Step 5`).
+
+### offline_test(test number, dataframe for rv from mapreduce commands, columns names for th previous dataframe, TestDFSIO log file path, dataframe for rv from TestDFSIO log, columns names for previous dataframe)
+* `Description` : Measure the response variables by launching mapreduce commands and reading the TestDFSIO log file (`Step 5`).
+* `Implementation` :
 ```python
-def start_offline_test(index,path_test_dfsio_logs,path_test_result):
+def offline_test(index,df_mapred_commands,cn_mapred_commands,path_test_dfsio_logs,df_dfsio_logs,cn_dfsio_logs):
 
-    # Test via command line
-    map_number,cpu_time_map,cpu_time_red,cpu_time_tot = test_via_command_line()
-    
-    # Results TestDFSIO via logs
-    throughput_value,avarege_io_value = test_dfsio_logs(index,path_test_dfsio_logs)
+   # Read the response variables from the mapreduce commands
+    mapred_commands(index,df_mapred_commands,cn_mapred_commands)
 
-    # Save values on test_result.csv
-    with open(path_test_result,'a') as file:          
-        writer=csv.writer(file)
-        writer.writerow([map_number,cpu_time_map,cpu_time_red,cpu_time_tot,throughput_value,avarege_io_value]) 
+    # Read the response variables from the TestDFSIO logs
+    test_dfsio_logs(index,path_test_dfsio_logs,df_dfsio_logs,cn_dfsio_logs) 
 ```
 
-### test_via_command_line()
+### mapred_commands(test number,dataframe for rv from mapreduce commands ,columns names for th previous dataframe )
 * `Description` : Measure the response variables using mapreduce commands<sup>[[17]](References.md#mapred_commands)</sup> (`Step 5`).
+* `Implementation` :
 ```python
-def test_via_command_line():
+def mapred_commands(index,df_mapred_commands,cn_mapred_commands):
     # Find jobID
     job_id_sub = subprocess.run('$HADOOP_HOME/bin/mapred job -list all | grep "job_"',shell = True ,capture_output=True)
     job_id = job_id_sub.stdout.decode().split('\t')[0]
@@ -199,8 +219,9 @@ def test_via_command_line():
     return map_number,cpu_time_map,cpu_time_red,cpu_time_tot
 ```
 
-### test_dfsio_logs(test index, TestDFSIO_results.log file path)
+### test_dfsio_logs(test number, TestDFSIO log file path, dataframe for rv from TestDFSIO log, columns names for previous dataframe)
 * `Description` : Measure the response variables using the TestDFSIO_results.log file (`Step 5`).
+* `Implementation` :
 ```python
 def test_dfsio_logs(index,file):
     throughput_line =  5 + (9 * index)                                                  # Position of the lines
@@ -211,10 +232,23 @@ def test_dfsio_logs(index,file):
     return throughput_value,avarege_io_value
 ```
 
-## os.system(TestDFSIO clean command)
-* `Description` : Clean up test results (`Step 6`).
+### clean_up(TestDFSIO log file path)
+* `Description` : Clean up the TestDFSIO result and remove log file (`Step 6`).
+* `Implementation` :
 ```python
-os.system('$HADOOP_HOME/bin/hadoop jar $HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-client-jobclient-3.3.5-tests.jar TestDFSIO -clean')
+def clean_up(path_test_dfsio_logs):
+    os.system('$HADOOP_HOME/bin/hadoop jar $HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-client-jobclient-3.3.5-tests.jar TestDFSIO -clean')
+    os.remove(path_test_dfsio_logs)
+```
+
+
+### save_rv(test_result file path, dataframe for test_result, dataframe for rv from mapreduce commands, dataframe for rv from TestDFSIO log)
+* `Description` : Save response variables on test_result csv file (`Step 6`).
+* `Implementation` :
+```python
+def save_rv(path_test_result,df_test_result,df_mapred_commands,df_dfsio_logs):
+    df_test_result = pandas.concat([df_mapred_commands, df_dfsio_logs], axis=1)     # Concatenate pandas objects along a particular axis
+    df_test_result.to_csv(path_test_result,index= False)
 ```
 
 ## How to Run <a name="run"></a>

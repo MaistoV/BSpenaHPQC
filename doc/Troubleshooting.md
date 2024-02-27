@@ -83,9 +83,7 @@ $ sbin/start-dfs.sh
 $ bin/hdfs dfsadmin -safemode leave
 ```
 
-
+## Error 7
 java.lang.NoClassDefFoundError: junit/framework/TestCase
-
-
 in  hadoop-env.sh (hadoop/hadoop-dist/target/hadoop-3.3.5/etc/hadoop/)
 export HADOOP_CLASSPATH=$HADOOP_CLASSPATH:/path/to/junit.jar
