@@ -259,6 +259,8 @@ Set :
 
 ### Run
 ```bash
-$ $HADOOP_HOME/bin/hdfs namenode -format            # Format the dfs
 $ python3 run_test.py
 ```
+
+> [!NOTE]
+> If the following message "Re-format filesystem in Storage Directory root= /tmp/hadoop-spena/dfs/name; location= null ? (Y or N)" appears on your terminal, choose Y

@@ -6,14 +6,14 @@ $HADOOP_HOME/sbin/stop-yarn.sh
 $HADOOP_HOME/bin/mapred --daemon stop historyserver
 
 
-#rm -rf ./tmp/hadoop-${user}/dfs/data/*
+# Clear the data directory
+rm -rf /tmp/hadoop-$(whoami)/dfs/data/*
 
 # Format the filesystem
-#$HADOOP_HOME/bin/hdfs namenode -format             
+$HADOOP_HOME/bin/hdfs namenode -format             
 
 # Start HDFS deamons,YARN deamons and JobHistoryServer
 $HADOOP_HOME/sbin/start-dfs.sh                     
-$HADOOP_HOME/bin/hdfs dfsadmin -safemode leave                # Forcefully let the namenode leave safemode
 $HADOOP_HOME/sbin/start-yarn.sh
 $HADOOP_HOME/bin/mapred --daemon start historyserver
 

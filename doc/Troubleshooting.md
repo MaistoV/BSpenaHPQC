@@ -73,17 +73,22 @@ $ bin/hadoop namenode
 ```
 
 ## Error 6
-* `Error Cause` : Start HDFS deamons using command 
+* `Error Cause` : Format HDFS
 ```bash
-$ sbin/start-dfs.sh 
+$HADOOP_HOME/bin/hdfs namenode -format   
 ```
-* `Error Message` : Cannot delete /benchmarks/TestDFSIO/io_control. Name node is in safe mode.
-* [`Solution`](https://stackoverflow.com/questions/15803266/name-node-is-in-safe-mode-not-able-to-leave) : 
+* `Error Message` : Incompatible clusterIDs in /tmp/hadoop-$(user)/dfs/data: namenode clusterID = CID-84f0c0a3-9a9a-4113-8b0f-cb3cbd2ba659; datanode clusterID = CID-82969d99-7366-42d0-b503-0e6f96e4eb51.
+* [`Solution`](https://stackoverflow.com/questions/43346632/incompatible-clusterids-in-datanode-and-namenode) : Clear the data directory
 ```bash
-$ bin/hdfs dfsadmin -safemode leave
+rm -rf /tmp/hadoop-$(whoami)/dfs/data/*
 ```
 
 ## Error 7
-java.lang.NoClassDefFoundError: junit/framework/TestCase
-in  hadoop-env.sh (hadoop/hadoop-dist/target/hadoop-3.3.5/etc/hadoop/)
+```bash
+$ $HADOOP_HOME/bin/hadoop jar $HADOOP_HOME/share/hadoop/mapreduce/hadoop-*test*.jar TestDFSIO -read | -write | -clean [-nrFiles N] [-fileSize MB] [-resFile resultFileName] [-bufferSize Bytes]
+```
+* `Error Message` : java.lang.NoClassDefFoundError: junit/framework/TestCase.
+* [`Solution`] : Ass junit.jar path to environment variable path in hadoop-env.sh file (hadoop/hadoop-dist/target/hadoop-3.3.5/etc/hadoop/)
+```bash
 export HADOOP_CLASSPATH=$HADOOP_CLASSPATH:/path/to/junit.jar
+```
