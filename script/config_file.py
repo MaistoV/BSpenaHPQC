@@ -10,7 +10,7 @@ path_test_dfsio_logs = '/home/spena/Downloads/TestDFSIO_results.log'
 hdfs_t = ('dfs.datanode.handler.count',)
 mapred_t = ('mapreduce.map.cpu.vcores',)
 yarn_t = ('yarn.scheduler.minimum-allocation-vcores',)
-dfsio_t = ('dfsio.nrFiles','dfsio.fileSize')
+dfsio_t = ('dfsio.nrFiles','dfsio.fileSize','dfsio.resFile')
 
 # Colums names for dataframe with response variables from mapreduce commands
 cn_mapred_commands = ['maps.number','cpu.time.map.task','cpu.time.reduce.tasks','cpu.time.tot']

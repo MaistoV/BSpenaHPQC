@@ -5,7 +5,6 @@ $HADOOP_HOME/sbin/stop-dfs.sh
 $HADOOP_HOME/sbin/stop-yarn.sh
 $HADOOP_HOME/bin/mapred --daemon stop historyserver
 
-
 # Clear the data directory
 rm -rf /tmp/hadoop-$(whoami)/dfs/data/*
 

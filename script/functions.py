@@ -1,5 +1,6 @@
 
 import xml.etree.ElementTree as ET                        # Module for parsing and creating XML data
+import linecache                                          # Module to extract and access specific lines in python
 import subprocess                                         # Module to spawn new processes and capture stout/stderr
 import os
 import requests                                           # Module to execute http requests
@@ -11,7 +12,7 @@ import config_file as conf
 
 ############################# STEP 1 FUNCTIONS ######################################
 
-# Function to create all the dataframes needed for the script
+# Function to create one dataframe from test_list.csv and one needed for test_result.csv
 def create_dataframe(path_test_list):
 
     # Read test_list.csv
@@ -29,11 +30,11 @@ def create_dataframe(path_test_list):
     df_test_result = pandas.DataFrame()                     
     df_test_result.index = tests_number
 
-    # Dataframe to store response variables from mapreduce commands
+    # Dataframe to store response variables from test via command line
     df_mapred_commands = pandas.DataFrame()                   
     df_mapred_commands.index = tests_number
     
-    # Dataframe to store response variables from TestDFSIO log file
+    # Dataframe to store response variables from TestDFSIO logs 
     df_dfsio_logs = pandas.DataFrame()                  
     df_dfsio_logs.index = tests_number
 
@@ -78,13 +79,13 @@ def config_cluster(path_hdfs_site,hdfs_t,path_mapred_site,mapred_t,path_yarn_sit
 
 ############################# STEP 4 FUNCTIONS ######################################
 
-# Function to start the TestDFSIO
+# Function to start the dfsio test
 def start_dfsio(string):
     os.system(string)
 
 # Function to start the online test
 def online_test():
-    print("Not Implemented yet")
+    print("Online Test not Implemented yet")
 
 # Function to use the REST API to measure the response variables
 def rest_api():
@@ -100,8 +101,6 @@ def dfsio_online_test(row,dfsio_t):
     for t in dfsio_t:
         s = s + ' -' + t.split('.')[1] + ' ' + str(row[t])  
 
-    s = s + ' -resFile ' + conf.path_test_dfsio_logs                        # Add to the string the file path for test results log
-
     # Start TestDFSIO
     dfsio_process = mp.Process(target = start_dfsio, args=(s,))             # Create new process
     dfsio_process.start()                                                   # Start the process
@@ -110,9 +109,9 @@ def dfsio_online_test(row,dfsio_t):
     online_test_process = mp.Process(target = online_test)
     online_test_process.start()                
     
-    # Methods block until processes are terminated
-    dfsio_process.join()                                                    
+    # Methods block until processes are terminated                                                   
     online_test_process.join()
+    dfsio_process.join() 
 
     # REST API Test
     #rest_api()
@@ -163,7 +162,6 @@ def offline_test(index,df_mapred_commands,cn_mapred_commands,path_test_dfsio_log
 
     # Read the response variables from the TestDFSIO logs
     test_dfsio_logs(index,path_test_dfsio_logs,df_dfsio_logs,cn_dfsio_logs)
-
 
 
 ############################# STEP 6 FUNCTION ######################################
