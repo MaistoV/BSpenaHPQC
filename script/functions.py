@@ -78,31 +78,43 @@ def config_cluster(path_hdfs_site,hdfs_t,path_mapred_site,mapred_t,path_yarn_sit
 
 ############################# STEP 4 FUNCTIONS ######################################
 
-# Function to start the dfsio test
+# Function to start the TestDFSIO
 def start_dfsio(string):
     os.system(string)
 
-# Function to create (using the paramters from test_list.csv) the dfsio test
-def create_dfsio(row,dfsio_t):
+# Function to start the online test
+def online_test():
+    print("Not Implemented yet")
+
+# Function to use the REST API to measure the response variables
+def rest_api():
+    response = requests.get('http://localhost:8088/ws/v1/cluster/apps')
+    data = response.json()                                                  # data is a dictionary
+    print(data['apps']['app'][0]['allocatedMB'])                            # apps and app are keys, the app value is a list --> 0 to access the firts element
+    print(data['apps']['app'][0]['allocatedVCores'])
+
+# Function to create the TestDFSIO
+def dfsio_online_test(row,dfsio_t):
     s = '$HADOOP_HOME/bin/hadoop jar $HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-client-jobclient-3.3.5-tests.jar TestDFSIO -' + str(row['dfsio.operation'])
     for t in dfsio_t:
         s = s + ' -' + t.split('.')[1] + ' ' + str(row[t])  
 
     s = s + ' -resFile ' + conf.path_test_dfsio_logs                        # Add to the string the file path for test results log
 
-    dfsio_process = mp.Process(target = start_dfsio, args=(s,))             # Create the new process
+    # Start TestDFSIO
+    dfsio_process = mp.Process(target = start_dfsio, args=(s,))             # Create new process
     dfsio_process.start()                                                   # Start the process
-    dfsio_process.join()                                                    # Method blocks until the process is terminated
+    
+    # Start Online Test
+    online_test_process = mp.Process(target = online_test)
+    online_test_process.start()                
+    
+    # Methods block until processes are terminated
+    dfsio_process.join()                                                    
+    online_test_process.join()
 
-    # Start online test (not implemented yet)
-
-
-    ###########
-    # Test via REST API
-    # response = requests.get('http://localhost:8088/ws/v1/cluster/apps')
-    # data = response.json()                                      # data is a dictionary
-    # print(data['apps']['app'][0]['allocatedMB'])                # apps and app are keys, the app value is a list --> 0 to access the firts element
-    # print(data['apps']['app'][0]['allocatedVCores'])
+    # REST API Test
+    #rest_api()
 
 
 
@@ -142,7 +154,7 @@ def test_dfsio_logs(index,path_test_dfsio_logs,df_dfsio_logs,cn_dfsio_logs):
     df_dfsio_logs.loc[df_dfsio_logs.index[index], cn_dfsio_logs] = [throughput,average_io]
 
 
-# Function to measure the response variables by launching mapreduce commands and reading the TestDFSIO log file
+# Function to start the Offline Test
 def offline_test(index,df_mapred_commands,cn_mapred_commands,path_test_dfsio_logs,df_dfsio_logs,cn_dfsio_logs):
 
     # Read the response variables from the mapreduce commands

@@ -19,8 +19,8 @@ if __name__=='__main__':
         os.system('./start_cluster.sh')
         print("\n")
 
-        print("STEP 4: Start the TestDFSIO")
-        func.create_dfsio(row,conf.dfsio_t)
+        print("STEP 4: Start the TestDFSIO and Online Test")
+        func.dfsio_online_test(row,conf.dfsio_t)
         print("\n")
                                 
         print("STEP 5: Start the Offline Test\n")

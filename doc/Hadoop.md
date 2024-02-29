@@ -100,10 +100,10 @@ A Hadoop cluster can be configured by setting the configuration parameters of th
 * yarn-site.xml.
 
 Besides. there are `read-only default configuration files` which contain the configuration parameters deafult values :
-  * core-default.xml.
-  * hdfs-default.xml. 
-  * mapred-default.xml.
-  * yarn-default.xml.
+* core-default.xml.
+* hdfs-default.xml. 
+* mapred-default.xml.
+* yarn-default.xml.
 
 
 ## TestDFSIO <a name="testdfsio"></a>

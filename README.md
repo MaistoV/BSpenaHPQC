@@ -11,10 +11,6 @@ The independent factors are the `cluster configuration parameters` and are store
     * [YARN](doc/Hadoop.md#YARN)
     * [Hadoop Cluster Configurarion](doc/Hadoop.md#clusterconfig)
     * [TestDFSIO](doc/Hadoop.md#testdfsio)
-1. [Configuration Parameters](doc/Parameters.md)
-    * [HDFS](doc/Parameters.md#hdfsparanalysis)
-    * [MapReduce](doc/Parameters.md#maprredparanalysis)
-    * [YARN](doc/Parameters.md#yarnparanalysis)
 1. [Environment Setup](doc/Setup.md)
     * [Tools](doc/Setup.md#tool)
     * [Building Hadoop](doc/Setup.md#build)
@@ -25,6 +21,12 @@ The independent factors are the `cluster configuration parameters` and are store
     * [Python Modules](doc/Script.md#python_mod)
     * [Functions](doc/Script.md#func)
     * [How to Run](doc/Script.md#run)
+1. [Experiments](doc/Parameters.md)
 1. [Troubleshooting](doc/Troubleshooting.md)
 1. [References](doc/References.md)
     * [Further References](doc/References.md#fref)
+
+
+# Introduzione hadoop - architettura - definizione concetti
+# Setup Sperimentale
+# Analisi dei risultati
