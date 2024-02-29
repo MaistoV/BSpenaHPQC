@@ -13,6 +13,10 @@ A minimal flow of controll of the script
 ```mermaid
 stateDiagram-v2
     state fork_state <<fork>>
+        
+        
+        
+        
         [*] --> Step_1
         Step_1 --> Step_2
         Step_2 --> Step_3
@@ -261,6 +265,3 @@ Set :
 ```bash
 $ python3 run_test.py
 ```
-
-> [!NOTE]
-> If the following message "Re-format filesystem in Storage Directory root= /tmp/hadoop-spena/dfs/name; location= null ? (Y or N)" appears on your terminal, choose Y

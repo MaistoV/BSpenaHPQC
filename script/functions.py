@@ -17,7 +17,7 @@ def create_dataframe(path_test_list):
     # Read test_list.csv
     df_test_list = pandas.read_csv(path_test_list)                 
 
-    # Create custum indeces
+    # Create custom indeces
     tests_number = []
     for i in range(1,len(df_test_list.index)+1):
         string = 'test' + str(i)
