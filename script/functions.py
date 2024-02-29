@@ -93,7 +93,8 @@ def rest_api():
     print(data['apps']['app'][0]['allocatedMB'])                            # apps and app are keys, the app value is a list --> 0 to access the firts element
     print(data['apps']['app'][0]['allocatedVCores'])
 
-# Function to create the TestDFSIO
+
+# Function to start TestDFSIO and the Online Test
 def dfsio_online_test(row,dfsio_t):
     s = '$HADOOP_HOME/bin/hadoop jar $HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-client-jobclient-3.3.5-tests.jar TestDFSIO -' + str(row['dfsio.operation'])
     for t in dfsio_t:

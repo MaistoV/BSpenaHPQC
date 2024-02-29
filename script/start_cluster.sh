@@ -10,7 +10,7 @@ $HADOOP_HOME/bin/mapred --daemon stop historyserver
 rm -rf /tmp/hadoop-$(whoami)/dfs/data/*
 
 # Format the filesystem
-$HADOOP_HOME/bin/hdfs namenode -format             
+echo Y | $HADOOP_HOME/bin/hdfs namenode -format          
 
 # Start HDFS deamons,YARN deamons and JobHistoryServer
 $HADOOP_HOME/sbin/start-dfs.sh                     
