@@ -1,4 +1,4 @@
-# Experiments 
+# Experiments
 I have conducted a `full factorial experiment 3<sup>2</sup>9`, which consists of `2 independent factors`, each with `3 levels`. For each of the 9 combinations, were carried out `9 repetitions`, resulting in a total of 81 experiments. 
 The chosen independent factors are related to the computation field and are: 
 * `dfs.datanode.handler.count` : The number of server threads for the datanode, with the following levels
@@ -20,7 +20,7 @@ On the other hand, the `response variables` are related to the time analysis :
 * `TestDSFIO Average IO rate mb/sec`
 * `TestDSFIO Throughput mb/sec`
 
-## Result Analysis
+## Response Variables Analysis <a name="rv_analysis"></a>
 Subsequently, the following graphs were designed to visualize the results.
 
 <img src="img/throughtput.jpeg" width="1000">

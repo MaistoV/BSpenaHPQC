@@ -20,12 +20,8 @@ The independent factors are the `cluster configuration parameters` and are store
     * [Control Flow](doc/Script.md#flow_control)
     * [Python Modules](doc/Script.md#python_mod)
     * [How to Run](doc/Script.md#run)
-1. [Experiments](doc/Parameters.md)
+1. [Experiments](doc/Experiments.md)
+    * [Response Variables Analysis](doc/Script.Experiments#rv_analysis)
 1. [Troubleshooting](doc/Troubleshooting.md)
 1. [References](doc/References.md)
     * [Further References](doc/References.md#fref)
-
-
-# Introduzione hadoop - architettura - definizione concetti
-# Setup Sperimentale
-# Analisi dei risultati
