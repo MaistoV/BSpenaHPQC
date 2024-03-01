@@ -1,51 +1,43 @@
 # Apache Hadoop
 
 ## Introduction <a name="intro"></a>
-Apache Hadoop software library <sup>[[1]](References.md#hadoop)</sup> is a `freamwork` used for the distributed processing of massive datasets across `clusters` of commodity hardware. Hadoop Cluster is a computational cluster used for storing and analyzing huge amounts of unstructured or structured data in a distributed computing environment. Hadoop has a `master-slave` architecture<sup>[[2]](References.md#hadoop_architecture)</sup> :
-* `Master Node` : There is one per cluster. It assigns tasks to the slave nodes. The master node stores metadata and manages the resources across the cluster.
+Apache Hadoop software library <sup>[[1]](References.md#hadoop)</sup> is a `freamwork` used for the distributed processing of massive datasets across `clusters` of commodity hardware. `Hadoop Cluster` is a computational cluster used for storing and analyzing huge amounts of unstructured or structured data in a distributed computing environment. 
+
+The Hadoop architecture has three layers :
+* `HDFS` : The Storage layer.
+* `MapReduce` : The Applications layer.
+* `YARN` : The Resource Management layer.
+
+<p align="center">
+  <img src="https://techvidvan.com/tutorials/wp-content/uploads/sites/2/2020/04/hadoop-component.jpg" width="700">
+</p>
+
+and follows has a `master-slave` architecture<sup>[[2]](References.md#hadoop_architecture)</sup> :
+* `Master Node` : There is one per cluster. It assigns tasks to the slave nodes and stores metadata, managing the resources across the cluster.
 * `Slave Nodes` : Store data and perform the computing.
 
+Master and slaves nodes contain the components related to the previous three layers.
 <p align="center">
   <img src="https://techvidvan.com/tutorials/wp-content/uploads/sites/2/2020/03/hadoop-architecture.jpg" width="700">
 </p>
-
-Besides, the architecture has three layers :
-* `HDFS` : The storage layer.
-* `MapReduce` : The data processing layer.
-* `Yarn` : The resource management layer.
-
-Hadoop provides different features<sup>[[3]](References.md#hadoop_features)</sup> such as :
-* Fault Tolerance.
-* High Availability.
-* Data Locality.
-* Data Reliability.
-* Very Cost-Effective.
 
 
 ## HDFS <a name="hdfs"></a>
 HDFS (Hadoop Distributed File System)<sup>[[4]](References.md#hdfs_architecture)</sup> is a java-based distributed file system running on commodity hardware which supports a traditional hierarchical file organization. This file system :
 * Stores user data in files.
 * Splits file in one or more blocked-sized chunks known as `data blocks`,with size of 128 MB by default (the size is configurable per file).  
-* Replicates the data blocks. The replication factor is three by default, but it can be configurable per file.
-* Supports `write-once-read-many` access model for on files. After closing a fila, it cannnot be updated at any point, but content can be append at the end.
-* Support the `snapshot` to execute a roll back of a corrupted istance
+* Replicates the data blocks with a `configurable replication factor`, which is set to 3 by default. The default factor causes an 200% overhead in storage space and other resources, so to avoid the overhead is used the the `Erasure Coding`. It provides the same level of fault-tolerance with much less storage space.
 
 HDFS has a `master-slave architecture` :
 * `NameNode` : There is one `master daemon` per cluster, it executes file system namespace operations (opening, closing, and renaming files and directories) and handles clients access to files. The NameNode assigns the blocks to DataNodes and stores the metadata (number of data blocks,their locations,numeber of replicas, etc...). Finally, it makes all decisions regarding blocks replication.
 * `DataNode`  : There is one `slave daemon` per node in the cluster, it executes read/write operation from the file system’s client. The DataNode performs data blocks operations (creation, deletion and replication) and stores the actual data. Moreover, DataNodes ara gathered together in `racks`.
 
-> [!NOTE]
-> The deafult replication factor is 3, it generates an 200% overhead in storage space and other resources. The solution is the `Erasure Coding`, which provides the same level of fault-tolerance with much less storage space.
 
 <p align="center">
   <img src="https://techvidvan.com/tutorials/wp-content/uploads/sites/2/2020/03/HDFS-Architecture.jpg" width="600">
 </p>
 
-The architecture can be `rebalanced` moving data from one Datanode to another. HDFS provides :
-* Data reliability.
-* Data availability.
-* Data Locality.
-* A fault-tolerant system.
+The architecture can be `rebalanced` moving data from one Datanode to another.
 
 
 ## MapReduce <a name="mapred"></a>
@@ -71,9 +63,8 @@ YARN (Yet Another Resource Negotiator)<sup>[[7]](References.md#yarn)</sup><sup>[
 * Allows the exectution of an `application`, it can be a `single MapReduce job` or `DAG of jobs`. 
 * Sends computations where the data is stored on locak disks (property of `data locality`)
 * Uses the `containers`, collection of all the resources necessary to run an application on a node in a cluster.
-* Has a `master-slave nodes architecture`.
 
-YARN has the following components :
+YARN has a `master-slave nodes architecture` :
 * `ResourceManager` : The `master daemon` runs on master node. It manages the resources among all the applications in the system. The daemon assigns map and reduce tasks to the NodeManager and schedules containers. The ResourceManager has two main components :
     * `Scheduler` : It is a pure scheduler (does not perform monitoring or tracking of the applications' status), it allocates resources or container to the running applications.
     * `ApplicationsManager` : Accepts `job submissions` by the clients<sup>[[10]](References.md#yarn_app)</sup> and secures resources on a node (an operation known as "`negotiating the first container`") to launch the ApplicationMaster.
@@ -93,21 +84,31 @@ YARN supports the following schedulers<sup>[[8]](References.md#yarn_intro)</sup>
 
 
 ## Hadoop Cluster Configuration <a name="clusterconfig"></a>
-A Hadoop cluster can be configured by setting the configuration parameters of the three layers in the `site-specific configuration files` such as:
+A Hadoop cluster is highly configurable through the parameters settings and the supported modes.
+
+### Supported Modes
+Hadoop supports three different modes<sup>[[11]](References.md#modes)</sup> :
+* `Standalone Mode` : Hadoop is configured to run in a single-node as a single process on a single Java Virtual Machine (run on a single Java process).
+* `Pseudo-distributed Mode` : All the daemons run on different Java processes. This mode uses only a single node and the cluster is simulated, so  all the processes inside the cluster runs independently to each other.
+* `Fully-Distributed Mode` : There are multiple nodes used to run master and slaves deamons and the data are distributed across the different nodes.
+
+### Parameters Settings
+The parameters can be configured in the `site-specific configuration files`, such as:
 * core-site.xml.
 * hdfs-site.xml.
 * mapred-site.xml.
 * yarn-site.xml.
 
-Besides. there are `read-only default configuration files` which contain the configuration parameters deafult values :
+Furthermore, Hadoop provides the `read-only default configuration files`with default parameter values:
 * core-default.xml.
 * hdfs-default.xml. 
 * mapred-default.xml.
 * yarn-default.xml.
 
+These values are used when the parameters are not explicitly set in the **-site.xml* files.
 
 ## TestDFSIO <a name="testdfsio"></a>
-TestDFSIO benchmark is a read and write test for HDFS<sup>[[11]](References.md#dfsio)</sup> and describes how faster a cluster is in terms of I/O. Benchmark results are saved in *TestDFSIO_results.log* file (in the current local directory) and printed in to stdout.
+TestDFSIO benchmark is a read and write test for HDFS<sup>[[12]](References.md#dfsio)</sup> and describes how faster a cluster is in terms of I/O. Benchmark results are saved in *TestDFSIO_results.log* file (in the current local directory) and printed in to stdout.
 
 The benchmark syntax is the following
 ```bash

@@ -9,17 +9,12 @@
 1. <a id="yarn_intro"></a> [Introduction to YARN](https://www.youtube.com/watch?v=5vmP1-6xd6Y&ab_channel=OracleLearning)
 1. <a id="yarn_tutorial"></a> [Hadoop Yarn Tutorial for Beginners](https://data-flair.training/blogs/hadoop-yarn-tutorial/)
 1. <a id="yarn_app"></a> [Hadoop: Writing YARN Applications](https://hadoop.apache.org/docs/r3.3.5/hadoop-yarn/hadoop-yarn-site/WritingYarnApplications.html)
+1. <a id="modes"></a> [Hadoop – Different Modes of Operation](https://www.geeksforgeeks.org/hadoop-different-modes-of-operation/)
 1. <a id="dfsio"></a> [Benchmarking and Stress Testing an Hadoop Cluster with TeraSort, TestDFSIO & Co.](https://www.michael-noll.com/blog/2011/04/09/benchmarking-and-stress-testing-an-hadoop-cluster-with-terasort-testdfsio-nnbench-mrbench/)
-1. <a id="hdfs_default_xml"></a> [Default Configuration File hdfs-defult.xml](https://hadoop.apache.org/docs/r3.3.5/hadoop-project-dist/hadoop-hdfs/hdfs-default.xml)
-1. <a id="mapred_default_xml"></a> [Default Configuration File mapred-default.xml](https://hadoop.apache.org/docs/r3.3.5/hadoop-mapreduce-client/hadoop-mapreduce-client-core/mapred-default.xml)
-1. <a id="yarn_default_xml"></a> [Default Configuration File yarn-defult.xml](https://hadoop.apache.org/docs/r3.3.5/hadoop-yarn/hadoop-yarn-common/yarn-default.xml)
-1. <a id="yarn_resource_configuration"></a> [Hadoop: YARN Resource Configuration](https://hadoop.apache.org/docs/r3.3.5/hadoop-yarn/hadoop-yarn-site/ResourceModel.html)
 1. <a id="single_node_cluster"></a> [Hadoop: Setting up a Single Node Cluster](https://hadoop.apache.org/docs/r3.3.5/hadoop-project-dist/hadoop-common/SingleCluster.html)
-1. <a id="mapred_commands"></a> [MapReduce Commands Guide](https://hadoop.apache.org/docs/r3.3.5/hadoop-mapreduce-client/hadoop-mapreduce-client-core/MapredCommands.html)
 
 
 # Further References <a name="fref"></a>
-* [Hadoop – Different Modes of Operation](https://www.geeksforgeeks.org/hadoop-different-modes-of-operation/)
 * [Hadoop HDFS Data Read and Write Operations](https://data-flair.training/blogs/hadoop-hdfs-data-read-and-write-operations/)
 * [Rack Awareness in Hadoop HDFS – An Introductory Guide](https://data-flair.training/blogs/rack-awareness-hadoop-hdfs/)
 * [HDFS Erasure Coding](https://hadoop.apache.org/docs/r3.3.5/hadoop-project-dist/hadoop-hdfs/HDFSErasureCoding.html)
@@ -31,3 +26,8 @@
 * [Native Libraries Guide](https://hadoop.apache.org/docs/r3.3.5/hadoop-project-dist/hadoop-common/NativeLibraries.html)
 * [YARN Commands](https://hadoop.apache.org/docs/r3.3.5/hadoop-yarn/hadoop-yarn-site/YarnCommands.html)
 * [Maven Getting Started Guide](https://maven.apache.org/guides/getting-started/index.html)
+* [Default Configuration File hdfs-defult.xml](https://hadoop.apache.org/docs/r3.3.5/hadoop-project-dist/hadoop-hdfs/hdfs-default.xml)
+* [Default Configuration File mapred-default.xml](https://hadoop.apache.org/docs/r3.3.5/hadoop-mapreduce-client/hadoop-mapreduce-client-core/mapred-default.xml)
+* [Default Configuration File yarn-defult.xml](https://hadoop.apache.org/docs/r3.3.5/hadoop-yarn/hadoop-yarn-common/yarn-default.xml)
+* [Hadoop: YARN Resource Configuration](https://hadoop.apache.org/docs/r3.3.5/hadoop-yarn/hadoop-yarn-site/ResourceModel.html)
+* [MapReduce Commands Guide](https://hadoop.apache.org/docs/r3.3.5/hadoop-mapreduce-client/hadoop-mapreduce-client-core/MapredCommands.html)

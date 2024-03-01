@@ -108,7 +108,7 @@ $ mvn package -Pdist,native -DskipTests -Dtar
 * `native` flag : Build the native hadoop library.
 
 ## Setting up Hadoop Cluster <a name="cluster"></a>
-To run the single-node cluster in pseudo-distributed mode, set the **-site.xml* file as following<sup>[[16]](References.md#single_node_cluster)</sup>:
+To run the single-node cluster in pseudo-distributed mode, set the **-site.xml* file as following<sup>[[13]](References.md#single_node_cluster)</sup>:
 * etc/hadoop/core-site.xml :
 ```xml
 <configuration>
