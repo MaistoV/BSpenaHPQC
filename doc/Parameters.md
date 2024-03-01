@@ -23,5 +23,7 @@ On the other hand, the `response variables` are related to the time analysis :
 ## Result Analysis
 Subsequently, the following graphs were designed to visualize the results.
 
-<img src="./doc/img/cpu_tim.jpeg" width="600">
+<img src="img/throughtput.jpeg" width="1000">
+<img src="img/cpu_time.jpeg" width="1000">
+<img src="img/average_io.jpeg" width="1000">
 
