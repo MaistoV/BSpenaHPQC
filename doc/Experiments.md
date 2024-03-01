@@ -1,5 +1,6 @@
 # Experiments
-I have conducted a `full factorial experiment 3<sup>2</sup>9`, which consists of `2 independent factors`, each with `3 levels`. For each of the 9 combinations, were carried out `9 repetitions`, resulting in a total of 81 experiments. All experiments were write operations with a number of files equal to 10 and a file size of 100 MB.
+I have conducted a `full factorial desing` 3<sup>2</sup>9, which consists of `2 independent factors`, each with `3 levels`. For each of the 9 combinations, were carried out `9 repetitions`, resulting in a total of 81 experiments. All experiments were write operations with a number of files equal to 10 and a file size of 100 MB.
+
 The chosen independent factors are related to the computation field and are: 
 * `dfs.datanode.handler.count` : The number of server threads for the datanode, with the following levels
   * 10 (default value)
@@ -10,7 +11,7 @@ The chosen independent factors are related to the computation field and are:
   * 2
   * 4 
 
-The levels depend on the `cluster configuration`; regarding the number of vCores, it cannot exceed the value defined by yarn.nodemanager.resource.cpu-vcores parameter.
+The levels depend on the `cluster configuration`.
 
 On the other hand, the `response variables` are related to the time analysis :
 * `Number of map tasks`
