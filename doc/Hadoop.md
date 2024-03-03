@@ -5,11 +5,11 @@ Apache Hadoop software library <sup>[[1]](References.md#hadoop)</sup> is a `frea
 
 The Hadoop architecture has three layers :
 * `HDFS` : The Storage layer.
-* `MapReduce` : The Applications layer.
 * `YARN` : The Resource Management layer.
+* `MapReduce` : The Application layer.
 
 <p align="center">
-  <img src="https://techvidvan.com/tutorials/wp-content/uploads/sites/2/2020/04/hadoop-component.jpg" width="700">
+  <img src="https://data-flair.training/blogs/wp-content/uploads/sites/2/2019/02/Hadoop-Architecture1.jpg" width="600">
 </p>
 
 and follows has a `master-slave` architecture<sup>[[2]](References.md#hadoop_architecture)</sup> :
@@ -17,8 +17,9 @@ and follows has a `master-slave` architecture<sup>[[2]](References.md#hadoop_arc
 * `Slave Nodes` : Store data and perform the computing.
 
 Master and slaves nodes contain the components related to the previous three layers.
+
 <p align="center">
-  <img src="https://techvidvan.com/tutorials/wp-content/uploads/sites/2/2020/03/hadoop-architecture.jpg" width="700">
+  <img src="https://techvidvan.com/tutorials/wp-content/uploads/sites/2/2020/03/hadoop-architecture.jpg" width="600">
 </p>
 
 
@@ -32,7 +33,6 @@ HDFS has a `master-slave architecture` :
 * `NameNode` : There is one `master daemon` per cluster, it executes file system namespace operations (opening, closing, and renaming files and directories) and handles clients access to files. The NameNode assigns the blocks to DataNodes and stores the metadata (number of data blocks,their locations,numeber of replicas, etc...). Finally, it makes all decisions regarding blocks replication.
 * `DataNode`  : There is one `slave daemon` per node in the cluster, it executes read/write operation from the file system’s client. The DataNode performs data blocks operations (creation, deletion and replication) and stores the actual data. Moreover, DataNodes ara gathered together in `racks`.
 
-
 <p align="center">
   <img src="https://techvidvan.com/tutorials/wp-content/uploads/sites/2/2020/03/HDFS-Architecture.jpg" width="600">
 </p>
@@ -41,11 +41,11 @@ The architecture can be `rebalanced` moving data from one Datanode to another.
 
 
 ## MapReduce <a name="mapred"></a>
-MapReduce<sup>[[2]](References.md#hadoop_architecture)</sup><sup>[[5]](References.md#mapred_tutorial)</sup> is a software framework for writing applications (which need not be written in Java) that process large datasets in parallel on large clusters. The framework :
-* Works on sets of `<key,value> pairs`.
-* Splits input into fixed-size splits called `InputSplit` in order to be processed. 
+MapReduce<sup>[[2]](References.md#hadoop_architecture)</sup><sup>[[5]](References.md#mapred_tutorial)</sup> is a software framework for writing applications (which need not be written in Java) that process large datasets in parallel on large clusters. The framework works on sets of `<key,value> pairs`.
 
-A `MapReduce job`  is the unit of work the client wants to perform, it is performed throught the execution of `map tasks` and `reduce tasks`. Each map task uses a user-defined `map function` which is implemented through interfaces and/or abstract-classes, the same goes for each reduce task with a `reduce function`. MapReduce creates a map task for each InputSplit, instead the number of reduce task can be set by the user (set as zero if no reduction is desired).
+A `MapReduce job` is a unit of work the client wants to perform: 
+* It takes as inputs a fixed-size splits, divided by Hadoop, known as `InputSplit (or splits)`. 
+* It is is an execution of `map tasks` and `reduce tasks`. Each map/reduce task uses a user-defined `map/reduce function` which is implemented through interfaces and/or abstract-classes. MapReduce creates a map task for each split, instead the number of reduce task can be set by the user (set as zero if no reduction is desired).
 
 MapReduce has two phases<sup>[[5]](References.md#mapred_tutorial)</sup><sup>[[6]](References.md#mapred_flow)</sup> : 
 * `Map Phase` : Maps the input <key,value> pair to zero or multiple `intermetdiate <key,value> pairs`.
@@ -54,9 +54,8 @@ MapReduce has two phases<sup>[[5]](References.md#mapred_tutorial)</sup><sup>[[6]
   * `Sort` : Groups the intermediate pairs by keys.
 
 <p align="center">
-  <img src="https://data-flair.training/blogs/wp-content/uploads/sites/2/2016/11/how-map-reduce-work-together-tutorial.jpg" width="800">
+  <img src="img/map_red.png" width="700">
 </p> 
-
 
 ## YARN <a name="YARN"></a>
 YARN (Yet Another Resource Negotiator)<sup>[[7]](References.md#yarn)</sup><sup>[[8]](References.md#yarn_intro)</sup><sup>[[9]](References.md#yarn_tutorial)</sup> is a freamwork for distributed computing which separates resorse menagement and processing components. YARN :
@@ -88,7 +87,7 @@ A Hadoop cluster is highly configurable through the parameters settings and the 
 
 ### Supported Modes
 Hadoop supports three different modes<sup>[[11]](References.md#modes)</sup> :
-* `Standalone Mode` : Hadoop is configured to run in a single-node as a single process on a single Java Virtual Machine (run on a single Java process).
+* `Standalone Mode` : Hadoop is configured to run in a single-node as a single process on a single Java Virtual Machine (run on a single Java process). This mode is used for testing and debugging.
 * `Pseudo-distributed Mode` : All the daemons run on different Java processes. This mode uses only a single node and the cluster is simulated, so  all the processes inside the cluster runs independently to each other.
 * `Fully-Distributed Mode` : There are multiple nodes used to run master and slaves deamons and the data are distributed across the different nodes.
 
@@ -99,7 +98,7 @@ The parameters can be configured in the `site-specific configuration files`, suc
 * mapred-site.xml.
 * yarn-site.xml.
 
-Furthermore, Hadoop provides the `read-only default configuration files`with default parameter values:
+Furthermore, Hadoop provides the `read-only default configuration files` with default parameter values:
 * core-default.xml.
 * hdfs-default.xml. 
 * mapred-default.xml.
@@ -108,7 +107,7 @@ Furthermore, Hadoop provides the `read-only default configuration files`with def
 These values are used when the parameters are not explicitly set in the **-site.xml* files.
 
 ## TestDFSIO <a name="testdfsio"></a>
-TestDFSIO benchmark is a read and write test for HDFS<sup>[[12]](References.md#dfsio)</sup> and describes how faster a cluster is in terms of I/O. Benchmark results are saved in *TestDFSIO_results.log* file (in the current local directory) and printed in to stdout.
+TestDFSIO benchmark is a `read and write test` for HDFS<sup>[[12]](References.md#dfsio)</sup> and describes how faster a cluster is in terms of I/O. Benchmark results are saved in *TestDFSIO_results.log* file (in the current local directory) and printed to stdout.
 
 The benchmark syntax is the following
 ```bash

@@ -1,7 +1,15 @@
-# HPQC
-The purpose of the project is to develop a `Test Cases Script` that, given `independent factors`, runs the `TestDFSIO benchmark` on a `Single-Node Hadoop Cluster` set in `Pseudo-Distributed M;Mode`. Also the script measures the `response variables`.
+# Test Cases Script
+The `Test Cases Script` is a python script which, given `indipendet factors (cluster configuration parameters)`, runs a `TestDFSIO benchmark` ,on a `Single-Node Hadoop Cluster` set in `Pseudo-Distributed Mode`. Besides, the script measures the `response variables` through an Online Test (not implemented yet) and and Offline Test.
 
-The independent factors are the `cluster configuration parameters` and are stored into the *test_list.csv* file. The response variables can be both cluster configuration parameters and `TestDSFIO results`, them are saved within the *test_result.csv* file.
+## Test Flow
+The user follows the following test flow :
+* Writes the cluster configuration parameters and TestDFSIO flags in `test_list.csv` file.
+* Starts the `run_test.py` script.
+* Reads response variables from `test_result.csv` file.
+
+<p align="center">
+  <img src="doc/img/test_flow.png" width="600">
+</p>
 
 ## Table of Contents
 1. [Apache Hadoop](doc/Hadoop.md)
@@ -15,9 +23,9 @@ The independent factors are the `cluster configuration parameters` and are store
     * [Tools](doc/Setup.md#tool)
     * [Building Hadoop](doc/Setup.md#build)
     * [Setting up the Hadoop Cluster](doc/Setup.md#cluster)
-1. [Test Cases Script](doc/Script.md)
-    * [Script Structure](doc/Script.md#script_struc)
+1. [Script in detail](doc/Script.md)
     * [Control Flow](doc/Script.md#flow_control)
+    * [Script Structure](doc/Script.md#script_struc)
     * [Python Modules](doc/Script.md#python_mod)
     * [How to Run](doc/Script.md#run)
 1. [Experiments](doc/Experiments.md)

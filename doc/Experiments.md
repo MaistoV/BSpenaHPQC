@@ -1,5 +1,6 @@
 # Experiments
-I have conducted a `full factorial desing` 3<sup>2</sup>9, which consists of `2 independent factors`, each with `3 levels`. For each of the 9 combinations, were carried out `9 repetitions`, resulting in a total of 81 experiments. All experiments were write operations with a number of files equal to 10 and a file size of 100 MB.
+I have conducted a `full factorial desing` 3<sup>2</sup>9, which consists of `2 independent factors`, each with `3 levels`. For each of the 9 combinations, were carried out `9 repetitions`, resulting in a total of 81 experiments. All experiments were `write operations` with 10 files 
+and a file size of 100 MB.
 
 The chosen independent factors are related to the computation field and are: 
 * `dfs.datanode.handler.count` : The number of server threads for the datanode, with the following levels
@@ -24,7 +25,9 @@ On the other hand, the `response variables` are related to the time analysis :
 ## Response Variables Analysis <a name="rv_analysis"></a>
 Subsequently, the following graphs were designed to visualize the results. In order to conduct a more detailed study on the `throughput`, were considered additional points. Instead, the `number of map tasks` was not represented because its value was constant across all experiments and matched the number of files of the TestDFSIO. Indeed, TestDFSIO is designed in such a way that it will use 1 map task per file.
 
-<img src="img/throughput.png" width="1000">
-<img src="img/cpu_time.jpeg" width="1000">
-<img src="img/average_io.png" width="1000">
+<p align="center">
+  <img src="img/throughput.png" width="1200">
+  <img src="img/cpu_time.jpeg" width="1200">
+  <img src="img/average_io.png" width="1200">
+</p>
 

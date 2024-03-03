@@ -1,15 +1,6 @@
-# Test Cases Script
-
-## Script Structure <a name="script_struc"></a>
-The Test Cases Script has 5 different files :
-* `run_test.py` : Python script to start.
-* `functions.py` : Python file which holds the functions implementations.
-* `config_file.py` : Python file which holds the variables needed by the script.
-* `start_cluster.sh` : Bash script which holds the line commnds to start the hadoop cluster.
-* `test_list.csv` : CSV file which holds the configuration paramters.
+# Script in detail
 
 ## Control Flow <a name="flow_control"></a>
-A minimal flow of controll of the script
 ```mermaid
 stateDiagram-v2
     state fork_state <<fork>>
@@ -17,7 +8,8 @@ stateDiagram-v2
     s1: Dataframes Creation
     s2: Cluster Configuration
     s3: Start Cluster in Pseudo-Distributed Mode
-    s4: Start TestDFSIO and Online Test 
+    s4: Start TestDFSIO and Online Test
+    s4_1 : Online Test
     s5: Start Offline Test
     s6: Clean up TestDFSIO results
     s7: Save Response Variables
@@ -28,15 +20,23 @@ stateDiagram-v2
         s3 --> s4
         s4 --> fork_state
         fork_state --> TestDFSIO
-        fork_state --> Online_Test
+        fork_state --> s4_1
 
         TestDFSIO --> join_state
-        Online_Test --> join_state
+        s4_1 --> join_state
         join_state --> s5
         s5 --> s6
         s6 --> s7
         s7 --> [*]
 ```
+
+## Script Structure <a name="script_struc"></a>
+The Test Cases Script has 5 different files :
+* `run_test.py` : Python "main" script.
+* `functions.py` : Python file which holds the functions implementations.
+* `config_file.py` : Python file which holds the variables needed by the script.
+* `start_cluster.sh` : Bash script which holds the line commnds to stop and start the hadoop cluster.
+* `test_list.csv` : CSV file which holds the configuration paramters.
 
 
 ## Python Modules <a name="python_mod"></a>
@@ -45,14 +45,13 @@ stateDiagram-v2
 * `xml.etree.ElementTree module` : Module for parsing and creating XML data.
 * `subprocess` : Module to spawn new processes and capture stout/stderr.
 * `os` : Module to use operating system dependent functionality.
-* `multiprocessing` : Module to spaw new processes.
+* `multiprocessing` : Module to spawn new processes.
 
 
 ## How to Run <a name="run"></a>
 ### Prerequisites
-Set : 
-* Indipendent factors and TestDFSIO flags as the first row of *test_list.csv* file.
-* Variables in *config_file.py*
+* Set indipendent factors and TestDFSIO flags as the first row of `test_list.csv` file.
+* Set variables in `config_file.py`
 
 ### Run
 ```bash
