@@ -11,9 +11,8 @@ The chosen independent factors are related to the computation field and are:
   * 2
   * 4 
 
-The levels depend on the `cluster configuration`.
 
-On the other hand, the `response variables` are related to the time analysis :
+On the other hand, the `response variables` are related to the time analysis and "load" analysis :
 * `Number of map tasks`
 * `CPU time spent by the map tasks` : Total time that the all map tasks have spent executing on CPU's
 * `CPU time spent by the reduce tasks` : Total time that the all reduce tasks have spent executing on CPU's

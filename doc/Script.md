@@ -51,7 +51,7 @@ The Test Cases Script has 5 different files :
 ## How to Run <a name="run"></a>
 ### Prerequisites
 * Set indipendent factors and TestDFSIO flags as the first row of `test_list.csv` file.
-* Set variables in `config_file.py`
+* Set variables in `config_file.py`.
 
 ### Run
 ```bash

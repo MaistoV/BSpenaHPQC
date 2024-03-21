@@ -12,7 +12,7 @@ The Hadoop architecture has three layers :
   <img src="https://data-flair.training/blogs/wp-content/uploads/sites/2/2019/02/Hadoop-Architecture1.jpg" width="600">
 </p>
 
-and follows has a `master-slave` architecture<sup>[[2]](References.md#hadoop_architecture)</sup> :
+and has a `master-slave` architecture<sup>[[2]](References.md#hadoop_architecture)</sup> :
 * `Master Node` : There is one per cluster. It assigns tasks to the slave nodes and stores metadata, managing the resources across the cluster.
 * `Slave Nodes` : Store data and perform the computing.
 
@@ -26,12 +26,12 @@ Master and slaves nodes contain the components related to the previous three lay
 ## HDFS <a name="hdfs"></a>
 HDFS (Hadoop Distributed File System)<sup>[[4]](References.md#hdfs_architecture)</sup> is a java-based distributed file system running on commodity hardware which supports a traditional hierarchical file organization. This file system :
 * Stores user data in files.
-* Splits file in one or more blocked-sized chunks known as `data blocks`,with size of 128 MB by default (the size is configurable per file).  
-* Replicates the data blocks with a `configurable replication factor`, which is set to 3 by default. The default factor causes an 200% overhead in storage space and other resources, so to avoid the overhead is used the the `Erasure Coding`. It provides the same level of fault-tolerance with much less storage space.
+* Splits file in one or more 128 MB blocked-sized chunks known as `data blocks` (size is configurable per file).  
+* Replicates the data blocks with a `configurable replication factor` (3 by default). The default factor causes an 200% overhead in storage space and other resources, so to avoid the overhead is used the the `Erasure Coding`. It provides the same level of fault-tolerance with much less storage space.
 
 HDFS has a `master-slave architecture` :
-* `NameNode` : There is one `master daemon` per cluster, it executes file system namespace operations (opening, closing, and renaming files and directories) and handles clients access to files. The NameNode assigns the blocks to DataNodes and stores the metadata (number of data blocks,their locations,numeber of replicas, etc...). Finally, it makes all decisions regarding blocks replication.
-* `DataNode`  : There is one `slave daemon` per node in the cluster, it executes read/write operation from the file system’s client. The DataNode performs data blocks operations (creation, deletion and replication) and stores the actual data. Moreover, DataNodes ara gathered together in `racks`.
+* `NameNode` : Master daemon, there is one per cluster. It executes file system namespace operations (opening, closing, and renaming files and directories) and handles clients access to files. The NameNode assigns the blocks to DataNodes and stores the metadata (number of data blocks,their locations,numeber of replicas, etc...). Finally, it makes all decisions regarding blocks replication.
+* `DataNode` : Slave daemon, there is one per node in the cluster. It executes read/write operation from the file system’s client. The DataNode performs data blocks operations (creation, deletion and replication) and stores the actual data. Moreover, DataNodes ara gathered together in `racks`.
 
 <p align="center">
   <img src="https://techvidvan.com/tutorials/wp-content/uploads/sites/2/2020/03/HDFS-Architecture.jpg" width="600">
@@ -49,9 +49,8 @@ A `MapReduce job` is a unit of work the client wants to perform:
 
 MapReduce has two phases<sup>[[5]](References.md#mapred_tutorial)</sup><sup>[[6]](References.md#mapred_flow)</sup> : 
 * `Map Phase` : Maps the input <key,value> pair to zero or multiple `intermetdiate <key,value> pairs`.
-* `Reduce Phase` : Reduces set of intermediate values, which share a key, to a `smaller set of values`. The smaller set is the final output. This phase has `Shuffle` and `Sort` sub-phases which occur simultaneously :
-  * `Shuffle` : Fetches the values of the output of the mappers.
-  * `Sort` : Groups the intermediate pairs by keys.
+* `Shuffle & Sort` : Fetches the values of the output of the mappers and groups the intermediate pairs by keys.
+* `Reduce Phase` : Reduces set of intermediate values, which share a key, to a `smaller set of values`. The smaller set is the final output.
 
 <p align="center">
   <img src="img/map_red.png" width="700">
@@ -59,8 +58,8 @@ MapReduce has two phases<sup>[[5]](References.md#mapred_tutorial)</sup><sup>[[6]
 
 ## YARN <a name="yarn_p"></a>
 YARN (Yet Another Resource Negotiator)<sup>[[7]](References.md#yarn)</sup><sup>[[8]](References.md#yarn_intro)</sup><sup>[[9]](References.md#yarn_tutorial)</sup> is a freamwork for distributed computing which separates resorse menagement and processing components. YARN :
-* Allows the exectution of an `application`, it can be a `single MapReduce job` or `DAG of jobs`. 
-* Sends computations where the data is stored on locak disks (property of `data locality`)
+* Allows the exectution of an `application` (`single MapReduce job` or `DAG of jobs`). 
+* Sends computations where the data is stored on local disks (property of `data locality`)
 * Uses the `containers`, collection of all the resources necessary to run an application on a node in a cluster.
 
 YARN has a `master-slave nodes architecture` :

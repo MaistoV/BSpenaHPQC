@@ -30,7 +30,7 @@ $ pip install pandas
 
 ### Maven 3.6
 ```bash
-sudo apt-get -y install maven
+$ sudo apt-get -y install maven
 ```
 
 ### Hadoop 3.3.5
