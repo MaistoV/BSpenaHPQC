@@ -1,5 +1,5 @@
 # Test Cases Script
-The `Test Cases Script` is a python script which, given `indipendet factors (cluster configuration parameters)`, runs a `TestDFSIO benchmark` ,on a `Single-Node Hadoop Cluster` set in `Pseudo-Distributed Mode`. Besides, the script measures the `response variables` through an Online Test (not implemented yet) and and Offline Test.
+The `Test Cases Script` is a python script which, given `indipendet factors (cluster configuration parameters)`, runs a `TestDFSIO Benchmark` ,on a `Single-Node Hadoop Cluster` set in `Pseudo-Distributed Mode`. Besides, the script measures the `response variables` through an Online Test (not implemented yet) and and Offline Test.
 
 ## Test Flow
 The user follows the following test flow :
