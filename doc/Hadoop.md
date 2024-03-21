@@ -57,7 +57,7 @@ MapReduce has two phases<sup>[[5]](References.md#mapred_tutorial)</sup><sup>[[6]
   <img src="img/map_red.png" width="700">
 </p> 
 
-## YARN <a name="YARN"></a>
+## YARN <a name="yarn_p"></a>
 YARN (Yet Another Resource Negotiator)<sup>[[7]](References.md#yarn)</sup><sup>[[8]](References.md#yarn_intro)</sup><sup>[[9]](References.md#yarn_tutorial)</sup> is a freamwork for distributed computing which separates resorse menagement and processing components. YARN :
 * Allows the exectution of an `application`, it can be a `single MapReduce job` or `DAG of jobs`. 
 * Sends computations where the data is stored on locak disks (property of `data locality`)
