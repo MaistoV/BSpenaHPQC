@@ -88,7 +88,7 @@ rm -rf /tmp/hadoop-$(whoami)/dfs/data/*
 $ $HADOOP_HOME/bin/hadoop jar $HADOOP_HOME/share/hadoop/mapreduce/hadoop-*test*.jar TestDFSIO -read | -write | -clean [-nrFiles N] [-fileSize MB] [-resFile resultFileName] [-bufferSize Bytes]
 ```
 * `Error Message` : java.lang.NoClassDefFoundError: junit/framework/TestCase.
-* [`Solution`] : Ass junit.jar path to environment variable path in hadoop-env.sh file (hadoop/hadoop-dist/target/hadoop-3.3.5/etc/hadoop/)
+* [`Solution`] : Add junit.jar path to environment variable path in hadoop-env.sh file (hadoop/hadoop-dist/target/hadoop-3.3.5/etc/hadoop/)
 ```bash
 export HADOOP_CLASSPATH=$HADOOP_CLASSPATH:/path/to/junit.jar
 ```
