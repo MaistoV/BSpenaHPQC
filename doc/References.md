@@ -31,3 +31,5 @@
 * [Default Configuration File yarn-defult.xml](https://hadoop.apache.org/docs/r3.3.5/hadoop-yarn/hadoop-yarn-common/yarn-default.xml)
 * [Hadoop: YARN Resource Configuration](https://hadoop.apache.org/docs/r3.3.5/hadoop-yarn/hadoop-yarn-site/ResourceModel.html)
 * [MapReduce Commands Guide](https://hadoop.apache.org/docs/r3.3.5/hadoop-mapreduce-client/hadoop-mapreduce-client-core/MapredCommands.html)
+* [MapReduce Application Master REST API’s](https://hadoop.apache.org/docs/r3.3.5/hadoop-mapreduce-client/hadoop-mapreduce-client-core/MapredAppMasterRest.html)
+* [Hadoop Troubleshooting](https://www.cs.brandeis.edu//~cs147a/lab/hadoop-troubleshooting/)
