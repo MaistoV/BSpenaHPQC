@@ -1,7 +1,6 @@
 # References
-1. <a id="hadoop"></a> [Apache Hadoop](https://hadoop.apache.org/)
+1. <a id="hadoop"></a> [Hadoop Architecture in Detail – HDFS, Yarn & MapReduce](https://data-flair.training/blogs/hadoop-architecture/)
 1. <a id="hadoop_architecture"></a> [Apache Hadoop Architecture – HDFS, YARN & MapReduce](https://techvidvan.com/tutorials/hadoop-architecture/)
-1. <a id="hadoop_features"></a> [10 Features Of Hadoop That Made It The Most Popular](https://data-flair.training/blogs/features-of-hadoop-and-design-principles/)
 1. <a id="hdfs_architecture"></a> [HDFS Architecture](https://hadoop.apache.org/docs/r3.3.5/hadoop-project-dist/hadoop-hdfs/HdfsDesign.html)
 1. <a id="mapred_tutorial"></a> [MapReduce Tutorial](https://hadoop.apache.org/docs/r3.3.5/hadoop-mapreduce-client/hadoop-mapreduce-client-core/MapReduceTutorial.html)
 1. <a id="mapred_flow"></a> [Hadoop MapReduce Flow – How data flows in MapReduce?](https://data-flair.training/blogs/hadoop-mapreduce-flow/)
