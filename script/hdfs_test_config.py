@@ -1,0 +1,54 @@
+import os        # For OS command proxying
+
+#######################################
+# Test configuration and result files #
+#######################################
+path_test_list       = os.getcwd() + '/test_lists/test_list.csv'
+path_test_result     = os.getcwd() + '/test_results/test_result.csv'
+path_test_dfsio_logs = os.getcwd() + '/logs/' + '/TestDFSIO_results.log'
+
+############################################
+# Tuples with the test_list.csv parameters #
+############################################
+hdfs_t   = ('dfs.datanode.handler.count',)
+mapred_t = ('mapreduce.map.cpu.vcores',)
+yarn_t   = ('yarn.nodemanager.resource.cpu-vcores',)
+dfsio_t  = ('dfsio.nrFiles','dfsio.fileSize')
+test_list_columns = hdfs_t + mapred_t + yarn_t + dfsio_t
+
+############################
+# Columns for test results #
+############################
+# Colums names for dataframe with response variables from mapreduce commands
+columns_mapred_commands = ['maps.number','cpu.time.map.task','cpu.time.reduce.tasks','cpu.time.tot']
+
+# Colums names for dataframe with response variables from TestDFSIO logs 
+columns_dfsio_logs = ['throughput_value','average_io_value']
+
+# Column names for test result dataframe
+df_test_result_columns = columns_mapred_commands + columns_dfsio_logs
+
+##########
+# Hadoop #
+##########
+# Get HADOOP_HOME from env
+HADOOP_HOME = os.environ['HADOOP_HOME']
+# Hadoop configuration files
+path_hdfs_site       = HADOOP_HOME + '/etc/hadoop/hdfs-site.xml'
+path_mapred_site     = HADOOP_HOME + '/etc/hadoop/mapred-site.xml'
+path_yarn_site       = HADOOP_HOME + '/etc/hadoop/yarn-site.xml'
+
+# Path to DFSIO JAR
+path_dfsio_jar = HADOOP_HOME + '/share/hadoop/mapreduce/hadoop-mapreduce-client-jobclient-3.4.0-tests.jar'
+
+# HTTP addresses
+# TODO: import from hdfs-site.xml
+dfs_namenode_http_address = "master:9870"
+# TODO: import from YARN-site.xml
+yarn_resourcemanager_webapp_address = "master:8032"
+
+########################### DO NOT MODIFY ######################################
+
+# TODO: what to do with this
+# String array with the special parameters needed for the cluster configuration in psuedo-distributed mode
+dont_touch_parameters = ['dfs.replication','mapreduce.framework.name','mapreduce.application.classpath','yarn.nodemanager.aux-services','yarn.nodemanager.env-whitelist']

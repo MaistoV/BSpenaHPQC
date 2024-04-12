@@ -22,10 +22,11 @@ $ sudo reboot
 $ echo $JAVA_HOME                         
 ```
 
-### Python Libraries
-* pandas
+### Python
+Install Python 3.10.12 and required modules:
 ```bash
-$ pip install pandas
+$ sudo apt install python3.10
+$ pip3 install -r py_prerequisites.txt # only pandas for now
 ```
 
 ### Maven 3.6
