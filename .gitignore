@@ -5,3 +5,5 @@ __pycache__
 # If necessary, adding to cache can be forced
 script/test_lists/
 script/test_results/
+
+# Temporary files

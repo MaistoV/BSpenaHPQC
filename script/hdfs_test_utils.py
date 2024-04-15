@@ -26,6 +26,15 @@ def assert_config():
     for value in config.test_list_columns:
         assert ( value in list(df_test_list.columns) ), "Property " + value + " not in " + config.path_test_list
 
+def dump_config():
+    print("Test factors: " + str(config.test_list_columns))
+    print("Number of repetitions: " + str(config.test_list_num_repetitions))
+
+# Create a .csv from test_list_columns configuration 
+def gen_test_list_header(path_test_list):
+    df = pandas.DataFrame(columns=config.test_list_columns, index=None)
+    df.to_csv(path_test_list, index=None)
+    
 ###########################
 # 1. Initialization utils #
 ###########################
@@ -36,8 +45,11 @@ def initTest_create_dataframe():
     # Read test_list.csv
     df_test_list = pandas.read_csv(config.path_test_list)                 
     
+    # Expand by the number of repetition
+    for i in range(1,config.test_list_num_repetitions):
+        df_test_list = pandas.concat([df_test_list, df_test_list], ignore_index=True)
+
     # Reshuffle for randomness
-    # TODO: verify this does not break test_list -> test_result matching
     df_test_list = df_test_list.sample(frac=1).reset_index(drop=True)
 
     # Create custom indeces
@@ -72,6 +84,12 @@ def initTest_create_dataframe():
 
 # Wrapper function
 def initTest():
+    # Create output directories
+    os.makedirs(os.path.dirname(config.path_test_dfsio_logs), exist_ok=True)
+    os.makedirs(os.path.dirname(config.path_test_result)    , exist_ok=True)
+
+    # Directly return tuple, for simplicity
+    # NOTE: this is a bit messy
     return initTest_create_dataframe()
 
 #####################
@@ -109,7 +127,6 @@ def configCluster_update_xml(file, row, tuple_format):
 
 # Update cluster configuration
 def configCluster( row ):
-    
     configCluster_update_xml( config.path_hdfs_site  , row, config.hdfs_t   )   # Configure hdfs-site.xml
     configCluster_update_xml( config.path_mapred_site, row, config.mapred_t )   # Configure mapred-site.xml
     configCluster_update_xml( config.path_yarn_site  , row, config.yarn_t   )   # Configure yarn-site.xml
@@ -148,12 +165,14 @@ def onlineTest_TestDFSIO_run( row ):
     dfsio_cmd = (
                 '$HADOOP_HOME/bin/hadoop jar ' + config.path_dfsio_jar + ' ' +
                 'TestDFSIO -resFile ' + config.path_test_dfsio_logs + 
-                ' -' + str(row['dfsio.operation'])
+                ' -' + str(row['dfsio.operation']) + " > /dev/null"
                 )
                 
     # Adjust parameters format
     for t in config.dfsio_t:
         dfsio_cmd = dfsio_cmd + ' -' + t.split('.')[1] + ' ' + str(row[t])  
+
+    print("dfsio_cmd: " + dfsio_cmd)
 
     # Start TestDFSIO
     dfsio_process = mp.Process(target = onlineTest_os_cmd, args=(dfsio_cmd,))
@@ -190,10 +209,12 @@ def offlineTest_mapred_commands(index, df_mapred_commands):
     job_id_cmd = '$HADOOP_HOME/bin/mapred job -list all | grep "job_"'
     job_id_sub = subprocess.run(job_id_cmd, shell = True ,capture_output=True)
     job_id = job_id_sub.stdout.decode().split('\t')[0]
+    print("job_id:" + job_id)
 
     # Number of map tasks
     map_number_cmd = '$HADOOP_HOME/bin/mapred job -status ' + job_id + ' | grep "Number of maps"'
     map_number_sub = subprocess.run(map_number_cmd, shell = True ,capture_output=True)
+    print("map_number_sub:" + str(map_number_sub))
     map_number = int(map_number_sub.stdout.decode().split(':')[1])
 
     # CPU time spent by MapReduce Framework, map tasks and reduce tasks

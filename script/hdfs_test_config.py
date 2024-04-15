@@ -5,16 +5,18 @@ import os        # For OS command proxying
 #######################################
 path_test_list       = os.getcwd() + '/test_lists/test_list.csv'
 path_test_result     = os.getcwd() + '/test_results/test_result.csv'
-path_test_dfsio_logs = os.getcwd() + '/logs/' + '/TestDFSIO_results.log'
 
-############################################
-# Tuples with the test_list.csv parameters #
-############################################
+############################
+# Test_list.csv parameters #
+############################
+# Independent factors
 hdfs_t   = ('dfs.datanode.handler.count',)
 mapred_t = ('mapreduce.map.cpu.vcores',)
 yarn_t   = ('yarn.nodemanager.resource.cpu-vcores',)
 dfsio_t  = ('dfsio.nrFiles','dfsio.fileSize')
 test_list_columns = hdfs_t + mapred_t + yarn_t + dfsio_t
+# Number of repetitions for each test
+test_list_num_repetitions = 1
 
 ############################
 # Columns for test results #
@@ -47,8 +49,20 @@ dfs_namenode_http_address = "master:9870"
 # TODO: import from YARN-site.xml
 yarn_resourcemanager_webapp_address = "master:8032"
 
+#########
+# DFSIO #
+#########
+path_test_dfsio_logs = os.getcwd() + '/logs/TestDFSIO_results.log'
+
 ########################### DO NOT MODIFY ######################################
 
-# TODO: what to do with this
+# TODO: what to do with this?
 # String array with the special parameters needed for the cluster configuration in psuedo-distributed mode
-dont_touch_parameters = ['dfs.replication','mapreduce.framework.name','mapreduce.application.classpath','yarn.nodemanager.aux-services','yarn.nodemanager.env-whitelist']
+dont_touch_parameters = []
+# dont_touch_parameters = ['dfs.replication','mapreduce.framework.name','mapreduce.application.classpath','yarn.nodemanager.aux-services','yarn.nodemanager.env-whitelist']
+# From old cluster
+# dont_touch_parameters = [
+#                         'yarn.nodemanager.vmem-check-enabled',
+#                         'yarn.nodemanager.aux-services',
+#                         'yarn.acl.enable'
+#                     ]
