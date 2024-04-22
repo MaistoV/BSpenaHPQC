@@ -182,31 +182,44 @@ def onlineTest_TestDFSIO_run( row ):
     online_test_process = mp.Process(target = onlineTest_run_test)
     online_test_process.start()                
     
-    # Wait for subprocesses to terminate                                                  
-    online_test_process.join()
-    dfsio_process.join() 
-
     # REST API Test
     # TODO: implement
     # onlineTest_REST_get()
+    
+    # Wait for subprocesses to terminate                                                  
+    online_test_process.join()
+    dfsio_process.join()
 
-
-# Start Teragen as online test
-def onlineTest_Teragen_run( row ):
-    # Compose Teragen command
+# Start TeraSort as online test
+def onlineTest_TeraSort_run( row ):
+    # TODO: compose rerun_teragen condition
+    # 1. If exists output
+    # 2. If not terasort settings changed
+    
+    if ( rerun_teragen == 1 ):
+        # Compose Teragen command
+        teragen_cmd = (
+                    '$HADOOP_HOME/bin/hadoop jar ' + config.path_tergen_jar + ' ' +
+                    'tergen' + str(row['teragen.operation']) + " > /dev/null"
+                    )
+                    
+        # Adjust parameters format
+        for t in config.teragen_t:
+            teragen_cmd = teragen_cmd + ' -' + t.split('.')[1] + ' ' + str(row[t])  
+    
+        print("teragen_cmd: " + teragen_cmd)
+    
+        # Run TeraGen
+        os.system(teragen_cmd)
+    
+    # Compose TeraSort command
     teragen_cmd = (
                 '$HADOOP_HOME/bin/hadoop jar ' + config.path_tergen_jar + ' ' +
-                'tergen' + str(row['dfsio.operation']) + " > /dev/null"
+                'terasort' + config.path_teragen_output + ' ' + config.path_terasort_output +
+                ' > /dev/null"
                 )
-                
-    # Adjust parameters format
-    for t in config.teragen_t:
-        teragen_cmd = teragen_cmd + ' -' + t.split('.')[1] + ' ' + str(row[t])  
-
-    print("teragen_cmd: " + teragen_cmd)
-
-    # Start TestDFSIO
-    teragen_process = mp.Process(target = onlineTest_os_cmd, args=(teragen_cmd,))
+    # Start TeraSort
+    teragen_process = mp.Process(target = onlineTest_os_cmd, args=(terasort_cmd,))
     teragen_process.start()
     
     # Start Online Test
@@ -217,13 +230,21 @@ def onlineTest_Teragen_run( row ):
     online_test_process.join()
     teragen_process.join() 
 
+    # Check with TeraValidate
+    if ( run_teravalidate == 1 ):
+        teravalidate_cmd = (
+                '$HADOOP_HOME/bin/hadoop jar ' + config.path_tergen_jar + ' ' +
+                'teravalidate' + config.path_terasort_output + ' ' + config.path_teravalidate_output +
+                ' > /dev/null"
+        )        
+        os.system(teravalidate_cmd)
 
 # Wrapper function for onlineTest_TestDFSIO_run
 def onlineTest (row):
     # Start TestDFSIO
     onlineTest_TestDFSIO_run( row )
     # Start Terasort
-    onlineTest_Teragen_run ( row )
+    #onlineTest_Teragen_run ( row ) # TODO
 
 
 ###################
