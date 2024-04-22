@@ -60,7 +60,9 @@ path_test_dfsio_logs = os.getcwd() + '/logs/TestDFSIO_results.log'
 ###########
 # Path to Teragen JAR
 path_teragen_jar = HADOOP_HOME + '/<path-to>/hadoop-mapreduce-examples-3.4.0.jar'
-path_teragen_input = # TBD
+path_teragen_output = # TBD
+path_terasort_output = # TBD
+path_teravalidate_output = # TBD
 
 ########################### DO NOT MODIFY ######################################
 
