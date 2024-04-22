@@ -14,7 +14,8 @@ hdfs_t   = ('dfs.datanode.handler.count',)
 mapred_t = ('mapreduce.map.cpu.vcores',)
 yarn_t   = ('yarn.nodemanager.resource.cpu-vcores',)
 dfsio_t  = ('dfsio.nrFiles','dfsio.fileSize')
-test_list_columns = hdfs_t + mapred_t + yarn_t + dfsio_t
+teragen_t = ('',) # TBD
+test_list_columns = hdfs_t + mapred_t + yarn_t + dfsio_t + teragen_t
 # Number of repetitions for each test
 test_list_num_repetitions = 1
 
@@ -40,9 +41,6 @@ path_hdfs_site       = HADOOP_HOME + '/etc/hadoop/hdfs-site.xml'
 path_mapred_site     = HADOOP_HOME + '/etc/hadoop/mapred-site.xml'
 path_yarn_site       = HADOOP_HOME + '/etc/hadoop/yarn-site.xml'
 
-# Path to DFSIO JAR
-path_dfsio_jar = HADOOP_HOME + '/share/hadoop/mapreduce/hadoop-mapreduce-client-jobclient-3.4.0-tests.jar'
-
 # HTTP addresses
 # TODO: import from hdfs-site.xml
 dfs_namenode_http_address = "master:9870"
@@ -52,7 +50,17 @@ yarn_resourcemanager_webapp_address = "master:8032"
 #########
 # DFSIO #
 #########
+# Path to DFSIO JAR
+path_dfsio_jar = HADOOP_HOME + '/share/hadoop/mapreduce/hadoop-mapreduce-client-jobclient-3.4.0-tests.jar'
+# Path to DFSIO logfile
 path_test_dfsio_logs = os.getcwd() + '/logs/TestDFSIO_results.log'
+
+###########
+# Teragen #
+###########
+# Path to Teragen JAR
+path_teragen_jar = HADOOP_HOME + '/<path-to>/hadoop-mapreduce-examples-3.4.0.jar'
+path_teragen_input = # TBD
 
 ########################### DO NOT MODIFY ######################################
 
