@@ -190,12 +190,40 @@ def onlineTest_TestDFSIO_run( row ):
     # TODO: implement
     # onlineTest_REST_get()
 
+
+# Start Teragen as online test
+def onlineTest_Teragen_run( row ):
+    # Compose Teragen command
+    teragen_cmd = (
+                '$HADOOP_HOME/bin/hadoop jar ' + config.path_tergen_jar + ' ' +
+                'tergen' + str(row['dfsio.operation']) + " > /dev/null"
+                )
+                
+    # Adjust parameters format
+    for t in config.teragen_t:
+        teragen_cmd = teragen_cmd + ' -' + t.split('.')[1] + ' ' + str(row[t])  
+
+    print("teragen_cmd: " + teragen_cmd)
+
+    # Start TestDFSIO
+    teragen_process = mp.Process(target = onlineTest_os_cmd, args=(teragen_cmd,))
+    teragen_process.start()
+    
+    # Start Online Test
+    online_test_process = mp.Process(target = onlineTest_run_test)
+    online_test_process.start()                
+    
+    # Wait for subprocesses to terminate                                                  
+    online_test_process.join()
+    teragen_process.join() 
+
+
 # Wrapper function for onlineTest_TestDFSIO_run
 def onlineTest (row):
     # Start TestDFSIO
     onlineTest_TestDFSIO_run( row )
     # Start Terasort
-    # TODO: other tests
+    onlineTest_Teragen_run ( row )
 
 
 ###################
