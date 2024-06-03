@@ -45,9 +45,8 @@ def initTest_create_dataframe():
     # Read test_list.csv
     df_test_list = pandas.read_csv(config.path_test_list)                 
     
-    # Expand by the number of repetition
-    for i in range(1,config.test_list_num_repetitions):
-        df_test_list = pandas.concat([df_test_list, df_test_list], ignore_index=True)
+    # Expand by the number of repetitions
+    test_list_df = pandas.concat([test_list_df]*config.test_list_num_repetitions, ignore_index=True)
 
     # Reshuffle for randomness
     df_test_list = df_test_list.sample(frac=1).reset_index(drop=True)
